@@ -5,11 +5,27 @@
         <script src="frontend.js"></script>
         <script>
             // kludge to connect to the sandbox.
-            window.web3.setProvider(new web3.providers.HttpProvider('http://the-impermanence-of-space.on.ether.camp:8555/sandbox/3c3eed7ababee9fe3e5fa49685471dbe335f7d9e'))
+            window.web3.setProvider(new web3.providers.HttpProvider('http://the-impermanence-of-space.on.ether.camp:8555/sandbox/7fe0213f86f747d6663296f998822dd9a4c53eac'));
+       </script>
+       <script src="abi.js"></script>
+       <script>
+            // Kludge to get the galaxy.
+            var kfilter = window.web3.eth.filter({fromBlock: 0});
+            var kevent; 
+            var GalaxyAddress;
+            var galaxy;
+            kfilter.get(function(err, result) {
+                console.log(result);
+                kevent = result;
+                // Hack alert. Hi future self, this is why your events are breaking.
+                GalaxyAddress = kevent[1].address;
+                galaxy = Galaxy.at(GalaxyAddress) 
+
+            });
         </script>
+        <script src="bower_components/jquery/dist/jquery.js"></script>
     </head>
     <body>
-
-         OH MAN HERE IS A WACKY TEST MESSAGE.
+         <input type=text />
     </body>
 </html>
