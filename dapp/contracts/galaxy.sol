@@ -1,5 +1,5 @@
 ///@title The Impermance of Space; Galaxy Contract.
-contract Galaxy {
+contract Galaxy is named("Galaxy") {
     enum TechTypes
     {
         Atk,

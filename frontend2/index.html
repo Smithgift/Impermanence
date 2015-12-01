@@ -5,10 +5,11 @@
         <script src="frontend.js"></script>
         <script>
             // kludge to connect to the sandbox.
-            window.web3.setProvider(new web3.providers.HttpProvider('http://the-impermanence-of-space.on.ether.camp:8555/sandbox/7fe0213f86f747d6663296f998822dd9a4c53eac'));
+            window.web3.setProvider(new web3.providers.HttpProvider('http://the-impermanence-of-space.on.ether.camp:8555/sandbox/77cd4918040487bb9a7bb4c2c0e25e8cc4196d27'));
        </script>
        <script src="abi.js"></script>
        <script>
+            /*
             // Kludge to get the galaxy.
             var kfilter = window.web3.eth.filter({fromBlock: 0});
             var kevent; 
@@ -22,6 +23,33 @@
                 galaxy = Galaxy.at(GalaxyAddress) 
 
             });
+            */
+            var nameRegAbi = [
+{
+    "constant": true,
+    "inputs": [
+      {
+        "name": "name",
+        "type": "bytes32"
+      }
+    ],
+    "name": "addressOf",
+    "outputs": [
+      {
+        "name": "addr",
+        "type": "address"
+      }
+    ],
+    "type": "function"
+  }
+];
+
+var galaxy;
+
+var nameReg = web3.eth.contract(nameRegAbi).at('0x084f6a99003dae6d3906664fdbf43dd09930d0e3');
+nameReg.addressOf("Galaxy", function(err, address) {
+ galaxy = Galaxy.at(address);
+});
         </script>
         <script src="bower_components/jquery/dist/jquery.js"></script>
     </head>
