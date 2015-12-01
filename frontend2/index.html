@@ -44,6 +44,8 @@
   }
 ];
 
+web3.eth.defaultAccount = web3.eth.accounts[0]
+
 var galaxy;
 
 var nameReg = web3.eth.contract(nameRegAbi).at('0x084f6a99003dae6d3906664fdbf43dd09930d0e3');
@@ -54,6 +56,6 @@ nameReg.addressOf("Galaxy", function(err, address) {
         <script src="bower_components/jquery/dist/jquery.js"></script>
     </head>
     <body>
-         <input type=text />
+         System name: <input type=text id="name" /><input type=button onclick="galaxy.addSystem($('#name')[0].value)">
     </body>
 </html>
