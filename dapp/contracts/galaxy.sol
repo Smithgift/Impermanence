@@ -65,7 +65,7 @@ contract Galaxy is named("Galaxy") {
         System newSystem = galacticMap[systemHash];
         newSystem.name = _name;
         newSystem.exists = true;
-        //generateMap(systemHash);
+        generateMap(systemHash);
         systemAdded(_name, systemHash);
         //galacticMap.push(newSystem);
     }
@@ -85,7 +85,7 @@ contract Galaxy is named("Galaxy") {
             seed /= 16;
             newST = uint8(seed % 16);
             seed /= 256;
-            if((x == 16) || (y == 16)) {
+            if((x == 15) || (y == 15)) {
                 continue; // We're off the map.
             } else {
                 Sector chosenSector = newSystem.map[x][y];
