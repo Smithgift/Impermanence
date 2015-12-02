@@ -59,7 +59,7 @@ function setSystem(name) {
                         console.log(err);
                         setTimeout(function() {
                             galaxy.getSector(currentSystemHash, i, j, {}, setCell.bind(this));
-                        }, 1000);
+                        }.bind(this), 1000);
                     } else {
                         this.cell.html(mapLegend[result]);
                     }
