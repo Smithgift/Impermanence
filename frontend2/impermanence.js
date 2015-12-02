@@ -45,16 +45,16 @@ function setSystem(name) {
     } else {
         var systemMap = document.createElement("table");
         systemMap.id = "map";
+        $("#screen").append(systemMap);
         for(var i = 0; i < 15; i++) {
             var row = document.createElement("tr");
+            $(systemMap).append(row);
             for(var j = 0; j < 15; j++) {
                 var cell = document.createElement("td");
                 $(cell).text(galaxy.getSector(currentSystemHash, i, j));
                 $(row).append(cell);
             }
-            $("#map").append(row);
         }
-        $("#screen").append(systemMap);
     }
 }
 /*

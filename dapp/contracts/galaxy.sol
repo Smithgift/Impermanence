@@ -65,7 +65,7 @@ contract Galaxy is named("Galaxy") {
         System newSystem = galacticMap[systemHash];
         newSystem.name = _name;
         newSystem.exists = true;
-        generateMap(systemHash);
+        //generateMap(systemHash);
         systemAdded(_name, systemHash);
         //galacticMap.push(newSystem);
     }
