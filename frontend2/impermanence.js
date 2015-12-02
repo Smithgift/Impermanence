@@ -23,6 +23,7 @@ var mapLegend = [
 function setSystem(name) {
     currentSystemName = name;
     $("#title").text(currentSystemName);
+    $("#screen").empty();
     // For whatever reason, web3.sha3 does not start with a 0x. This leads to
     // attempts to reuse that hash to break.
     currentSystemHash = "0x" + web3.sha3(name);
@@ -52,12 +53,22 @@ function setSystem(name) {
             for(var j = 0; j < 15; j++) {
                 var cell = document.createElement("td");
                 $(cell).text("?");
-                galaxy.getSector(currentSystemHash, i, j, {}, function(err, result) {
-                    if(err) console.log(err);
-                    else {
-                        this.html(mapLegend[result]);
+                var setCell;
+                setCell = function(err, result) {
+                    if(err) {
+                        console.log(err);
+                        setTimeout(function() {
+                            galaxy.getSector(currentSystemHash, i, j, {}, setCell.bind(this));
+                        }, 1000);
+                    } else {
+                        this.cell.html(mapLegend[result]);
                     }
-                }.bind($(cell)));
+                }
+                galaxy.getSector(currentSystemHash, i, j, {}, setCell.bind({
+                    cell: $(cell),
+                    i: i,
+                    j: j
+                }));
                 $(row).append(cell);
             } 
         }
