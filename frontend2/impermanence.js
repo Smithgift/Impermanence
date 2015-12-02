@@ -11,19 +11,24 @@ function setSystem(name) {
     currentSystem = galaxy.galacticMap(currentSystemHash);
     if(!currentSystem[1]) {
         console.log("no system found.");
-        console.log($)
         $("#screen").text("No system by that name, want to create one?");
         var button = document.createElement("input");
         button.type = "button";
         button.onclick = function () {
-            createSystem(name, setSystem);
-            $("#screen").append("System under construction. This make take some time.")
+            galaxy.addSystem(name, function() {
+                // TODO: Refresh.
+                //setTimeout("setSystem(name)", 1000);
+            });
+            //createSystem(name, setSystem);
+            //$("#screen").append("System under construction. This make take some time.")
         };
         button.value = "YES!!!";
         $("#screen").append(button)
+    } else {
+        $("#screen").text("That is a system, yes-sir-ree.")
     }
 }
-
+/*
 function createSystem(name, callback) {
     galaxy.addSystem(name);
     var systemCreated = galaxy.systemAdded({'_name': name});
@@ -34,4 +39,4 @@ function createSystem(name, callback) {
             callback(name);
         }
     });
-}
+}*/
