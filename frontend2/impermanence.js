@@ -2,6 +2,24 @@ var currentSystemName;
 var currentSystemHash;
 var currentSystem;
 
+var mapLegend = [
+    " ",    //Empty,
+    "a",    //AtkAsteriod,
+    "d",    //DefAsteriod,
+    "e",    //EngAsteriod,
+    "A",    //AtkMonolith,
+    "D",    //DefMonolith,
+    "E",    //EngMonolith,
+    "U",    //UnobRift,
+    "#",    //AtkGreatMachine,
+    ")",    //DefGreatMachine,
+    "0",    //EngGreatMachine,
+    "o",    //Planet,
+    "O",    //Sun,
+    "*",    //Wormhole,
+    "^"     //AscensionGate
+]
+
 function setSystem(name) {
     currentSystemName = name;
     $("#title").text(currentSystemName);
@@ -25,7 +43,18 @@ function setSystem(name) {
         button.value = "YES!!!";
         $("#screen").append(button)
     } else {
-        $("#screen").text("That is a system, yes-sir-ree.")
+        var systemMap = document.createElement("table");
+        systemMap.id = "map";
+        for(var i = 0; i < 15; i++) {
+            var row = document.createElement("tr");
+            for(var j = 0; j < 15; j++) {
+                var cell = document.createElement("td");
+                $(cell).text(galaxy.getSector(currentSystemHash, i, j));
+                $(row).append(cell);
+            }
+            $("#map").append(row);
+        }
+        $("#screen").append(systemMap);
     }
 }
 /*

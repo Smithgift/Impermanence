@@ -73,39 +73,39 @@ contract Galaxy is named("Galaxy") {
     // We want the hash, not a pointer, because we need the hash as a seed.
     function generateMap(bytes32 systemHash) internal {
         System newSystem = galacticMap[systemHash];
-        newSystem.map[7][7].st = SectorType.sun;
-        bytes32 seed = systemHash;
+        newSystem.map[7][7].st = SectorType.Sun;
+        uint256 seed = uint256(systemHash);
         uint8 x;
         uint8 y;
-        uint8 type;
+        uint8 newST;
         for(uint8 i = 0; i < 16; i++) {
-            x = seed % 16;
+            x = uint8(seed % 16);
             seed /= 16;
-            y = seed % 16;
+            y = uint8(seed % 16);
             seed /= 16;
-            type = seed % 16;
+            newST = uint8(seed % 16);
             seed /= 256;
-            if((x == 16) || (y = 16)) {
+            if((x == 16) || (y == 16)) {
                 continue; // We're off the map.
             } else {
                 Sector chosenSector = newSystem.map[x][y];
                 if(chosenSector.st != SectorType.Empty) continue;
-                if(type <= 2) {
+                if(newST <= 2) {
                     chosenSector.st = SectorType.AtkAsteriod;
-                } else if (type <= 5) {
+                } else if (newST <= 5) {
                     chosenSector.st = SectorType.DefAsteriod;
-                } else if (type <= 8) {
+                } else if (newST <= 8) {
                     chosenSector.st = SectorType.EngAsteriod;
-                } else if (type == 9) {
+                } else if (newST == 9) {
                     chosenSector.st = SectorType.AtkMonolith;
-                } else if (type == 10) {
+                } else if (newST == 10) {
                     chosenSector.st = SectorType.DefMonolith;
-                } else if (type == 11) {
+                } else if (newST == 11) {
                     chosenSector.st = SectorType.EngMonolith;
-                } else if (type <= 13) {
+                } else if (newST <= 13) {
                     chosenSector.st = SectorType.UnobRift;
                 } else {
-                    chosentSector.st = SectorType.Planet;
+                    chosenSector.st = SectorType.Planet;
                 }
             }
         }
