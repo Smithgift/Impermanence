@@ -5,7 +5,10 @@
         <script src="frontend.js"></script>
         <script>
             // kludge to connect to the sandbox.
-            window.web3.setProvider(new web3.providers.HttpProvider('http://the-impermanence-of-space.on.ether.camp:8555/sandbox/77cd4918040487bb9a7bb4c2c0e25e8cc4196d27'));
+            function sandbox(id) {
+                window.web3.setProvider(new web3.providers.HttpProvider('http://the-impermanence-of-space.on.ether.camp:8555/sandbox/' + id));
+            }
+            sandbox("6a2153c9056414b4ba40259a42f6d973db0b4fa6")
        </script>
        <script src="abi.js"></script>
        <script>
@@ -54,8 +57,13 @@ nameReg.addressOf("Galaxy", function(err, address) {
 });
         </script>
         <script src="bower_components/jquery/dist/jquery.js"></script>
+        <script src="impermanence.js"></script>
     </head>
     <body>
-         System name: <input type=text id="name" /><input type=button onclick="galaxy.addSystem($('#name')[0].value)">
+         System name: <input type=text id="name" /><input type=button value="Go!" onclick="setSystem($('#name')[0].value)">
+         <h1 id="title"></h1>
+         <div id="screen">
+             Enter a system name to begin.
+         </div>
     </body>
 </html>
