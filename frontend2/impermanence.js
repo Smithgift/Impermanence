@@ -3,7 +3,7 @@ var currentSystemHash;
 var currentSystem;
 
 var mapLegend = [
-    " ",    //Empty,
+    "&nbsp;",    //Empty,
     "a",    //AtkAsteriod,
     "d",    //DefAsteriod,
     "e",    //EngAsteriod,
@@ -51,12 +51,19 @@ function setSystem(name) {
             $(systemMap).append(row);
             for(var j = 0; j < 15; j++) {
                 var cell = document.createElement("td");
-                $(cell).text(galaxy.getSector(currentSystemHash, i, j));
+                $(cell).text("?");
+                galaxy.getSector(currentSystemHash, i, j, {}, function(err, result) {
+                    if(err) console.log(err);
+                    else {
+                        this.html(mapLegend[result]);
+                    }
+                }.bind($(cell)));
                 $(row).append(cell);
-            }
+            } 
         }
     }
 }
+
 /*
 function createSystem(name, callback) {
     galaxy.addSystem(name);
