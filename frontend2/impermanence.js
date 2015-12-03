@@ -111,6 +111,14 @@ function focusSector(event) {
             focusedSector.destination
         )[0]
         $("#focus").append("A womhole to " + focusedSector.destinationName + "!");
+        $("#focus").append("<br />");
+        var button = document.createElement("input");
+        button.type = "button";
+        button.onclick = function() {
+            setSystem(focusedSector.destinationName);
+        };
+        button.value = "Go to system!";
+        $("#focus").append(button)
     }
     //$("#focus").append()
 }
