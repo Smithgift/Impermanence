@@ -53,10 +53,16 @@ contract Galaxy is named("Galaxy") {
     
     function getSectorType(bytes32 s, uint8 x, uint8 y) 
         constant 
-        public 
-        returns(SectorType) 
+        returns (SectorType) 
     {
         return galacticMap[s].map[x][y].st;
+    }
+    
+    function getWormhole(bytes32 s, uint8[2] coords) 
+        constant
+        returns (bytes32)
+    {
+        return galacticMap[s].Wormholes[compressCoords(coords)];
     }
 
     function Galaxy() {

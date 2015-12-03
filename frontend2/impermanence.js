@@ -60,10 +60,11 @@ function setSystem(name) {
                     if(err) {
                         console.log(err);
                         setTimeout(function() {
-                            galaxy.getSectorType(currentSystemHash, x, y, {}, setCell.bind(this));
+                            galaxy.getSectorType(currentSystemHash, this.x, this.y, {}, setCell.bind(this));
                         }.bind(this), 1000);
                     } else {
                         this.cell.html(mapLegend[result][0]);
+                        console.log(x, y, result);
                     }
                 }
                 galaxy.getSectorType(currentSystemHash, x, y, {}, setCell.bind({
@@ -78,7 +79,7 @@ function setSystem(name) {
         var focus = document.createElement("div");
         focus.id = "focus";
         $("#screen").append(focus);
-        $(focus).text("Click on a sector for more details.")
+        $(focus).text("Click on a sector for more details.");
     }
 }
 
@@ -99,6 +100,18 @@ function focusSector(event) {
     $("#focus").append("Sector at " + focusedSector.x + ", " + focusedSector.y);
     $("#focus").append("<br />");
     $("#focus").append(mapLegend[focusedSector.st][1] + "<br />");
+    // Hack to find sector type.
+    if(mapLegend[focusedSector.st][0] == "*" ) { // Wormhole.
+        focusedSector.destination = galaxy.getWormhole(
+            currentSystemHash, 
+            focusedSector.x,
+            focusedSector.y
+        );
+        focusedSector.destinationName = galaxy.galacticMap(
+            focusedSector.destination
+        )[0]
+        $("#focus").append("A womhole to " + focusedSector.destinationName + "!");
+    }
     //$("#focus").append()
 }
 
