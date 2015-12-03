@@ -9,7 +9,7 @@
             function sandbox(id) {
                 window.web3.setProvider(new web3.providers.HttpProvider('http://the-impermanence-of-space.on.ether.camp:8555/sandbox/' + id));
             }
-            sandbox("04c93ce94af77e17da35dbf78fca613dcfb8b8c7");
+            sandbox("300d32ea84c342510003fb28e90cd92b6cb9078f");
        </script>
        <script src="abi.js"></script>
        <script>
@@ -28,7 +28,7 @@
 
             });
             */
-            var nameRegAbi = [
+/*            var nameRegAbi = [
 {
     "constant": true,
     "inputs": [
@@ -47,15 +47,16 @@
     "type": "function"
   }
 ];
-
-web3.eth.defaultAccount = web3.eth.accounts[0]
-
+*/
+//web3.eth.defaultAccount = web3.eth.accounts[0]
+/*
 var galaxy;
 
 var nameReg = web3.eth.contract(nameRegAbi).at('0x084f6a99003dae6d3906664fdbf43dd09930d0e3');
 nameReg.addressOf("Galaxy", function(err, address) {
  galaxy = Galaxy.at(address);
 });
+*/
         </script>
         <script src="bower_components/jquery/dist/jquery.js"></script>
         <script src="impermanence.js"></script>

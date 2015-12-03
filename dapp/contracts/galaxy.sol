@@ -185,4 +185,5 @@ contract Galaxy is named("Galaxy") {
         crane.refreshMassRatio();
         insertShip(spawnSector, craneID);
     }
+    
 }

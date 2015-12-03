@@ -4,8 +4,9 @@
 
 cd dapp/contracts/
 pwd
-solc *.sol --combined-json abi > ../../build.json
+solc *.sol --combined-json abi,bin > ../../build.json
 cd -
-echo "var Galaxy = web3.eth.contract(JSON.parse(" > frontend2/abi.js
+echo "var build = " > frontend2/abi.js
 cat build.json >> frontend2/abi.js
+echo "var Galaxy = web3.eth.contract(JSON.parse(build" >> frontend2/abi.js
 echo ".contracts.Galaxy.abi))" >> frontend2/abi.js
