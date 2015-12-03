@@ -1,23 +1,24 @@
 var currentSystemName;
 var currentSystemHash;
 var currentSystem;
+var focusedSector = {};
 
 var mapLegend = [
-    "&nbsp;",    //Empty,
-    "a",    //AtkAsteriod,
-    "d",    //DefAsteriod,
-    "e",    //EngAsteriod,
-    "A",    //AtkMonolith,
-    "D",    //DefMonolith,
-    "E",    //EngMonolith,
-    "U",    //UnobRift,
-    "#",    //AtkGreatMachine,
-    ")",    //DefGreatMachine,
-    "0",    //EngGreatMachine,
-    "o",    //Planet,
-    "O",    //Sun,
-    "*",    //Wormhole,
-    "^"     //AscensionGate
+    ["&nbsp;", "Empty Space"],    //Empty,
+    ["a", "Kaboomium Asteriod"],    //AtkAsteriod,
+    ["d", "Bouncium Asteriod"],    //DefAsteriod,
+    ["e", "Zoomium Asteriod"],    //EngAsteriod,
+    ["A", "Ancient Monolith of Victory"],    //AtkMonolith,
+    ["D", "Ancient Monolith of Barriers"],    //DefMonolith,
+    ["E", "Ancient Monolith of Travel"],    //EngMonolith,
+    ["U", "Unobtainium Rift"],    //UnobRift,
+    ["#", "Obliteration Ray Factory"],    //AtkGreatMachine,
+    [")", "S.H.I.E.L.D."],    //DefGreatMachine,
+    ["0", "Omnigate"],    //EngGreatMachine,
+    ["o", "Inhabited Planet"],    //Planet,
+    ["O", "Sun"],    //Sun,
+    ["*", "Wormhole"],    //Wormhole,
+    ["^", "Ascension Gate"]     //AscensionGate
 ]
 
 function setSystem(name) {
@@ -47,32 +48,58 @@ function setSystem(name) {
         var systemMap = document.createElement("table");
         systemMap.id = "map";
         $("#screen").append(systemMap);
-        for(var i = 0; i < 15; i++) {
+        for(var x = 0; x < 15; x ++) {
             var row = document.createElement("tr");
             $(systemMap).append(row);
-            for(var j = 0; j < 15; j++) {
+            for(var y = 0; y < 15; y++) {
                 var cell = document.createElement("td");
                 $(cell).text("?");
+                $(cell).click({x: x, y: y}, focusSector)
                 var setCell;
                 setCell = function(err, result) {
                     if(err) {
                         console.log(err);
                         setTimeout(function() {
-                            galaxy.getSector(currentSystemHash, i, j, {}, setCell.bind(this));
+                            galaxy.getSectorType(currentSystemHash, x, y, {}, setCell.bind(this));
                         }.bind(this), 1000);
                     } else {
-                        this.cell.html(mapLegend[result]);
+                        this.cell.html(mapLegend[result][0]);
                     }
                 }
-                galaxy.getSector(currentSystemHash, i, j, {}, setCell.bind({
+                galaxy.getSectorType(currentSystemHash, x, y, {}, setCell.bind({
                     cell: $(cell),
-                    i: i,
-                    j: j
+                    x: x,
+                    y: y
                 }));
                 $(row).append(cell);
             } 
         }
+        focusedSector = {};
+        var focus = document.createElement("div");
+        focus.id = "focus";
+        $("#screen").append(focus);
+        $(focus).text("Click on a sector for more details.")
     }
+}
+
+function focusSector(event) {
+    if(focusedSector.td)
+        $(focusedSector.td).removeClass("selected");
+    focusedSector = {};
+    focusedSector.td = this;
+    focusedSector.x = event.data.x;
+    focusedSector.y = event.data.y;
+    focusedSector.st = galaxy.getSectorType(
+        currentSystemHash, 
+        focusedSector.x, 
+        focusedSector.y
+    );
+    $(this).addClass("selected");
+    $("#focus").empty();
+    $("#focus").append("Sector at " + focusedSector.x + ", " + focusedSector.y);
+    $("#focus").append("<br />");
+    $("#focus").append(mapLegend[focusedSector.st][1] + "<br />");
+    //$("#focus").append()
 }
 
 /*

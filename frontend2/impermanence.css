@@ -6,3 +6,11 @@ td {
     border: 1px solid black;
     font-family: monospace;
 }
+
+#focus {
+    border: 3px solid black;
+}
+
+.selected {
+    border-color: red;
+}

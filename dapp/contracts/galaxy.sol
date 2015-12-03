@@ -37,6 +37,13 @@ contract Galaxy is named("Galaxy") {
         string name;
         uint[3] techLevels;
         bool exists;
+        mapping (uint8 => bytes32) Wormholes;
+    }
+    
+    ///@dev convert an array of uints into a single uint. 
+    function compressCoords(uint8[2] coords) constant returns (uint8)
+    {
+        return coords[0] + (coords[1] * 16);
     }
     
     mapping (bytes32 => System) public galacticMap;
@@ -44,7 +51,7 @@ contract Galaxy is named("Galaxy") {
     // And now for a zillion helper functions. Recursive structs and 
     // getters do not mix. The good news is that calls are free.
     
-    function getSector(bytes32 s, uint8 x, uint8 y) 
+    function getSectorType(bytes32 s, uint8 x, uint8 y) 
         constant 
         public 
         returns(SectorType) 
@@ -109,5 +116,26 @@ contract Galaxy is named("Galaxy") {
                 }
             }
         }
+    }
+    
+    // TODO: Make internal.
+    function createLink(
+        bytes32 _from, 
+        uint8[2] _fromCoords, 
+        bytes32 _to, 
+        uint8[2] _toCoords
+    ) {
+        System fromSystem = galacticMap[_from];
+        Sector fromSector = fromSystem.map[_fromCoords[0]][_fromCoords[1]];
+        if(fromSector.st != SectorType.Empty) 
+            throw;
+        System toSystem = galacticMap[_to];
+        Sector toSector = toSystem.map[_toCoords[0]][_toCoords[1]];
+        if(toSector.st != SectorType.Empty) 
+            throw;
+        fromSector.st = SectorType.Wormhole;
+        fromSystem.Wormholes[compressCoords(_fromCoords)] = _to;
+        toSector.st = SectorType.Wormhole;
+        toSystem.Wormholes[compressCoords(_toCoords)] = _from;
     }
 }
