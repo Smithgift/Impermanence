@@ -1,13 +1,14 @@
 import "std.sol";
+import "shiplib.sol";
 
-///@title The Impermance of Space; Galaxy Contract.
+///@title The Impermanence of Space: Galaxy Contract.
 contract Galaxy is named("Galaxy") {
-    enum TechTypes
-    {
+
+    /*enum TechTypes {
         Atk,
         Def,
         Eng
-    }
+    }*/
     
     enum SectorType {
         Empty,
@@ -143,5 +144,45 @@ contract Galaxy is named("Galaxy") {
         fromSystem.Wormholes[compressCoords(_fromCoords)] = _to;
         toSector.st = SectorType.Wormhole;
         toSystem.Wormholes[compressCoords(_toCoords)] = _from;
+    }
+
+    //
+    // SHIPS!
+    //
+    
+    using ShipLib for ShipLib.Ship;
+     
+    ShipLib.Ship[] public galacticRegistry;
+     
+    modifier onlyshipowner(uint _shipID) {
+        if(galacticRegistry[_shipID].owner != msg.sender) {
+            throw;
+        } else { 
+            _
+        }
+    }
+     
+    function insertShip(Sector storage _sector, uint _shipID) internal {
+        // Optimiziation smoptimization.
+        _sector.localShips.push(_shipID);
+    }
+     
+    function spawnCrane(bytes32 _system, uint8 _x, uint8 _y) {
+        Sector spawnSector = galacticMap[_system].map[_x][_y];
+        if(spawnSector.st != SectorType.Planet) 
+            throw; // Generally, empty space does not have an industrial base.
+        uint craneID = galacticRegistry.length++;
+        ShipLib.Ship crane = galacticRegistry[craneID];
+        crane.exists = true;
+        crane.currentSystem = _system;
+        crane.x = _x;
+        crane.y = _y;
+        crane.energy = 0;
+        crane.owner = msg.sender;
+        crane.lastRefreshed = now;
+        crane.def = 1;
+        crane.eng = 1;
+        crane.refreshMassRatio();
+        insertShip(spawnSector, craneID);
     }
 }
