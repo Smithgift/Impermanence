@@ -27,9 +27,10 @@ library ShipLib {
         uint atk;
         uint def;
         uint eng;
-        int currentHP;
+        uint damage;
         uint massRatio;
         Cargo[] cargo;
+        string name;
     }
     
     function getEnergy(Ship storage self) constant returns (uint8) {
@@ -52,35 +53,50 @@ library ShipLib {
             mass += self.cargo[i].amount;
         }
         self.massRatio = mass / self.eng;
+        if(self.massRatio == 0)
+            self.massRatio = 1; // No photon-based ships, please.
     }
     
-    modifier act(Ship storage self) {
+    modifier act(Ship storage self, uint effort) {
         if(!self.exists)
             throw; // IT'S THE ORBITING DUTCHMAN!
         refreshEnergy(self);
-        if(self.massRatio > uint(self.energy))
+        if((self.massRatio * effort) > uint(self.energy))
             throw;
         // The following conversion is safe, because if massRatio was 
         // greater than 255, we'd just have thrown.
-        self.energy -= uint8(self.massRatio);
+        self.energy -= uint8(self.massRatio * effort);
         _
     }
     
-    function transfer(Ship storage self, address _newOwner) {
+    function transferOwnership(Ship storage self, address _newOwner) {
         self.owner = _newOwner;
     }
     
-    function attack(Ship storage self, Ship storage target) act(self) {
+    
+    function move(
+        Ship storage self, 
+        bytes32 _newsystem, 
+        uint8 _newx, 
+        uint8 _newy, 
+        uint8 distance
+    ) {
+        
+    }
+    
+    function attack(Ship storage self, Ship storage target) act(self, 1) {
         if(self.owner == target.owner)
             throw; // I'm sure this would be amusing. Once.
-        // Hello future coder. If someone somehow got this to wrap around, 
-        // I think you have balance problems somewhere.
-        self.currentHP -= int(target.atk);
-        if(self.currentHP <= 0)
+        self.damage += target.atk;
+        if(self.damage >= self.def)
             throw; // The attack will bring nothing good.
-        target.currentHP -= int(self.atk);
-        if(target.currentHP <= 0) {
+        target.damage += self.atk;
+        if(target.damage >= target.def) {
             target.exists = false;
         }
+    }
+    
+    function restoreHP(Ship storage self) {
+        self.damage = 0;
     }
 }

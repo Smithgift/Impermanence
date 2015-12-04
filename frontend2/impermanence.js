@@ -64,7 +64,7 @@ function setSystem(name) {
                         }.bind(this), 1000);
                     } else {
                         this.cell.html(mapLegend[result][0]);
-                        console.log(x, y, result);
+                        console.log(this.x, this.y, result);
                     }
                 }
                 galaxy.getSectorType(currentSystemHash, x, y, {}, setCell.bind({
@@ -101,7 +101,23 @@ function focusSector(event) {
     $("#focus").append("<br />");
     //$("#focus").append( + "<br />");
     // Hack to find sector type.
-    if(mapLegend[focusedSector.st][0] == "*" ) { // Wormhole.
+    if(mapLegend[focusedSector.st][0] == "o") { // Planet.
+        var craneName = document.createElement("input");
+        $("#focus").append(craneName);
+        var button = document.createElement("input");
+        button.type = "button";
+        button.onclick = function() {
+            console.log($(craneName).val());
+            galaxy.spawnCrane(
+                currentSystemHash, 
+                focusedSector.x, 
+                focusedSector.y,
+                $(craneName).val()
+            );
+        };
+        button.value = "Construct CRaNE!";
+        $("#focus").append(button);        
+    } if(mapLegend[focusedSector.st][0] == "*") { // Wormhole.
         focusedSector.destination = galaxy.getWormhole(
             currentSystemHash, 
             focusedSector.x,
@@ -120,7 +136,70 @@ function focusSector(event) {
         button.value = "Go to system!";
         $("#focus").append(button)
     }
-    //$("#focus").append()
+    focusedSector.ships = getSectorShips(
+        currentSystemHash,
+        focusedSector.x,
+        focusedSector.y
+    );
+    if(focusedSector.ships.length > 0) {
+        $("#focus").append("<br />");
+        $("#focus").append("Ships Present: <br />");
+        var shipTable = document.createElement("table");
+        shipTable.id = "ship_table";
+        $(shipTable).append("<tr><td>Name:</td><td>Owner:</td><td>A</td><td>D</td><td>E</td><td>HP</td><td>MR</td><td>ENERGY</td>")
+        $("#focus").append(shipTable);
+        var shipSelect = document.createElement("select");
+        //shipSelect.type = "select";
+        shipSelect.id = "ship_select";
+        $("#focus").append(shipSelect);
+        focusedSector.ships.forEach(function(entry){
+            // Table entry.
+            var row = document.createElement("tr");
+            [12, 5, 7, 8, 9, 10, 11, 4].forEach(function (col) {
+                $(row).append("<td></td>");
+                var colData = entry[1][col];
+                $(row).children().last().append(colData.toString());
+            })
+            $(shipTable).append(row);
+            /*
+        bool exists;
+        bytes32 currentSystem;
+        uint8 x;
+        uint8 y;
+        uint8 energy;
+        address owner;
+        uint lastRefreshed;
+        uint atk;
+        uint def;
+        uint eng;
+        int currentHP;
+        uint massRatio;
+        Cargo[] cargo;
+        string name;
+*/
+            // Select entry.
+            var option = document.createElement("option");
+            option.value = entry[0];
+            $(option).text(entry[1][12]);
+            $(option).change(function(event) {
+                console.log($(shipSelect).val());
+            })
+            $(shipSelect).append(option);
+        })
+    }
+    
+}
+
+function getSectorShips(systemHash, x, y)
+{
+    var ships = [];
+    for(var i = 0; i < galaxy.getSectorShipsLength(systemHash, x, y); i++) {
+        ship = [];
+        ship.push(galaxy.getSectorShip(systemHash, x, y, i));
+        ship.push(galaxy.shipRegistry(ship[0]));
+        if(ship[1][0]) ships.push(ship);
+    }
+    return ships;
 }
 
 /*

@@ -47,17 +47,19 @@
                         "tab2"
                     ],
                     "document": {
-                        "changed": false,
-                        "meta": {},
                         "filter": true,
                         "title": "node - \"2bf2dc22944b\"",
                         "tooltip": "node - \"2bf2dc22944b\"",
                         "terminal": {
                             "id": "devel_426",
                             "cwd": "",
-                            "width": 641,
-                            "height": 154
-                        }
+                            "width": 0,
+                            "height": 0,
+                            "scrollTop": -1
+                        },
+                        "hash": "67452301efcdab8998badcfe10325476c3d2e1f0",
+                        "meta": {},
+                        "changed": false
                     },
                     "editorType": "terminal",
                     "active": false
@@ -74,7 +76,8 @@
                         "changed": false,
                         "meta": {},
                         "filter": true,
-                        "title": "Terminal",
+                        "title": "bash - \"2bf2dc22944b\"",
+                        "tooltip": "bash - \"2bf2dc22944b\"",
                         "terminal": {
                             "id": "devel_550",
                             "cwd": "",
@@ -103,7 +106,7 @@
             "@ace.repl": 1,
             "@acestatus": 1,
             "@divider": 4,
-            "@document": 14,
+            "@document": 11,
             "@ethereum-console": 1,
             "@form": 5,
             "@menu": 8,
@@ -112,10 +115,10 @@
             "@postmessage": 1,
             "@preferences": 1,
             "@preview": 1,
-            "@session": 14,
-            "@tab": 4,
+            "@session": 10,
+            "@tab": 1,
             "@tree": 2,
-            "@undoManager": 14
+            "@undoManager": 11
         }
     },
     "findinfiles": {
@@ -133,7 +136,7 @@
     "panecycle": {
         "json()": [
             "tab14",
-            "tab5"
+            "tab6"
         ]
     },
     "panels": {
@@ -191,6 +194,7 @@
     "search-history": {
         "replace": {
             "json()": [
+                "sectorShip",
                 "getSectorType"
             ]
         },
@@ -206,16 +210,14 @@
             "focus": "tab14",
             "meta": {
                 "accessList": [
+                    "tab6",
+                    "tab17",
+                    "tab11",
                     "tab5",
                     "tab8",
-                    "tab11",
-                    "tab1",
-                    "tab0",
-                    "tab3",
                     "tab4",
-                    "tab7",
-                    "tab17",
-                    "tab18"
+                    "tab18",
+                    "tab0"
                 ]
             },
             "name": "pane0",
@@ -230,31 +232,11 @@
                     "document": {
                         "changed": false,
                         "meta": {
-                            "timestamp": 1449239488317
+                            "timestamp": 1449263565278
                         },
                         "filter": true,
                         "title": "index.html",
                         "tooltip": "/frontend2/index.html",
-                        "ace": {}
-                    },
-                    "editorType": "ace",
-                    "active": true
-                },
-                {
-                    "type": "tab",
-                    "name": "tab8",
-                    "path": "/dapp/contracts/galaxy.sol",
-                    "className": [
-                        "tab8"
-                    ],
-                    "document": {
-                        "changed": false,
-                        "meta": {
-                            "timestamp": 1449182108113
-                        },
-                        "filter": true,
-                        "title": "galaxy.sol",
-                        "tooltip": "/dapp/contracts/galaxy.sol",
                         "ace": {}
                     },
                     "editorType": "ace",
@@ -270,7 +252,7 @@
                     "document": {
                         "changed": false,
                         "meta": {
-                            "timestamp": 1449171844634
+                            "timestamp": 1449265844208
                         },
                         "filter": true,
                         "title": "impermanence.js",
@@ -288,84 +270,14 @@
                         "tab4"
                     ],
                     "document": {
-                        "filter": true,
-                        "title": "impermanence.css",
-                        "tooltip": "/frontend2/impermanence.css",
-                        "ace": {
-                            "folds": [],
-                            "scrolltop": 0,
-                            "scrollleft": 0,
-                            "selection": {
-                                "start": {
-                                    "row": 14,
-                                    "column": 22
-                                },
-                                "end": {
-                                    "row": 14,
-                                    "column": 22
-                                },
-                                "isBackwards": false
-                            },
-                            "options": {
-                                "guessTabSize": true,
-                                "useWrapMode": false,
-                                "wrapToView": true
-                            },
-                            "firstLineState": {
-                                "row": 48,
-                                "mode": "ace/mode/css"
-                            }
-                        },
-                        "hash": "8a8830391c5426bc1f9539fd33a60ecde7b47bc1",
+                        "changed": false,
                         "meta": {
                             "timestamp": 1449169689448
                         },
-                        "changed": false
-                    },
-                    "editorType": "ace",
-                    "active": false
-                },
-                {
-                    "type": "tab",
-                    "name": "tab7",
-                    "path": "/ethereum.json",
-                    "className": [
-                        "tab7"
-                    ],
-                    "document": {
                         "filter": true,
-                        "title": "ethereum.json",
-                        "tooltip": "/ethereum.json",
-                        "ace": {
-                            "folds": [],
-                            "scrolltop": 127,
-                            "scrollleft": 0,
-                            "selection": {
-                                "start": {
-                                    "row": 34,
-                                    "column": 8
-                                },
-                                "end": {
-                                    "row": 34,
-                                    "column": 8
-                                },
-                                "isBackwards": false
-                            },
-                            "options": {
-                                "guessTabSize": true,
-                                "useWrapMode": false,
-                                "wrapToView": true
-                            },
-                            "firstLineState": {
-                                "row": 130,
-                                "mode": "ace/mode/json"
-                            }
-                        },
-                        "hash": "aac374cd0dbe5a17021741e99af7f4d5360eebbb",
-                        "meta": {
-                            "timestamp": 1449181738501
-                        },
-                        "changed": false
+                        "title": "impermanence.css",
+                        "tooltip": "/frontend2/impermanence.css",
+                        "ace": {}
                     },
                     "editorType": "ace",
                     "active": false
@@ -378,36 +290,14 @@
                         "tab17"
                     ],
                     "document": {
-                        "filter": true,
-                        "title": "contract.sol",
-                        "tooltip": "/dapp/contracts/contract.sol",
-                        "ace": {
-                            "folds": [],
-                            "scrolltop": 0,
-                            "scrollleft": 0,
-                            "selection": {
-                                "start": {
-                                    "row": 5,
-                                    "column": 5
-                                },
-                                "end": {
-                                    "row": 5,
-                                    "column": 5
-                                },
-                                "isBackwards": false
-                            },
-                            "options": {
-                                "guessTabSize": true,
-                                "useWrapMode": false,
-                                "wrapToView": true
-                            },
-                            "firstLineState": 0
-                        },
-                        "hash": "9e8911d812d384cfe4e9230d49423435a995f217",
+                        "changed": false,
                         "meta": {
                             "timestamp": 1449086190675
                         },
-                        "changed": false
+                        "filter": true,
+                        "title": "contract.sol",
+                        "tooltip": "/dapp/contracts/contract.sol",
+                        "ace": {}
                     },
                     "editorType": "ace",
                     "active": false
@@ -426,7 +316,7 @@
                         "ace": {
                             "folds": [],
                             "scrolltop": 0,
-                            "scrollleft": 174,
+                            "scrollleft": 0,
                             "selection": {
                                 "start": {
                                     "row": 11,
@@ -456,60 +346,85 @@
                 },
                 {
                     "type": "tab",
+                    "name": "tab8",
+                    "path": "/dapp/contracts/galaxy.sol",
+                    "className": [
+                        "tab8"
+                    ],
+                    "document": {
+                        "changed": false,
+                        "meta": {
+                            "timestamp": 1449262211612
+                        },
+                        "filter": true,
+                        "title": "galaxy.sol",
+                        "tooltip": "/dapp/contracts/galaxy.sol",
+                        "ace": {}
+                    },
+                    "editorType": "ace",
+                    "active": false
+                },
+                {
+                    "type": "tab",
+                    "name": "tab6",
+                    "path": "/dapp/_pre/shiplib.sol",
+                    "className": [
+                        "tab6"
+                    ],
+                    "document": {
+                        "changed": false,
+                        "meta": {
+                            "timestamp": 1449267118636
+                        },
+                        "filter": true,
+                        "title": "shiplib.sol",
+                        "tooltip": "/dapp/_pre/shiplib.sol",
+                        "ace": {}
+                    },
+                    "editorType": "ace",
+                    "active": true
+                },
+                {
+                    "type": "tab",
                     "name": "tab0",
-                    "path": "/dapp/contracts/test1.sol",
+                    "path": "/frontend2/app.js",
                     "className": [
                         "tab0"
                     ],
                     "document": {
-                        "changed": false,
-                        "meta": {
-                            "timestamp": 1449237066221
-                        },
                         "filter": true,
-                        "title": "test1.sol",
-                        "tooltip": "/dapp/contracts/test1.sol",
-                        "ace": {}
-                    },
-                    "editorType": "ace",
-                    "active": false
-                },
-                {
-                    "type": "tab",
-                    "name": "tab1",
-                    "path": "/frontend2/abi.js",
-                    "className": [
-                        "tab1"
-                    ],
-                    "document": {
-                        "changed": false,
-                        "meta": {
-                            "timestamp": 1449180768378
+                        "title": "app.js",
+                        "tooltip": "/frontend2/app.js",
+                        "ace": {
+                            "folds": [],
+                            "scrolltop": 0,
+                            "scrollleft": 0,
+                            "selection": {
+                                "start": {
+                                    "row": 3,
+                                    "column": 2
+                                },
+                                "end": {
+                                    "row": 3,
+                                    "column": 2
+                                },
+                                "isBackwards": false
+                            },
+                            "options": {
+                                "guessTabSize": true,
+                                "useWrapMode": false,
+                                "wrapToView": true
+                            },
+                            "firstLineState": {
+                                "row": 116,
+                                "mode": "ace/mode/javascript"
+                            }
                         },
-                        "filter": true,
-                        "title": "abi.js",
-                        "tooltip": "/frontend2/abi.js",
-                        "ace": {}
-                    },
-                    "editorType": "ace",
-                    "active": false
-                },
-                {
-                    "type": "tab",
-                    "name": "tab3",
-                    "path": "/dump.txt",
-                    "className": [
-                        "tab3"
-                    ],
-                    "document": {
-                        "changed": false,
+                        "hash": "7e0dbde80849cdf01aacce844e2d345d132281db",
                         "meta": {
-                            "timestamp": 1449237852601
+                            "timestamp": 1449086190675
                         },
-                        "filter": true,
-                        "title": "dump.txt",
-                        "tooltip": "/dump.txt",
-                        "ace": {}
+                        "changed": false
                     },
                     "editorType": "ace",
                     "active": false
@@ -522,7 +437,7 @@
     },
     "tree_selection": {
         "json()": [
-            "/dapp/contracts/galaxy.sol"
+            "/frontend2/index.html"
         ]
     }
 }

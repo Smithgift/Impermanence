@@ -30,7 +30,7 @@ contract Galaxy is named("Galaxy") {
     
     struct Sector {
         SectorType st;
-        uint[] localShips;
+        uint[] sectorShips;
     }
     
     struct System {
@@ -64,6 +64,20 @@ contract Galaxy is named("Galaxy") {
         returns (bytes32)
     {
         return galacticMap[s].Wormholes[compressCoords(coords)];
+    }
+
+    function getSectorShipsLength(bytes32 s, uint8 x, uint8 y)
+        constant 
+        returns (uint) 
+    {
+        return galacticMap[s].map[x][y].sectorShips.length;   
+    }
+
+    function getSectorShip(bytes32 s, uint8 x, uint8 y, uint i)
+        constant 
+        returns (uint) 
+    {
+        return galacticMap[s].map[x][y].sectorShips[i];
     }
 
     function Galaxy() {
@@ -152,10 +166,10 @@ contract Galaxy is named("Galaxy") {
     
     using ShipLib for ShipLib.Ship;
      
-    ShipLib.Ship[] public galacticRegistry;
+    ShipLib.Ship[] public shipRegistry;
      
     modifier onlyshipowner(uint _shipID) {
-        if(galacticRegistry[_shipID].owner != msg.sender) {
+        if(shipRegistry[_shipID].owner != msg.sender) {
             throw;
         } else { 
             _
@@ -164,15 +178,15 @@ contract Galaxy is named("Galaxy") {
      
     function insertShip(Sector storage _sector, uint _shipID) internal {
         // Optimiziation smoptimization.
-        _sector.localShips.push(_shipID);
+        _sector.sectorShips.push(_shipID);
     }
      
-    function spawnCrane(bytes32 _system, uint8 _x, uint8 _y) {
+    function spawnCrane(bytes32 _system, uint8 _x, uint8 _y, string _name) {
         Sector spawnSector = galacticMap[_system].map[_x][_y];
         if(spawnSector.st != SectorType.Planet) 
             throw; // Generally, empty space does not have an industrial base.
-        uint craneID = galacticRegistry.length++;
-        ShipLib.Ship crane = galacticRegistry[craneID];
+        uint craneID = shipRegistry.length++;
+        ShipLib.Ship crane = shipRegistry[craneID];
         crane.exists = true;
         crane.currentSystem = _system;
         crane.x = _x;
@@ -182,7 +196,9 @@ contract Galaxy is named("Galaxy") {
         crane.lastRefreshed = now;
         crane.def = 1;
         crane.eng = 1;
+        crane.name = _name;
         crane.refreshMassRatio();
+        crane.restoreHP();
         insertShip(spawnSector, craneID);
     }
     
