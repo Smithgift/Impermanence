@@ -73,15 +73,16 @@ library ShipLib {
         self.owner = _newOwner;
     }
     
-    
     function move(
         Ship storage self, 
-        bytes32 _newsystem, 
-        uint8 _newx, 
-        uint8 _newy, 
+        bytes32 _newSystem, 
+        uint8 _newX, 
+        uint8 _newY, 
         uint8 distance
-    ) {
-        
+    ) act(self, distance) {
+        self.currentSystem = _newSystem;
+        self.x = _newX;
+        self.y = _newY;
     }
     
     function attack(Ship storage self, Ship storage target) act(self, 1) {

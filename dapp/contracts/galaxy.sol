@@ -180,7 +180,18 @@ contract Galaxy is named("Galaxy") {
         // Optimiziation smoptimization.
         _sector.sectorShips.push(_shipID);
     }
-     
+    
+    function removeShip(Sector storage _sector, uint _shipID) internal {
+        uint i = 0;
+        while(true) {
+            if(_sector.sectorShips[i] == _shipID) {
+                _sector.sectorShips[i] = 0;
+                return;
+            }
+            i++; // Yes, if we go off, we'll throw. That's the point.
+        }
+    }
+    
     function spawnCrane(bytes32 _system, uint8 _x, uint8 _y, string _name) {
         Sector spawnSector = galacticMap[_system].map[_x][_y];
         if(spawnSector.st != SectorType.Planet) 
@@ -202,4 +213,33 @@ contract Galaxy is named("Galaxy") {
         insertShip(spawnSector, craneID);
     }
     
+    function moveShip(
+        uint _shipID, 
+        bytes32 _newSystem, 
+        uint8 _newX, 
+        uint8 _newY, 
+        uint8 distance
+    ) internal
+    {
+        ShipLib.Ship mover = shipRegistry[_shipID];
+        Sector oldSector=galacticMap[mover.currentSystem].map[mover.x][mover.y];
+        mover.move(_newSystem, _newX, _newY, distance);
+        removeShip(oldSector, _shipID);
+        Sector newSector=galacticMap[_newSystem].map[_newX][_newX];
+        insertShip(newSector, _shipID);
+    }
+    
+    function impulse(
+        uint _shipID, 
+        uint8 _newX, 
+        uint8 _newY
+    ) 
+        onlyshipowner(_shipID) 
+    {
+        uint8 distance = 0;
+        ShipLib.Ship mover = shipRegistry[_shipID];
+        distance += uint8(+(int8(mover.x) - int8(_newX)));
+        distance += uint8(+(int8(mover.y) - int8(_newY)));
+        moveShip(_shipID, mover.currentSystem, _newX, _newY, distance);
+    }
 }

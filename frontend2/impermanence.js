@@ -2,6 +2,7 @@ var currentSystemName;
 var currentSystemHash;
 var currentSystem;
 var focusedSector = {};
+var selectedShip = [];
 
 var mapLegend = [
     ["&nbsp;", "Empty Space"],    //Empty,
@@ -53,6 +54,7 @@ function setSystem(name) {
             $(systemMap).append(row);
             for(var y = 0; y < 15; y++) {
                 var cell = document.createElement("td");
+                cell.id = x.toString(16) + y.toString(16);
                 $(cell).text("?");
                 $(cell).click({x: x, y: y}, focusSector)
                 var setCell;
@@ -81,6 +83,10 @@ function setSystem(name) {
         $("#screen").append(focus);
         $(focus).text("Click on a sector for more details.");
     }
+}
+
+function parseID(id) {
+    return [parseInt(id[0], 16), parseInt(id[1], 16)]
 }
 
 function focusSector(event) {
@@ -181,13 +187,15 @@ function focusSector(event) {
             var option = document.createElement("option");
             option.value = entry[0];
             $(option).text(entry[1][12]);
-            $(option).change(function(event) {
-                console.log($(shipSelect).val());
-            })
             $(shipSelect).append(option);
         })
+        $(shipSelect).change(function(event) {
+            selectShip(focusedSector.ships[$(this).val()]);
+        })
+        var shipDiv = document.createElement("div");
+        shipDiv.id = "ship_div";
+        $("#focus").append(shipDiv);
     }
-    
 }
 
 function getSectorShips(systemHash, x, y)
@@ -200,6 +208,28 @@ function getSectorShips(systemHash, x, y)
         if(ship[1][0]) ships.push(ship);
     }
     return ships;
+}
+
+function selectShip(ship) {
+    if(web3.eth.accounts.indexOf(ship[1][5]) == -1) {
+        $("#ship_div").text("You don't seem to own this ship.");
+    } else {
+        $("#ship_div").empty();
+        $("#ship_div").append("Move:");
+        var move_btn = document.createElement("input");
+        move_btn.type = "button";
+        $(move_btn).click(function(event) {
+            //var mapCells = ;
+            function moveTo(event) {
+                var coords = parseID(this.id);
+                console.log("Impulse move to ", coords);
+                galaxy.impulse(ship[0], coords[0], coords[1], {from: ship[0][5]});
+                $("body").off("click", "#map tr td", moveTo);
+            }
+            $("#map tr td").click(moveTo);
+        })
+        $("#ship_div").append(move_btn);
+    }
 }
 
 /*
