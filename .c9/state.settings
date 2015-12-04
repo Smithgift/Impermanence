@@ -18,8 +18,8 @@
             "meta": {
                 "accessList": [
                     "tab14",
-                    "tab2",
-                    "tab12"
+                    "tab12",
+                    "tab2"
                 ]
             },
             "name": "pane1",
@@ -55,7 +55,7 @@
                         "terminal": {
                             "id": "devel_426",
                             "cwd": "",
-                            "width": 705,
+                            "width": 641,
                             "height": 154
                         }
                     },
@@ -72,15 +72,13 @@
                     ],
                     "document": {
                         "changed": false,
-                        "meta": {
-                            "timestamp": 1449180565613
-                        },
+                        "meta": {},
                         "filter": true,
                         "title": "Terminal",
                         "terminal": {
                             "id": "devel_550",
                             "cwd": "",
-                            "width": 705,
+                            "width": 641,
                             "height": 154
                         }
                     },
@@ -104,20 +102,20 @@
             "@ace": 1,
             "@ace.repl": 1,
             "@acestatus": 1,
-            "@divider": 5,
-            "@document": 21,
+            "@divider": 4,
+            "@document": 14,
             "@ethereum-console": 1,
             "@form": 5,
-            "@menu": 11,
-            "@menuitem": 26,
+            "@menu": 8,
+            "@menuitem": 19,
             "@pane": 2,
             "@postmessage": 1,
             "@preferences": 1,
             "@preview": 1,
-            "@session": 21,
-            "@tab": 18,
+            "@session": 14,
+            "@tab": 4,
             "@tree": 2,
-            "@undoManager": 21
+            "@undoManager": 14
         }
     },
     "findinfiles": {
@@ -135,13 +133,13 @@
     "panecycle": {
         "json()": [
             "tab14",
-            "tab17"
+            "tab5"
         ]
     },
     "panels": {
         "@active-left": "tree",
         "@active-right": "ethergit.ethereum.sandbox.panel",
-        "@width-right": 303,
+        "@width-right": 367,
         "collab": {
             "@enabled": "true",
             "@name": "collab"
@@ -198,6 +196,7 @@
         },
         "search": {
             "json()": [
+                "_",
                 "getSector"
             ]
         }
@@ -207,17 +206,16 @@
             "focus": "tab14",
             "meta": {
                 "accessList": [
-                    "tab17",
                     "tab5",
-                    "tab6",
-                    "tab11",
-                    "tab16",
-                    "tab13",
                     "tab8",
-                    "tab10",
+                    "tab11",
+                    "tab1",
+                    "tab0",
+                    "tab3",
+                    "tab4",
                     "tab7",
-                    "tab9",
-                    "tab4"
+                    "tab17",
+                    "tab18"
                 ]
             },
             "name": "pane0",
@@ -232,7 +230,7 @@
                     "document": {
                         "changed": false,
                         "meta": {
-                            "timestamp": 1449180990713
+                            "timestamp": 1449239488317
                         },
                         "filter": true,
                         "title": "index.html",
@@ -240,7 +238,7 @@
                         "ace": {}
                     },
                     "editorType": "ace",
-                    "active": false
+                    "active": true
                 },
                 {
                     "type": "tab",
@@ -252,31 +250,11 @@
                     "document": {
                         "changed": false,
                         "meta": {
-                            "timestamp": 1449179866001
+                            "timestamp": 1449182108113
                         },
                         "filter": true,
                         "title": "galaxy.sol",
                         "tooltip": "/dapp/contracts/galaxy.sol",
-                        "ace": {}
-                    },
-                    "editorType": "ace",
-                    "active": false
-                },
-                {
-                    "type": "tab",
-                    "name": "tab6",
-                    "path": "/dapp/contracts/shiplib.sol",
-                    "className": [
-                        "tab6"
-                    ],
-                    "document": {
-                        "changed": false,
-                        "meta": {
-                            "timestamp": 1449177225667
-                        },
-                        "filter": true,
-                        "title": "shiplib.sol",
-                        "tooltip": "/dapp/contracts/shiplib.sol",
                         "ace": {}
                     },
                     "editorType": "ace",
@@ -292,7 +270,7 @@
                     "document": {
                         "changed": false,
                         "meta": {
-                            "timestamp": 1449171839320
+                            "timestamp": 1449171844634
                         },
                         "filter": true,
                         "title": "impermanence.js",
@@ -310,14 +288,39 @@
                         "tab4"
                     ],
                     "document": {
-                        "changed": false,
-                        "meta": {
-                            "timestamp": 1449169684055
-                        },
                         "filter": true,
                         "title": "impermanence.css",
                         "tooltip": "/frontend2/impermanence.css",
-                        "ace": {}
+                        "ace": {
+                            "folds": [],
+                            "scrolltop": 0,
+                            "scrollleft": 0,
+                            "selection": {
+                                "start": {
+                                    "row": 14,
+                                    "column": 22
+                                },
+                                "end": {
+                                    "row": 14,
+                                    "column": 22
+                                },
+                                "isBackwards": false
+                            },
+                            "options": {
+                                "guessTabSize": true,
+                                "useWrapMode": false,
+                                "wrapToView": true
+                            },
+                            "firstLineState": {
+                                "row": 48,
+                                "mode": "ace/mode/css"
+                            }
+                        },
+                        "hash": "8a8830391c5426bc1f9539fd33a60ecde7b47bc1",
+                        "meta": {
+                            "timestamp": 1449169689448
+                        },
+                        "changed": false
                     },
                     "editorType": "ace",
                     "active": false
@@ -330,29 +333,138 @@
                         "tab7"
                     ],
                     "document": {
-                        "changed": false,
-                        "meta": {
-                            "timestamp": 1449086190303
-                        },
                         "filter": true,
                         "title": "ethereum.json",
                         "tooltip": "/ethereum.json",
-                        "ace": {}
+                        "ace": {
+                            "folds": [],
+                            "scrolltop": 127,
+                            "scrollleft": 0,
+                            "selection": {
+                                "start": {
+                                    "row": 34,
+                                    "column": 8
+                                },
+                                "end": {
+                                    "row": 34,
+                                    "column": 8
+                                },
+                                "isBackwards": false
+                            },
+                            "options": {
+                                "guessTabSize": true,
+                                "useWrapMode": false,
+                                "wrapToView": true
+                            },
+                            "firstLineState": {
+                                "row": 130,
+                                "mode": "ace/mode/json"
+                            }
+                        },
+                        "hash": "aac374cd0dbe5a17021741e99af7f4d5360eebbb",
+                        "meta": {
+                            "timestamp": 1449181738501
+                        },
+                        "changed": false
                     },
                     "editorType": "ace",
                     "active": false
                 },
                 {
                     "type": "tab",
-                    "name": "tab9",
+                    "name": "tab17",
+                    "path": "/dapp/contracts/contract.sol",
+                    "className": [
+                        "tab17"
+                    ],
+                    "document": {
+                        "filter": true,
+                        "title": "contract.sol",
+                        "tooltip": "/dapp/contracts/contract.sol",
+                        "ace": {
+                            "folds": [],
+                            "scrolltop": 0,
+                            "scrollleft": 0,
+                            "selection": {
+                                "start": {
+                                    "row": 5,
+                                    "column": 5
+                                },
+                                "end": {
+                                    "row": 5,
+                                    "column": 5
+                                },
+                                "isBackwards": false
+                            },
+                            "options": {
+                                "guessTabSize": true,
+                                "useWrapMode": false,
+                                "wrapToView": true
+                            },
+                            "firstLineState": 0
+                        },
+                        "hash": "9e8911d812d384cfe4e9230d49423435a995f217",
+                        "meta": {
+                            "timestamp": 1449086190675
+                        },
+                        "changed": false
+                    },
+                    "editorType": "ace",
+                    "active": false
+                },
+                {
+                    "type": "tab",
+                    "name": "tab18",
+                    "path": "/jsonhack.sh",
+                    "className": [
+                        "tab18"
+                    ],
+                    "document": {
+                        "filter": true,
+                        "title": "jsonhack.sh",
+                        "tooltip": "/jsonhack.sh",
+                        "ace": {
+                            "folds": [],
+                            "scrolltop": 0,
+                            "scrollleft": 174,
+                            "selection": {
+                                "start": {
+                                    "row": 11,
+                                    "column": 50
+                                },
+                                "end": {
+                                    "row": 11,
+                                    "column": 50
+                                },
+                                "isBackwards": false
+                            },
+                            "options": {
+                                "guessTabSize": true,
+                                "useWrapMode": false,
+                                "wrapToView": true
+                            },
+                            "firstLineState": 0
+                        },
+                        "hash": "f3e7ac00d86896d924fde5cfa01b49e1f78b4a91",
+                        "meta": {
+                            "timestamp": 1449182060100
+                        },
+                        "changed": false
+                    },
+                    "editorType": "ace",
+                    "active": false
+                },
+                {
+                    "type": "tab",
+                    "name": "tab0",
                     "path": "/dapp/contracts/test1.sol",
                     "className": [
-                        "tab9"
+                        "tab0"
                     ],
                     "document": {
                         "changed": false,
                         "meta": {
-                            "timestamp": 1449072001588
+                            "timestamp": 1449237066221
                         },
                         "filter": true,
                         "title": "test1.sol",
@@ -364,50 +476,10 @@
                 },
                 {
                     "type": "tab",
-                    "name": "tab10",
-                    "path": "/frontend2/app.js",
-                    "className": [
-                        "tab10"
-                    ],
-                    "document": {
-                        "changed": false,
-                        "meta": {
-                            "timestamp": 1448995412898
-                        },
-                        "filter": true,
-                        "title": "app.js",
-                        "tooltip": "/frontend2/app.js",
-                        "ace": {}
-                    },
-                    "editorType": "ace",
-                    "active": false
-                },
-                {
-                    "type": "tab",
-                    "name": "tab13",
-                    "path": "/jsonhack.sh",
-                    "className": [
-                        "tab13"
-                    ],
-                    "document": {
-                        "changed": false,
-                        "meta": {
-                            "timestamp": 1449180478866
-                        },
-                        "filter": true,
-                        "title": "jsonhack.sh",
-                        "tooltip": "/jsonhack.sh",
-                        "ace": {}
-                    },
-                    "editorType": "ace",
-                    "active": false
-                },
-                {
-                    "type": "tab",
-                    "name": "tab16",
+                    "name": "tab1",
                     "path": "/frontend2/abi.js",
                     "className": [
-                        "tab16"
+                        "tab1"
                     ],
                     "document": {
                         "changed": false,
@@ -424,23 +496,23 @@
                 },
                 {
                     "type": "tab",
-                    "name": "tab17",
-                    "path": "/dapp/contracts/contract.sol",
+                    "name": "tab3",
+                    "path": "/dump.txt",
                     "className": [
-                        "tab17"
+                        "tab3"
                     ],
                     "document": {
                         "changed": false,
                         "meta": {
-                            "timestamp": 1449086190675
+                            "timestamp": 1449237852601
                         },
                         "filter": true,
-                        "title": "contract.sol",
-                        "tooltip": "/dapp/contracts/contract.sol",
+                        "title": "dump.txt",
+                        "tooltip": "/dump.txt",
                         "ace": {}
                     },
                     "editorType": "ace",
-                    "active": true
+                    "active": false
                 }
             ],
             "skin": "editor_tab",
@@ -450,7 +522,7 @@
     },
     "tree_selection": {
         "json()": [
-            "/dapp/contracts/contract.sol"
+            "/dapp/contracts/galaxy.sol"
         ]
     }
 }

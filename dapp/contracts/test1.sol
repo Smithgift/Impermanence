@@ -11,3 +11,9 @@ contract sha3test is named("Sha3")
         log0(sha3("test"));
     }
 }
+
+contract createTest {
+    function() {
+        new sha3test();
+    }
+}

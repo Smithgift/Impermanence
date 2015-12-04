@@ -1,5 +1,5 @@
 import "std.sol";
-import "shiplib.sol";
+import "../_pre/shiplib.sol";
 
 ///@title The Impermanence of Space: Galaxy Contract.
 contract Galaxy is named("Galaxy") {

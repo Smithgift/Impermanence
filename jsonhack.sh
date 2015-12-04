@@ -4,7 +4,7 @@
 
 cd dapp/contracts/
 pwd
-solc *.sol --combined-json abi,bin > ../../build.json
+solc --libraries ShipLib:0x0101010101010101010101010101010101010101 --combined-json abi,bin ../_pre/shiplib.sol *.sol > ../../build.json
 cd -
 echo "var build = " > frontend2/abi.js
 cat build.json >> frontend2/abi.js

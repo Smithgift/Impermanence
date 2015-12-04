@@ -32,7 +32,11 @@
       "0x084f6a99003dae6d3906664fdbf43dd09930d0e3": {
         "balance": 1234567890123345,
         "source": "dapp/_pre/name_reg.sol"
-      }
+      },
+      "0x0101010101010101010101010101010101010101": {
+        "balance": 2,
+        "source": "dapp/_pre/shiplib.sol"
+      } 
     }
   }
 }
