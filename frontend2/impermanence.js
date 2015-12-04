@@ -97,9 +97,9 @@ function focusSector(event) {
     );
     $(this).addClass("selected");
     $("#focus").empty();
-    $("#focus").append("Sector at " + focusedSector.x + ", " + focusedSector.y);
+    $("#focus").append(mapLegend[focusedSector.st][1] + " at " + focusedSector.x + ", " + focusedSector.y);
     $("#focus").append("<br />");
-    $("#focus").append(mapLegend[focusedSector.st][1] + "<br />");
+    //$("#focus").append( + "<br />");
     // Hack to find sector type.
     if(mapLegend[focusedSector.st][0] == "*" ) { // Wormhole.
         focusedSector.destination = galaxy.getWormhole(

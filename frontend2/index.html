@@ -51,12 +51,11 @@ var nameRegAbi = [
 web3.eth.defaultAccount = web3.eth.accounts[0]
 
 var galaxy;
-
+// Just pretend this part doesn't exist.
 var nameReg = web3.eth.contract(nameRegAbi).at('0x084f6a99003dae6d3906664fdbf43dd09930d0e3');
 var ga;
 nameReg.addressOf("Galaxy", function(err, address) {
  ga = address;
-});
 if(ga) {
     galaxy = Galaxy.at(ga);
 } else { 
@@ -76,6 +75,7 @@ web3.eth.sendTransaction({data: build.contracts.Galaxy.bin}, function(err, resul
     }, 1000)
 });
 }
+});
         </script>
         <script src="bower_components/jquery/dist/jquery.js"></script>
         <script src="impermanence.js"></script>
