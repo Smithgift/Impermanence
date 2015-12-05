@@ -241,6 +241,7 @@ function selectShip(ship) {
         $(move_btn).click(function(event) {
             $("#ship_div").text("Click on your destination sector!");
             function moveTo(event) {
+                $("body").off("click", "#map tr td", moveTo);
                 var coords = parseID(this.id);
                 console.log(ship[1][5]);
                 var action = new Action(
@@ -249,9 +250,8 @@ function selectShip(ship) {
                     getDistance([ship[1][2].toNumber(), ship[1][3].toNumber()], coords)
                 );
                 action.act();
-                $("body").off("click", "#map tr td", moveTo);
             }
-            $("#map tr td").click(moveTo);
+            $("body").on("click", "#map tr td", moveTo);
         })
         $("#ship_div").append(move_btn);
         if(mapLegend[focusedSector.st][0] == "*") {
@@ -331,7 +331,8 @@ Action.prototype.act = function() {
 
 function impulse(shipID, x, y, owner) {
     console.log("Impulse move", shipID, x, y, owner);
-    galaxy.impulse(shipID, x, y, {from: owner});
+    var tx = galaxy.impulse(shipID, x, y, {from: owner});
+    console.log("Impulse done.", tx);
 }
 
 function jump(shipID, destination, owner) {

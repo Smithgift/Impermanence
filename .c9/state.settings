@@ -109,8 +109,8 @@
             "@document": 10,
             "@ethereum-console": 1,
             "@form": 5,
-            "@menu": 5,
-            "@menuitem": 13,
+            "@menu": 8,
+            "@menuitem": 19,
             "@pane": 2,
             "@postmessage": 1,
             "@preferences": 1,
@@ -136,7 +136,7 @@
     "panecycle": {
         "json()": [
             "tab14",
-            "tab11"
+            "tab6"
         ]
     },
     "panels": {
@@ -210,12 +210,12 @@
             "focus": "tab14",
             "meta": {
                 "accessList": [
-                    "tab11",
-                    "tab5",
-                    "tab17",
-                    "tab8",
                     "tab6",
+                    "tab8",
+                    "tab5",
                     "tab18",
+                    "tab17",
+                    "tab11",
                     "tab0"
                 ]
             },
@@ -251,7 +251,7 @@
                     "document": {
                         "changed": false,
                         "meta": {
-                            "timestamp": 1449344119320
+                            "timestamp": 1449345254089
                         },
                         "filter": true,
                         "title": "impermanence.js",
@@ -259,7 +259,7 @@
                         "ace": {}
                     },
                     "editorType": "ace",
-                    "active": true
+                    "active": false
                 },
                 {
                     "type": "tab",
@@ -289,39 +289,14 @@
                         "tab18"
                     ],
                     "document": {
-                        "filter": true,
-                        "title": "jsonhack.sh",
-                        "tooltip": "/jsonhack.sh",
-                        "ace": {
-                            "folds": [],
-                            "scrolltop": 0,
-                            "scrollleft": 0,
-                            "selection": {
-                                "start": {
-                                    "row": 11,
-                                    "column": 50
-                                },
-                                "end": {
-                                    "row": 11,
-                                    "column": 50
-                                },
-                                "isBackwards": false
-                            },
-                            "options": {
-                                "guessTabSize": true,
-                                "useWrapMode": false,
-                                "wrapToView": true
-                            },
-                            "firstLineState": {
-                                "row": 261,
-                                "mode": "ace/mode/sh"
-                            }
-                        },
-                        "hash": "f3e7ac00d86896d924fde5cfa01b49e1f78b4a91",
+                        "changed": false,
                         "meta": {
                             "timestamp": 1449182060100
                         },
-                        "changed": false
+                        "filter": true,
+                        "title": "jsonhack.sh",
+                        "tooltip": "/jsonhack.sh",
+                        "ace": {}
                     },
                     "editorType": "ace",
                     "active": false
@@ -364,7 +339,7 @@
                         "ace": {}
                     },
                     "editorType": "ace",
-                    "active": false
+                    "active": true
                 },
                 {
                     "type": "tab",
