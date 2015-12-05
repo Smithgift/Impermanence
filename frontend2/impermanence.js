@@ -57,7 +57,7 @@ function setSystem(name) {
                 var cell = document.createElement("td");
                 cell.id = x.toString(16) + y.toString(16);
                 $(cell).text("?");
-                $(cell).click({x: x, y: y}, focusSector)
+                $(cell).click(focusSector)
                 var setCell;
                 setCell = function(err, result) {
                     if(err) {
@@ -94,15 +94,17 @@ function focusSector(event) {
     if(focusedSector.td)
         $(focusedSector.td).removeClass("selected");
     focusedSector = {};
+    console.log(this);
     focusedSector.td = this;
-    focusedSector.x = event.data.x;
-    focusedSector.y = event.data.y;
+    var coords = parseID(this.id);
+    focusedSector.x = coords[0];
+    focusedSector.y = coords[1];
     focusedSector.st = galaxy.getSectorType(
         currentSystemHash, 
         focusedSector.x, 
         focusedSector.y
     );
-    function watchSector() {
+    var watchSector = (function() {
         refreshFilter = galaxy.shipActivity({
             system: currentSystemHash,
             x: focusedSector.x,
@@ -110,9 +112,9 @@ function focusSector(event) {
         });
         refreshFilter.watch(function() {
             console.log("I'm being called, at least :(.");
-            focusSector(event);
-        });
-    }
+            focusSector.bind(this)(event);
+        }.bind(this));
+    }).bind(this);
     if(!refreshFilter) {
         watchSector();
     } else {
@@ -220,6 +222,7 @@ function getSectorShips(systemHash, x, y, shipList, shipTable, shipSelect)
                         option.value = ship[0];
                         $(option).text(ship[1][12]);
                         $(shipSelect).append(option);
+                        $(shipSelect).change();
                     }
                 }
             });
