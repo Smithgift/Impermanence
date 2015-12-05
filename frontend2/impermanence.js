@@ -142,73 +142,71 @@ function focusSector(event) {
         button.value = "Go to system!";
         $("#focus").append(button)
     }
-    focusedSector.ships = getSectorShips(
-        currentSystemHash,
-        focusedSector.x,
-        focusedSector.y
-    );
-    if(Object.keys(focusedSector.ships).length > 0) {
+    if(galaxy.getSectorShipsLength(
+            currentSystemHash, 
+            focusedSector.x, 
+            focusedSector.y).toNumber() > 0) {
         $("#focus").append("<br />");
         $("#focus").append("Ships Present: <br />");
         var shipTable = document.createElement("table");
         shipTable.id = "ship_table";
-        $(shipTable).append("<tr><td>Name:</td><td>Owner:</td><td>A</td><td>D</td><td>E</td><td>HP</td><td>MR</td><td>ENERGY</td>")
         $("#focus").append(shipTable);
+        $(shipTable).append("<tr><td>Name:</td><td>Owner:</td><td>A</td><td>D</td><td>E</td><td>HP</td><td>MR</td><td>ENERGY</td>")
         var shipSelect = document.createElement("select");
-        //shipSelect.type = "select";
         shipSelect.id = "ship_select";
         $("#focus").append(shipSelect);
-        Object.keys(focusedSector.ships).forEach(function(entry){
-            // Table entry.
-            var row = document.createElement("tr");
-            [12, 5, 7, 8, 9, 10, 11, 4].forEach(function (col) {
-                $(row).append("<td></td>");
-                var colData = focusedSector.ships[entry][1][col];
-                $(row).children().last().append(colData.toString());
-            })
-            $(shipTable).append(row);
-            /*
-        bool exists;
-        bytes32 currentSystem;
-        uint8 x;
-        uint8 y;
-        uint8 energy;
-        address owner;
-        uint lastRefreshed;
-        uint atk;
-        uint def;
-        uint eng;
-        int currentHP;
-        uint massRatio;
-        Cargo[] cargo;
-        string name;
-*/
-            // Select entry.
-            console.log(entry);
-            var option = document.createElement("option");
-            option.value = entry;
-            $(option).text(focusedSector.ships[entry][1][12]);
-            $(shipSelect).append(option);
-        })
+        focusedSector.ships = {};
+        getSectorShips(
+            currentSystemHash,
+            focusedSector.x,
+            focusedSector.y,
+            focusedSector.ships,
+            shipTable,
+            shipSelect
+        )
         $(shipSelect).change(function(event) {
             selectShip(focusedSector.ships[$(this).val()]);
         })
         var shipDiv = document.createElement("div");
         shipDiv.id = "ship_div";
         $("#focus").append(shipDiv);
+    } else {
+        $("#focus").append("No ships detected.");
     }
 }
 
-function getSectorShips(systemHash, x, y)
+function getSectorShips(systemHash, x, y, shipList, shipTable, shipSelect)
 {
-    var ships = {};
     for(var i = 0; i < galaxy.getSectorShipsLength(systemHash, x, y); i++) {
-        ship = [];
-        ship.push(galaxy.getSectorShip(systemHash, x, y, i));
-        ship.push(galaxy.shipRegistry(ship[0]));
-        if(ship[1][0]) ships[ship[0]] = ship;
+        galaxy.getSectorShip(systemHash, x, y, i, function(err, result) {
+            if(err) {
+                console.log("Oh dear, we couldn't get a ship. Probably should fix this.");
+                throw err;
+            }
+            ship = [result]
+            galaxy.shipRegistry(ship[0], function(err, result) {
+                ship.push(result); 
+                if(ship[1][0]) {
+                    shipList[ship[0]] = ship;
+                    if(!(typeof shipTable === "undefined")) {
+                        var row = document.createElement("tr");
+                        [12, 5, 7, 8, 9, 10, 11, 4].forEach(function (col) {
+                            var colTD = document.createElement("td");
+                            $(colTD).text(ship[1][col].toString());
+                            $(row).append(colTD);
+                        });
+                        $(shipTable).append(row);
+                    }
+                    if(!(typeof shipSelect === "undefined")) {
+                        var option = document.createElement("option");
+                        option.value = ship[0];
+                        $(option).text(ship[1][12]);
+                        $(shipSelect).append(option);
+                    }
+                }
+            })
+        });
     }
-    return ships;
 }
 
 function selectShip(ship) {

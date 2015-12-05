@@ -136,7 +136,7 @@
     "panecycle": {
         "json()": [
             "tab14",
-            "tab5"
+            "tab11"
         ]
     },
     "panels": {
@@ -207,11 +207,11 @@
     },
     "tabs": {
         "json()": {
-            "focus": "tab14",
+            "focus": "/frontend2/impermanence.js",
             "meta": {
                 "accessList": [
-                    "tab5",
                     "tab11",
+                    "tab5",
                     "tab6",
                     "tab8",
                     "tab17",
@@ -239,14 +239,15 @@
                         "ace": {}
                     },
                     "editorType": "ace",
-                    "active": true
+                    "active": false
                 },
                 {
                     "type": "tab",
                     "name": "tab11",
                     "path": "/frontend2/impermanence.js",
                     "className": [
-                        "tab11"
+                        "tab11",
+                        "focus"
                     ],
                     "document": {
                         "changed": false,
@@ -259,7 +260,7 @@
                         "ace": {}
                     },
                     "editorType": "ace",
-                    "active": false
+                    "active": true
                 },
                 {
                     "type": "tab",
