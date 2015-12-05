@@ -201,7 +201,7 @@ function getSectorShips(systemHash, x, y, shipList, shipTable, shipSelect)
                 console.log("Oh dear, we couldn't get a ship. Probably should fix this.");
                 throw err;
             }
-            ship = [result]
+            var ship = [result];
             galaxy.shipRegistry(ship[0], function(err, result) {
                 ship.push(result); 
                 if(ship[1][0]) {
@@ -222,7 +222,7 @@ function getSectorShips(systemHash, x, y, shipList, shipTable, shipSelect)
                         $(shipSelect).append(option);
                     }
                 }
-            })
+            });
         });
     }
 }
