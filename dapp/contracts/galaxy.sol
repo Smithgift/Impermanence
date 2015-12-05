@@ -200,8 +200,8 @@ contract Galaxy is named("Galaxy") {
         return shipRegistry[_shipID].getEnergy();
     }
 
-    function getShipCargo(uint _shipID, uint8 _cargoType) {
-        return shipRegistry[_shipID].cargo[_cargoType];
+    function getShipCargo(uint _shipID, uint8 _cargoType) returns (uint) {
+        return uint(shipRegistry[_shipID].cargo[_cargoType]);
     }
 
     function insertShip(
@@ -313,23 +313,23 @@ contract Galaxy is named("Galaxy") {
     function canMine(uint _shipID, uint8 diff) constant returns (bool) {
         var ship = shipRegistry[_shipID];
         var sector = galacticMap[ship.currentSystem].map[ship.x][ship.y];
-        return ((sha3(ship.id, (block.blockhash(block.blockNumber -1)) % diff)) 
+        return ((uint(sha3(_shipID, (block.blockhash(block.number -1)))) % diff) 
                 == ((sector.mine) % diff));
     }
     
     function mine(uint _shipID) {
-        var ship = shipRegistry(_shipID);
+        var ship = shipRegistry[_shipID];
         ship.genericAction(8);
         var sector = galacticMap[ship.currentSystem].map[ship.x][ship.y];
         uint st = uint(sector.st);
-        uint diff;
+        uint8 diff;
         if(st == 0) {
             throw; // You said there was something to mine HERE?
-        } else if (st < 3) {
+        } else if (st < 4) {
             diff = 16;
-        } else if (st < 6) {
-            diff = 256;
-        } else if (st == 6) {
+        } else if (st < 7) {
+            diff = 255;
+        } else if (st == 7) {
             diff = 32;
         } else {
             throw; // I don't know if you get what mining means.
@@ -337,6 +337,13 @@ contract Galaxy is named("Galaxy") {
         if(canMine(_shipID, diff)) {
             ship.cargo[st - 1]++;
             sector.mine++;
+            if(st > 3) {
+                if(st < 7) {
+                    sector.st = SectorType(st - 3);
+                } else {
+                    sector.st = SectorType.Empty;
+                }
+            }
         } else {
             throw; // It was here a moment ago, I swear!
         }

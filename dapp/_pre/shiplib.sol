@@ -6,8 +6,8 @@ library ShipLib {
         EngRock,
         AtkTech,
         DefTech,
-        EngTech
-        UnobOrb,
+        EngTech,
+        UnobOrb
     }
     
     struct Cargo {
@@ -29,7 +29,7 @@ library ShipLib {
         uint eng;
         uint damage;
         uint massRatio;
-        Cargo[] cargo;
+        uint[] cargo;
         string name;
     }
     
@@ -50,7 +50,7 @@ library ShipLib {
     function refreshMassRatio(Ship storage self) {
         uint mass = self.atk + self.def + self.eng;
         for(uint i = 0; i < self.cargo.length; i++) {
-            mass += self.cargo[i].amount;
+            mass += self.cargo[i];
         }
         self.massRatio = mass / self.eng;
         if(self.massRatio == 0)

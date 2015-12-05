@@ -215,6 +215,13 @@ function getSectorShips(systemHash, x, y, shipList, shipTable, shipSelect)
                             $(colTD).text(ship[1][col].toString());
                             $(row).append(colTD);
                         });
+                        hold = getShipHold(ship[0]);
+                        var itemStr = "";
+                        Object.keys(hold).forEach(function(entry) {
+                            itemStr += entry + ": " + hold[entry];  
+                        });
+                        if(itemStr)
+                            $(row).append("<td>" + itemStr + "</td>");
                         $(shipTable).append(row);
                     }
                     if(!(typeof shipSelect === "undefined")) {
@@ -228,6 +235,17 @@ function getSectorShips(systemHash, x, y, shipList, shipTable, shipSelect)
             });
         });
     }
+}
+
+function getShipHold(_shipID) {
+    cargoList = {}
+    var i = 0; // Manual iteration in a for loop. Take that, elegance!
+    ["a", "d", "e", "A", "D", "E", "U"].forEach(function(entry) {
+        var cargo = galaxy.getShipCargo(_shipID, i++)
+        if(cargo)
+            cargoList[entry] = cargo;
+    });
+    return cargoList;
 }
 
 function selectShip(ship) {
@@ -281,7 +299,7 @@ function selectShip(ship) {
                     8
                 );
                 // And they say tables are bad in HTML...
-                var difficulty = [-1, 16, 16, 16, 256, 256, 256, 32][focusedSector.st];
+                var difficulty = [-1, 16, 16, 16, 255, 255, 255, 32][focusedSector.st];
                 action.condition = function() {
                     if(!Action.prototype.condition.call(this))
                         return false;

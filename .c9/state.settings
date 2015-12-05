@@ -136,7 +136,7 @@
     "panecycle": {
         "json()": [
             "tab14",
-            "tab11"
+            "tab17"
         ]
     },
     "panels": {
@@ -207,16 +207,16 @@
     },
     "tabs": {
         "json()": {
-            "focus": "/frontend2/impermanence.js",
+            "focus": "tab14",
             "meta": {
                 "accessList": [
-                    "tab11",
-                    "tab18",
-                    "tab8",
-                    "tab6",
                     "tab17",
+                    "tab11",
+                    "tab0",
+                    "tab6",
+                    "tab8",
                     "tab5",
-                    "tab0"
+                    "tab18"
                 ]
             },
             "name": "pane0",
@@ -246,13 +246,12 @@
                     "name": "tab11",
                     "path": "/frontend2/impermanence.js",
                     "className": [
-                        "tab11",
-                        "focus"
+                        "tab11"
                     ],
                     "document": {
                         "changed": false,
                         "meta": {
-                            "timestamp": 1449357408345
+                            "timestamp": 1449358510539
                         },
                         "filter": true,
                         "title": "impermanence.js",
@@ -260,7 +259,7 @@
                         "ace": {}
                     },
                     "editorType": "ace",
-                    "active": true
+                    "active": false
                 },
                 {
                     "type": "tab",
@@ -280,7 +279,7 @@
                         "ace": {}
                     },
                     "editorType": "ace",
-                    "active": false
+                    "active": true
                 },
                 {
                     "type": "tab",
@@ -312,7 +311,7 @@
                     "document": {
                         "changed": false,
                         "meta": {
-                            "timestamp": 1449357481426
+                            "timestamp": 1449358491597
                         },
                         "filter": true,
                         "title": "galaxy.sol",
@@ -332,7 +331,7 @@
                     "document": {
                         "changed": false,
                         "meta": {
-                            "timestamp": 1449356773630
+                            "timestamp": 1449358471039
                         },
                         "filter": true,
                         "title": "shiplib.sol",
