@@ -30,6 +30,7 @@ contract Galaxy is named("Galaxy") {
     
     struct Sector {
         SectorType st;
+        uint8 mine;
         uint[] sectorShips;
     }
     
@@ -199,6 +200,10 @@ contract Galaxy is named("Galaxy") {
         return shipRegistry[_shipID].getEnergy();
     }
 
+    function getShipCargo(uint _shipID, uint8 _cargoType) {
+        return shipRegistry[_shipID].cargo[_cargoType];
+    }
+
     function insertShip(
         bytes32 _system, 
         uint8 _x, 
@@ -303,5 +308,37 @@ contract Galaxy is named("Galaxy") {
         uint8 desty;
         (destx, desty) = decompressCoords(destHint);
         moveShip(_shipID, dest, destx, desty, 1);
+    }
+    
+    function canMine(uint _shipID, uint8 diff) constant returns (bool) {
+        var ship = shipRegistry[_shipID];
+        var sector = galacticMap[ship.currentSystem].map[ship.x][ship.y];
+        return ((sha3(ship.id, (block.blockhash(block.blockNumber -1)) % diff)) 
+                == ((sector.mine) % diff));
+    }
+    
+    function mine(uint _shipID) {
+        var ship = shipRegistry(_shipID);
+        ship.genericAction(8);
+        var sector = galacticMap[ship.currentSystem].map[ship.x][ship.y];
+        uint st = uint(sector.st);
+        uint diff;
+        if(st == 0) {
+            throw; // You said there was something to mine HERE?
+        } else if (st < 3) {
+            diff = 16;
+        } else if (st < 6) {
+            diff = 256;
+        } else if (st == 6) {
+            diff = 32;
+        } else {
+            throw; // I don't know if you get what mining means.
+        }
+        if(canMine(_shipID, diff)) {
+            ship.cargo[st - 1]++;
+            sector.mine++;
+        } else {
+            throw; // It was here a moment ago, I swear!
+        }
     }
 }

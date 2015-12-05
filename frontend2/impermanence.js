@@ -269,10 +269,33 @@ function selectShip(ship) {
             });
             $("#ship_div").append(jmp_btn);
         }
+        if((focusedSector.st > 0) && (focusedSector.st < 8)) {
+            var mine_btn = document.createElement("input");
+            mine_btn.type = "button";
+            mine_btn.value = "Mine resources!";
+            $(mine_btn).click(function(event) {
+                $("#ship_div").text("Beginning prospecting!");
+                var action = new Action(
+                    mine,
+                    [ship[0], ship[1][5]],
+                    8
+                );
+                // And they say tables are bad in HTML...
+                var difficulty = [-1, 16, 16, 16, 256, 256, 256, 32][focusedSector.st];
+                action.condition = function() {
+                    if(!Action.prototype.condition.call(this))
+                        return false;
+                    return galaxy.canMine(this.shipID, difficulty);
+                }
+                action.act();
+            });
+            $("#ship_div").append(jmp_btn);
+        }
     }
 }
 
 function getDistance(coordsa, coordsb) {
+    return 1; // Until solidity is unbroken.
     var distance = 0;
     distance += Math.abs(coordsa[0] - coordsb[0]);
     distance += Math.abs(coordsa[1] - coordsb[1]);
@@ -353,6 +376,11 @@ function jump(shipID, destination, owner) {
         }
     }
     console.log("No matching wormhole found. :(");
+}
+
+function mine(shipID, owner) {
+    console.log("MINE! MINE! MINE!", shipID);
+    galaxy.mine(shipID); // That was easy.
 }
 
 function createSystem(name, callback) {

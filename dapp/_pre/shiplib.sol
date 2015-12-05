@@ -4,10 +4,10 @@ library ShipLib {
         AtkRock,
         DefRock,
         EngRock,
-        UnobOrb,
         AtkTech,
         DefTech,
         EngTech
+        UnobOrb,
     }
     
     struct Cargo {
@@ -102,5 +102,9 @@ library ShipLib {
     
     function restoreHP(Ship storage self) {
         self.damage = 0;
+    }
+    
+    function genericAction(Ship storage self, uint effort) act(self, effort) {
+        // Just for some random action you want to spend energy on.
     }
 }
