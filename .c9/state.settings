@@ -12,7 +12,7 @@
     },
     "console": {
         "@expanded": true,
-        "@height": 180,
+        "@height": 184,
         "@maximized": "false",
         "json()": {
             "meta": {
@@ -55,7 +55,7 @@
                             "cwd": "",
                             "width": 0,
                             "height": 0,
-                            "scrollTop": 14882.405822753906
+                            "scrollTop": 7386
                         },
                         "hash": "67452301efcdab8998badcfe10325476c3d2e1f0",
                         "meta": {},
@@ -82,7 +82,7 @@
                             "id": "devel_550",
                             "cwd": "",
                             "width": 641,
-                            "height": 154
+                            "height": 158
                         }
                     },
                     "editorType": "terminal",
@@ -136,7 +136,7 @@
     "panecycle": {
         "json()": [
             "tab14",
-            "tab6"
+            "tab5"
         ]
     },
     "panels": {
@@ -210,12 +210,12 @@
             "focus": "tab14",
             "meta": {
                 "accessList": [
-                    "tab6",
-                    "tab8",
                     "tab5",
-                    "tab18",
-                    "tab17",
+                    "tab8",
+                    "tab6",
                     "tab11",
+                    "tab17",
+                    "tab18",
                     "tab0"
                 ]
             },
@@ -231,7 +231,7 @@
                     "document": {
                         "changed": false,
                         "meta": {
-                            "timestamp": 1449343006877
+                            "timestamp": 1449355087309
                         },
                         "filter": true,
                         "title": "index.html",
@@ -239,7 +239,7 @@
                         "ace": {}
                     },
                     "editorType": "ace",
-                    "active": false
+                    "active": true
                 },
                 {
                     "type": "tab",
@@ -251,7 +251,7 @@
                     "document": {
                         "changed": false,
                         "meta": {
-                            "timestamp": 1449345254089
+                            "timestamp": 1449348951622
                         },
                         "filter": true,
                         "title": "impermanence.js",
@@ -311,7 +311,7 @@
                     "document": {
                         "changed": false,
                         "meta": {
-                            "timestamp": 1449337335022
+                            "timestamp": 1449354853361
                         },
                         "filter": true,
                         "title": "galaxy.sol",
@@ -331,7 +331,7 @@
                     "document": {
                         "changed": false,
                         "meta": {
-                            "timestamp": 1449268572715
+                            "timestamp": 1449354867587
                         },
                         "filter": true,
                         "title": "shiplib.sol",
@@ -339,7 +339,7 @@
                         "ace": {}
                     },
                     "editorType": "ace",
-                    "active": true
+                    "active": false
                 },
                 {
                     "type": "tab",
@@ -349,39 +349,14 @@
                         "tab0"
                     ],
                     "document": {
-                        "filter": true,
-                        "title": "app.js",
-                        "tooltip": "/frontend2/app.js",
-                        "ace": {
-                            "folds": [],
-                            "scrolltop": 0,
-                            "scrollleft": 0,
-                            "selection": {
-                                "start": {
-                                    "row": 3,
-                                    "column": 2
-                                },
-                                "end": {
-                                    "row": 3,
-                                    "column": 2
-                                },
-                                "isBackwards": false
-                            },
-                            "options": {
-                                "guessTabSize": true,
-                                "useWrapMode": false,
-                                "wrapToView": true
-                            },
-                            "firstLineState": {
-                                "row": 240,
-                                "mode": "ace/mode/javascript"
-                            }
-                        },
-                        "hash": "7e0dbde80849cdf01aacce844e2d345d132281db",
+                        "changed": false,
                         "meta": {
                             "timestamp": 1449086190675
                         },
-                        "changed": false
+                        "filter": true,
+                        "title": "app.js",
+                        "tooltip": "/frontend2/app.js",
+                        "ace": {}
                     },
                     "editorType": "ace",
                     "active": false

@@ -195,7 +195,7 @@ contract Galaxy is named("Galaxy") {
         uint shipID
     );
     
-    function getShipEnergy(uint _shipID) constant returns (uint8) {
+    function getShipEnergy(uint _shipID) constant returns (uint) {
         return shipRegistry[_shipID].getEnergy();
     }
 
@@ -259,7 +259,7 @@ contract Galaxy is named("Galaxy") {
         bytes32 _newSystem, 
         uint8 _newX, 
         uint8 _newY, 
-        uint8 distance
+        uint distance
     ) internal
     {
         ShipLib.Ship mover = shipRegistry[_shipID];
@@ -277,10 +277,13 @@ contract Galaxy is named("Galaxy") {
     ) 
         onlyshipowner(_shipID) 
     {
-        uint8 distance = 0;
+        uint distance = 1;
         ShipLib.Ship mover = shipRegistry[_shipID];
-        distance += uint8(+(int8(mover.x) - int8(_newX)));
-        distance += uint8(+(int8(mover.y) - int8(_newY)));
+        // Guess what, kids? absolute values are broken!
+        //distance += uint(+(int(mover.x) - int(_newX)));
+        //log2(bytes32(mover.x), bytes32(_newX), bytes32(distance));
+        //distance += uint(+(int(mover.y) - int(_newY)));
+        //log2(bytes32(mover.y), bytes32(_newY), bytes32(distance));
         moveShip(_shipID, mover.currentSystem, _newX, _newY, distance);
     }
     

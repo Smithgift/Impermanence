@@ -21,7 +21,7 @@ library ShipLib {
         bytes32 currentSystem;
         uint8 x;
         uint8 y;
-        uint8 energy;
+        uint energy;
         address owner;
         uint lastRefreshed;
         uint atk;
@@ -33,12 +33,12 @@ library ShipLib {
         string name;
     }
     
-    function getEnergy(Ship storage self) constant returns (uint8) {
-        uint baseEnergy = uint(self.energy) + (now - self.lastRefreshed);
+    function getEnergy(Ship storage self) constant returns (uint) {
+        uint baseEnergy = (self.energy + (now - self.lastRefreshed));
         if(baseEnergy > 255) {
             return 255;
         } else {
-            return uint8(baseEnergy);
+            return baseEnergy;
         }
     }
     
@@ -61,11 +61,14 @@ library ShipLib {
         if(!self.exists)
             throw; // IT'S THE ORBITING DUTCHMAN!
         refreshEnergy(self);
-        if((self.massRatio * effort) > uint(self.energy))
+        //log1(bytes32(effort), bytes32(self.energy));
+        //_
+        return;
+        if((self.massRatio * effort) > self.energy)
             throw;
         // The following conversion is safe, because if massRatio was 
         // greater than 255, we'd just have thrown.
-        self.energy -= uint8(self.massRatio * effort);
+        self.energy -= (self.massRatio * effort);
         _
     }
     
@@ -78,7 +81,7 @@ library ShipLib {
         bytes32 _newSystem, 
         uint8 _newX, 
         uint8 _newY, 
-        uint8 distance
+        uint distance
     ) act(self, distance) {
         self.currentSystem = _newSystem;
         self.x = _newX;

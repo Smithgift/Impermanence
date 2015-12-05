@@ -257,7 +257,7 @@ function selectShip(ship) {
         if(mapLegend[focusedSector.st][0] == "*") {
             var jmp_btn = document.createElement("input");
             jmp_btn.type = "button";
-            jmp_btn.value = "Enter wormhole!"
+            jmp_btn.value = "Enter wormhole!";
             $(jmp_btn).click(function(event) {
                 $("#ship_div").text("INITIATING JUMP SEQUENCE!");
                 var action = new Action(
@@ -293,10 +293,10 @@ function Action(f, args, effort) {
 Action.prototype.condition = function() {
     var energy = galaxy.getShipEnergy(this.shipID).toNumber() 
     if(energy >= (this.massRatio * this.effort)) {
-        console.log("Condition met:", energy, (this.massRatio * this.effort));
+        console.log("Condition met:", energy, (this.massRatio.toNumber() * this.effort));
         return true;
     } else {
-        console.log("Condition not met:", energy, (this.massRatio * this.effort));
+        console.log("Condition not met:", energy, (this.massRatio.toNumber() * this.effort));
         return false;
     }
 }
