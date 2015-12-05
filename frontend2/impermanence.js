@@ -147,7 +147,7 @@ function focusSector(event) {
         focusedSector.x,
         focusedSector.y
     );
-    if(focusedSector.ships.length > 0) {
+    if(Object.keys(focusedSector.ships).length > 0) {
         $("#focus").append("<br />");
         $("#focus").append("Ships Present: <br />");
         var shipTable = document.createElement("table");
@@ -158,12 +158,12 @@ function focusSector(event) {
         //shipSelect.type = "select";
         shipSelect.id = "ship_select";
         $("#focus").append(shipSelect);
-        focusedSector.ships.forEach(function(entry){
+        Object.keys(focusedSector.ships).forEach(function(entry){
             // Table entry.
             var row = document.createElement("tr");
             [12, 5, 7, 8, 9, 10, 11, 4].forEach(function (col) {
                 $(row).append("<td></td>");
-                var colData = entry[1][col];
+                var colData = focusedSector.ships[entry][1][col];
                 $(row).children().last().append(colData.toString());
             })
             $(shipTable).append(row);
@@ -184,9 +184,10 @@ function focusSector(event) {
         string name;
 */
             // Select entry.
+            console.log(entry);
             var option = document.createElement("option");
-            option.value = entry[0];
-            $(option).text(entry[1][12]);
+            option.value = entry;
+            $(option).text(focusedSector.ships[entry][1][12]);
             $(shipSelect).append(option);
         })
         $(shipSelect).change(function(event) {
@@ -200,12 +201,12 @@ function focusSector(event) {
 
 function getSectorShips(systemHash, x, y)
 {
-    var ships = [];
+    var ships = {};
     for(var i = 0; i < galaxy.getSectorShipsLength(systemHash, x, y); i++) {
         ship = [];
         ship.push(galaxy.getSectorShip(systemHash, x, y, i));
         ship.push(galaxy.shipRegistry(ship[0]));
-        if(ship[1][0]) ships.push(ship);
+        if(ship[1][0]) ships[ship[0]] = ship;
     }
     return ships;
 }
@@ -215,14 +216,15 @@ function selectShip(ship) {
         $("#ship_div").text("You don't seem to own this ship.");
     } else {
         $("#ship_div").empty();
-        $("#ship_div").append("Move:");
         var move_btn = document.createElement("input");
         move_btn.type = "button";
+        move_btn.value = "Launch!"
         $(move_btn).click(function(event) {
-            //var mapCells = ;
+            $("#ship_div").text("Click on your destinatiom sector!")
             function moveTo(event) {
                 var coords = parseID(this.id);
-                impulse(ship[0], coords[0], coords[1], {from: ship[0][5]});
+                console.log(ship[1][5]);
+                impulse(ship[0], coords[0], coords[1], ship[1][5]);
                 $("body").off("click", "#map tr td", moveTo);
             }
             $("#map tr td").click(moveTo);

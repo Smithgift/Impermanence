@@ -136,7 +136,7 @@
     "panecycle": {
         "json()": [
             "tab14",
-            "tab8"
+            "tab11"
         ]
     },
     "panels": {
@@ -210,13 +210,13 @@
             "focus": "tab14",
             "meta": {
                 "accessList": [
-                    "tab8",
-                    "tab5",
-                    "tab18",
-                    "tab6",
                     "tab11",
+                    "tab6",
+                    "tab8",
                     "tab17",
-                    "tab0"
+                    "tab18",
+                    "tab0",
+                    "tab5"
                 ]
             },
             "name": "pane0",
@@ -251,7 +251,7 @@
                     "document": {
                         "changed": false,
                         "meta": {
-                            "timestamp": 1449320169184
+                            "timestamp": 1449323955284
                         },
                         "filter": true,
                         "title": "impermanence.js",
@@ -259,7 +259,7 @@
                         "ace": {}
                     },
                     "editorType": "ace",
-                    "active": false
+                    "active": true
                 },
                 {
                     "type": "tab",
@@ -319,7 +319,7 @@
                         "ace": {}
                     },
                     "editorType": "ace",
-                    "active": true
+                    "active": false
                 },
                 {
                     "type": "tab",
@@ -349,39 +349,14 @@
                         "tab0"
                     ],
                     "document": {
-                        "filter": true,
-                        "title": "app.js",
-                        "tooltip": "/frontend2/app.js",
-                        "ace": {
-                            "folds": [],
-                            "scrolltop": 0,
-                            "scrollleft": 0,
-                            "selection": {
-                                "start": {
-                                    "row": 3,
-                                    "column": 2
-                                },
-                                "end": {
-                                    "row": 3,
-                                    "column": 2
-                                },
-                                "isBackwards": false
-                            },
-                            "options": {
-                                "guessTabSize": true,
-                                "useWrapMode": false,
-                                "wrapToView": true
-                            },
-                            "firstLineState": {
-                                "row": 116,
-                                "mode": "ace/mode/javascript"
-                            }
-                        },
-                        "hash": "7e0dbde80849cdf01aacce844e2d345d132281db",
+                        "changed": false,
                         "meta": {
                             "timestamp": 1449086190675
                         },
-                        "changed": false
+                        "filter": true,
+                        "title": "app.js",
+                        "tooltip": "/frontend2/app.js",
+                        "ace": {}
                     },
                     "editorType": "ace",
                     "active": false
@@ -394,10 +369,6 @@
     },
     "tree_selection": {
         "json()": [
-            "/frontend2/index.html"
-        ]
-    }
-}
             "/frontend2/index.html"
         ]
     }
