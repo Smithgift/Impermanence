@@ -102,7 +102,7 @@ function focusSector(event) {
         focusedSector.x, 
         focusedSector.y
     );
-    if(!refreshFilter) {
+    function watchSector() {
         refreshFilter = galaxy.shipActivity({
             system: currentSystemHash,
             x: focusedSector.x,
@@ -112,6 +112,12 @@ function focusSector(event) {
             console.log("I'm being called, at least :(.");
             focusSector(event);
         });
+    }
+    if(!refreshFilter) {
+        watchSector();
+    } else {
+        refreshFilter.stopWatching();
+        watchSector();
     }
     $(this).addClass("selected");
     $("#focus").empty();

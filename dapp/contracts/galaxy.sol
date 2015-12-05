@@ -251,10 +251,10 @@ contract Galaxy is named("Galaxy") {
     ) internal
     {
         ShipLib.Ship mover = shipRegistry[_shipID];
-        Sector oldSector=galacticMap[mover.currentSystem].map[mover.x][mover.y];
+        //Sector oldSector=galacticMap[mover.currentSystem].map[mover.x][mover.y];
+        removeShip(mover.currentSystem, mover.x, mover.y, _shipID);
         mover.move(_newSystem, _newX, _newY, distance);
-        removeShip(_newSystem, _newX, _newY, _shipID);
-        Sector newSector=galacticMap[_newSystem].map[_newX][_newX];
+        //Sector newSector=galacticMap[_newSystem].map[_newX][_newX];
         insertShip(_newSystem, _newX, _newY, _shipID);
     }
     
