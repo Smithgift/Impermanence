@@ -9,7 +9,7 @@
             function sandbox(id) {
                 window.web3.setProvider(new web3.providers.HttpProvider('http://the-impermanence-of-space.on.ether.camp:8555/sandbox/' + id));
             }
-            sandbox("0c8632c21fe8acd25418697c094f683549aa0d9d");
+            sandbox("4f9ce178f25c833e0823e1c3ca7b3366a66edd3f");
        </script>
        <script src="abi.js"></script>
        <script>
@@ -60,7 +60,11 @@ if(web3.toDecimal(ga)) {
     galaxy = Galaxy.at(ga);
 } else { 
 // Get? This is a kludge to CREATE the galaxy!
+    createGalaxy();
+}
+});
 
+function createGalaxy() {
 // Hey guys, if you want to run compiled code, shove 0x in front first!
 build.contracts.Galaxy.bin = "0x" + build.contracts.Galaxy.bin
 
@@ -73,9 +77,9 @@ web3.eth.sendTransaction({data: build.contracts.Galaxy.bin}, function(err, resul
     setTimeout(function() {
         galaxy = Galaxy.at(web3.eth.getTransactionReceipt(gt).contractAddress);
     }, 1000)
-});
+});    
 }
-});
+
         </script>
         <script src="bower_components/jquery/dist/jquery.js"></script>
         <script src="impermanence.js"></script>

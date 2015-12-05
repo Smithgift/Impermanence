@@ -179,17 +179,42 @@ contract Galaxy is named("Galaxy") {
             _
         }
     }
-     
-    function insertShip(Sector storage _sector, uint _shipID) internal {
+    
+    event shipActivity(
+        bytes32 indexed system, 
+        uint8 indexed x, 
+        uint8 indexed y,
+        uint shipID
+    );
+    
+    function insertShip(
+        bytes32 _system, 
+        uint8 _x, 
+        uint8 _y, 
+        uint _shipID
+    ) 
+        internal 
+    {
         // Optimiziation smoptimization.
+        Sector _sector = galacticMap[_system].map[_x][_y];
         _sector.sectorShips.push(_shipID);
+        shipActivity(_system, _x, _y, _shipID);
     }
     
-    function removeShip(Sector storage _sector, uint _shipID) internal {
+    function removeShip(
+        bytes32 _system, 
+        uint8 _x, 
+        uint8 _y, 
+        uint _shipID
+    ) 
+        internal 
+    {
+        Sector _sector = galacticMap[_system].map[_x][_y];
         uint i = 0;
         while(true) {
             if(_sector.sectorShips[i] == _shipID) {
                 _sector.sectorShips[i] = 0;
+                shipActivity(_system, _x, _y, _shipID);
                 return;
             }
             i++; // Yes, if we go off, we'll throw. That's the point.
@@ -214,7 +239,7 @@ contract Galaxy is named("Galaxy") {
         crane.name = _name;
         crane.refreshMassRatio();
         crane.restoreHP();
-        insertShip(spawnSector, craneID);
+        insertShip(_system,_x, _y, craneID);
     }
     
     function moveShip(
@@ -228,9 +253,9 @@ contract Galaxy is named("Galaxy") {
         ShipLib.Ship mover = shipRegistry[_shipID];
         Sector oldSector=galacticMap[mover.currentSystem].map[mover.x][mover.y];
         mover.move(_newSystem, _newX, _newY, distance);
-        removeShip(oldSector, _shipID);
+        removeShip(_newSystem, _newX, _newY, _shipID);
         Sector newSector=galacticMap[_newSystem].map[_newX][_newX];
-        insertShip(newSector, _shipID);
+        insertShip(_newSystem, _newX, _newY, _shipID);
     }
     
     function impulse(

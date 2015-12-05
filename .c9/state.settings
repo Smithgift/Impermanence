@@ -136,7 +136,7 @@
     "panecycle": {
         "json()": [
             "tab14",
-            "tab11"
+            "tab5"
         ]
     },
     "panels": {
@@ -207,16 +207,16 @@
     },
     "tabs": {
         "json()": {
-            "focus": "/frontend2/impermanence.js",
+            "focus": "tab14",
             "meta": {
                 "accessList": [
-                    "tab11",
                     "tab5",
-                    "tab6",
                     "tab8",
+                    "tab11",
+                    "tab0",
+                    "tab6",
                     "tab17",
-                    "tab18",
-                    "tab0"
+                    "tab18"
                 ]
             },
             "name": "pane0",
@@ -231,7 +231,7 @@
                     "document": {
                         "changed": false,
                         "meta": {
-                            "timestamp": 1449320787156
+                            "timestamp": 1449328823046
                         },
                         "filter": true,
                         "title": "index.html",
@@ -239,20 +239,19 @@
                         "ace": {}
                     },
                     "editorType": "ace",
-                    "active": false
+                    "active": true
                 },
                 {
                     "type": "tab",
                     "name": "tab11",
                     "path": "/frontend2/impermanence.js",
                     "className": [
-                        "tab11",
-                        "focus"
+                        "tab11"
                     ],
                     "document": {
                         "changed": false,
                         "meta": {
-                            "timestamp": 1449324461538
+                            "timestamp": 1449328597963
                         },
                         "filter": true,
                         "title": "impermanence.js",
@@ -260,7 +259,7 @@
                         "ace": {}
                     },
                     "editorType": "ace",
-                    "active": true
+                    "active": false
                 },
                 {
                     "type": "tab",
@@ -312,7 +311,7 @@
                     "document": {
                         "changed": false,
                         "meta": {
-                            "timestamp": 1449324489202
+                            "timestamp": 1449328729020
                         },
                         "filter": true,
                         "title": "galaxy.sol",

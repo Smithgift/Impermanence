@@ -3,6 +3,7 @@ var currentSystemHash;
 var currentSystem;
 var focusedSector = {};
 var selectedShip = [];
+var refreshFilter;
 
 var mapLegend = [
     ["&nbsp;", "Empty Space"],    //Empty,
@@ -49,10 +50,10 @@ function setSystem(name) {
         var systemMap = document.createElement("table");
         systemMap.id = "map";
         $("#screen").append(systemMap);
-        for(var x = 0; x < 15; x ++) {
+        for(var y = 0; y < 15; y ++) {
             var row = document.createElement("tr");
             $(systemMap).append(row);
-            for(var y = 0; y < 15; y++) {
+            for(var x = 0; x < 15; x++) {
                 var cell = document.createElement("td");
                 cell.id = x.toString(16) + y.toString(16);
                 $(cell).text("?");
@@ -101,6 +102,17 @@ function focusSector(event) {
         focusedSector.x, 
         focusedSector.y
     );
+    if(!refreshFilter) {
+        refreshFilter = galaxy.shipActivity({
+            system: currentSystemHash,
+            x: focusedSector.x,
+            y: focusedSector.y
+        });
+        refreshFilter.watch(function() {
+            console.log("I'm being called, at least :(.");
+            focusSector(event);
+        });
+    }
     $(this).addClass("selected");
     $("#focus").empty();
     $("#focus").append(mapLegend[focusedSector.st][1] + " at " + focusedSector.x + ", " + focusedSector.y);
