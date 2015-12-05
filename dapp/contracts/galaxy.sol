@@ -47,6 +47,14 @@ contract Galaxy is named("Galaxy") {
         return coords[0] + (coords[1] * 16);
     }
     
+    function decompressCoords(uint8 compressedCoords) 
+        constant 
+        returns (uint8 x, uint8 y)
+    {
+        y = compressedCoords / 16;
+        x = compressedCoords % 16;
+    }
+    
     mapping (bytes32 => System) public galacticMap;
     
     // And now for a zillion helper functions. Recursive structs and 
@@ -270,5 +278,23 @@ contract Galaxy is named("Galaxy") {
         distance += uint8(+(int8(mover.x) - int8(_newX)));
         distance += uint8(+(int8(mover.y) - int8(_newY)));
         moveShip(_shipID, mover.currentSystem, _newX, _newY, distance);
+    }
+    
+    function jump(uint _shipID, uint8 destHint) onlyshipowner(_shipID) {
+        ShipLib.Ship ship = shipRegistry[_shipID];
+        uint8[2] memory homecoords;
+        homecoords[0] = ship.x;
+        homecoords[1] = ship.y;
+        bytes32 dest = galacticMap[ship.currentSystem]
+                                        .Wormholes[compressCoords(homecoords)];
+        if(dest == 0x0) 
+            throw; // There wasn't a wormhole here.
+        System destSystem = galacticMap[dest];
+        if(destSystem.Wormholes[destHint] != ship.currentSystem)
+            throw; // YOU SHOULD HAVE TAKEN THAT META-LEFT TURN!
+        uint8 destx;
+        uint8 desty;
+        (destx, desty) = decompressCoords(destHint);
+        moveShip(_shipID, dest, destx, desty, 1);
     }
 }

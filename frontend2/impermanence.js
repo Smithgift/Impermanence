@@ -143,7 +143,7 @@ function focusSector(event) {
         };
         button.value = "Construct CRaNE!";
         $("#focus").append(button);        
-    } if(mapLegend[focusedSector.st][0] == "*") { // Wormhole.
+    } else if(mapLegend[focusedSector.st][0] == "*") { // Wormhole.
         focusedSector.destination = galaxy.getWormhole(
             currentSystemHash, 
             focusedSector.x,
@@ -239,7 +239,7 @@ function selectShip(ship) {
         move_btn.type = "button";
         move_btn.value = "Launch!"
         $(move_btn).click(function(event) {
-            $("#ship_div").text("Click on your destinatiom sector!")
+            $("#ship_div").text("Click on your destination sector!");
             function moveTo(event) {
                 var coords = parseID(this.id);
                 console.log(ship[1][5]);
@@ -249,12 +249,42 @@ function selectShip(ship) {
             $("#map tr td").click(moveTo);
         })
         $("#ship_div").append(move_btn);
+        if(mapLegend[focusedSector.st][0] == "*") {
+            var jmp_btn = document.createElement("input");
+            jmp_btn.type = "button";
+            jmp_btn.value = "Enter wormhole!"
+            $(jmp_btn).click(function(event) {
+                $("#ship_div").text("INITIATING JUMP SEQUENCE!");
+                jump(ship[0], focusedSector.destination, ship[1][5]);
+            });
+            $("#ship_div").append(jmp_btn);
+        }
     }
 }
 
 function impulse(shipID, x, y, owner) {
     console.log("Impulse move", shipID, x, y, owner);
     galaxy.impulse(shipID, x, y, {from: owner});
+}
+
+function jump(shipID, destination, owner) {
+    // We must get the hint first.
+    // By brute force, apparently.
+    for(var x = 0; x < 15; x++) {
+        for(var y = 0; y < 15; y++) {
+            if(galaxy.getWormhole(
+                currentSystemHash, 
+                focusedSector.x,
+                focusedSector.y
+            ) == destination) {
+                var hint = galaxy.compressCoords([x, y]);
+                console.log("ATTEMPTING JUMP!", destination, hint, x, y);
+                galaxy.jump(shipID, hint);
+                return;
+            }
+        }
+    }
+    console.log("No matching wormhole found. :(");
 }
 
 function createSystem(name, callback) {

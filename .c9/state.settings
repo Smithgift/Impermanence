@@ -47,17 +47,19 @@
                         "tab2"
                     ],
                     "document": {
-                        "changed": false,
-                        "meta": {},
                         "filter": true,
                         "title": "node - \"2bf2dc22944b\"",
                         "tooltip": "node - \"2bf2dc22944b\"",
                         "terminal": {
                             "id": "devel_426",
                             "cwd": "",
-                            "width": 641,
-                            "height": 154
-                        }
+                            "width": 0,
+                            "height": 0,
+                            "scrollTop": 14882.405822753906
+                        },
+                        "hash": "67452301efcdab8998badcfe10325476c3d2e1f0",
+                        "meta": {},
+                        "changed": false
                     },
                     "editorType": "terminal",
                     "active": false
@@ -104,19 +106,19 @@
             "@ace.repl": 1,
             "@acestatus": 1,
             "@divider": 4,
-            "@document": 11,
+            "@document": 10,
             "@ethereum-console": 1,
             "@form": 5,
-            "@menu": 8,
-            "@menuitem": 19,
+            "@menu": 5,
+            "@menuitem": 13,
             "@pane": 2,
             "@postmessage": 1,
             "@preferences": 1,
             "@preview": 1,
-            "@session": 11,
+            "@session": 9,
             "@tab": 1,
             "@tree": 2,
-            "@undoManager": 11
+            "@undoManager": 10
         }
     },
     "findinfiles": {
@@ -209,12 +211,12 @@
             "meta": {
                 "accessList": [
                     "tab11",
-                    "tab8",
-                    "tab5",
-                    "tab0",
-                    "tab6",
+                    "tab18",
                     "tab17",
-                    "tab18"
+                    "tab5",
+                    "tab8",
+                    "tab6",
+                    "tab0"
                 ]
             },
             "name": "pane0",
@@ -229,7 +231,7 @@
                     "document": {
                         "changed": false,
                         "meta": {
-                            "timestamp": 1449328823046
+                            "timestamp": 1449334478209
                         },
                         "filter": true,
                         "title": "index.html",
@@ -249,7 +251,7 @@
                     "document": {
                         "changed": false,
                         "meta": {
-                            "timestamp": 1449332109270
+                            "timestamp": 1449336019575
                         },
                         "filter": true,
                         "title": "impermanence.js",
@@ -309,7 +311,7 @@
                     "document": {
                         "changed": false,
                         "meta": {
-                            "timestamp": 1449329129549
+                            "timestamp": 1449334380287
                         },
                         "filter": true,
                         "title": "galaxy.sol",
@@ -327,14 +329,39 @@
                         "tab6"
                     ],
                     "document": {
-                        "changed": false,
-                        "meta": {
-                            "timestamp": 1449268572715
-                        },
                         "filter": true,
                         "title": "shiplib.sol",
                         "tooltip": "/dapp/_pre/shiplib.sol",
-                        "ace": {}
+                        "ace": {
+                            "folds": [],
+                            "scrolltop": 1031.5,
+                            "scrollleft": 0,
+                            "selection": {
+                                "start": {
+                                    "row": 43,
+                                    "column": 4
+                                },
+                                "end": {
+                                    "row": 43,
+                                    "column": 4
+                                },
+                                "isBackwards": false
+                            },
+                            "options": {
+                                "guessTabSize": true,
+                                "useWrapMode": false,
+                                "wrapToView": true
+                            },
+                            "firstLineState": {
+                                "row": 240,
+                                "mode": "plugins/ethergit.solidity.language/solidity_mode"
+                            }
+                        },
+                        "hash": "3b1800fc80f8f6c1cb71a4c7e486c1e713a35973",
+                        "meta": {
+                            "timestamp": 1449268572715
+                        },
+                        "changed": false
                     },
                     "editorType": "ace",
                     "active": false
@@ -347,14 +374,39 @@
                         "tab0"
                     ],
                     "document": {
-                        "changed": false,
-                        "meta": {
-                            "timestamp": 1449086190675
-                        },
                         "filter": true,
                         "title": "app.js",
                         "tooltip": "/frontend2/app.js",
-                        "ace": {}
+                        "ace": {
+                            "folds": [],
+                            "scrolltop": 0,
+                            "scrollleft": 0,
+                            "selection": {
+                                "start": {
+                                    "row": 3,
+                                    "column": 2
+                                },
+                                "end": {
+                                    "row": 3,
+                                    "column": 2
+                                },
+                                "isBackwards": false
+                            },
+                            "options": {
+                                "guessTabSize": true,
+                                "useWrapMode": false,
+                                "wrapToView": true
+                            },
+                            "firstLineState": {
+                                "row": 240,
+                                "mode": "ace/mode/javascript"
+                            }
+                        },
+                        "hash": "7e0dbde80849cdf01aacce844e2d345d132281db",
+                        "meta": {
+                            "timestamp": 1449086190675
+                        },
+                        "changed": false
                     },
                     "editorType": "ace",
                     "active": false
@@ -367,7 +419,7 @@
     },
     "tree_selection": {
         "json()": [
-            "/frontend2/index.html"
+            "/frontend2/impermanence.js"
         ]
     }
 }
