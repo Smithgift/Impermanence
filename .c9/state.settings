@@ -109,8 +109,8 @@
             "@document": 10,
             "@ethereum-console": 1,
             "@form": 5,
-            "@menu": 5,
-            "@menuitem": 13,
+            "@menu": 8,
+            "@menuitem": 19,
             "@pane": 2,
             "@postmessage": 1,
             "@preferences": 1,
@@ -211,11 +211,11 @@
             "meta": {
                 "accessList": [
                     "tab11",
-                    "tab18",
-                    "tab17",
                     "tab5",
                     "tab8",
+                    "tab17",
                     "tab6",
+                    "tab18",
                     "tab0"
                 ]
             },
@@ -231,7 +231,7 @@
                     "document": {
                         "changed": false,
                         "meta": {
-                            "timestamp": 1449334478209
+                            "timestamp": 1449337385759
                         },
                         "filter": true,
                         "title": "index.html",
@@ -251,7 +251,7 @@
                     "document": {
                         "changed": false,
                         "meta": {
-                            "timestamp": 1449336019575
+                            "timestamp": 1449339132619
                         },
                         "filter": true,
                         "title": "impermanence.js",
@@ -311,7 +311,7 @@
                     "document": {
                         "changed": false,
                         "meta": {
-                            "timestamp": 1449334380287
+                            "timestamp": 1449337335307
                         },
                         "filter": true,
                         "title": "galaxy.sol",
@@ -329,39 +329,14 @@
                         "tab6"
                     ],
                     "document": {
-                        "filter": true,
-                        "title": "shiplib.sol",
-                        "tooltip": "/dapp/_pre/shiplib.sol",
-                        "ace": {
-                            "folds": [],
-                            "scrolltop": 1031.5,
-                            "scrollleft": 0,
-                            "selection": {
-                                "start": {
-                                    "row": 43,
-                                    "column": 4
-                                },
-                                "end": {
-                                    "row": 43,
-                                    "column": 4
-                                },
-                                "isBackwards": false
-                            },
-                            "options": {
-                                "guessTabSize": true,
-                                "useWrapMode": false,
-                                "wrapToView": true
-                            },
-                            "firstLineState": {
-                                "row": 240,
-                                "mode": "plugins/ethergit.solidity.language/solidity_mode"
-                            }
-                        },
-                        "hash": "3b1800fc80f8f6c1cb71a4c7e486c1e713a35973",
+                        "changed": false,
                         "meta": {
                             "timestamp": 1449268572715
                         },
-                        "changed": false
+                        "filter": true,
+                        "title": "shiplib.sol",
+                        "tooltip": "/dapp/_pre/shiplib.sol",
+                        "ace": {}
                     },
                     "editorType": "ace",
                     "active": false

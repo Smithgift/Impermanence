@@ -195,6 +195,10 @@ contract Galaxy is named("Galaxy") {
         uint shipID
     );
     
+    function getShipEnergy(uint _shipID) constant returns (uint8) {
+        return shipRegistry[_shipID].getEnergy();
+    }
+
     function insertShip(
         bytes32 _system, 
         uint8 _x, 

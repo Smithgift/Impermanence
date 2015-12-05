@@ -262,12 +262,44 @@ function selectShip(ship) {
     }
 }
 
-function impulse(shipID, x, y, owner) {
+// Lo! in the middle of the hackathon I feel the urge to implement a
+// decorator.
+// By which I mean class.
+function action(f, args, effort) {
+    this.f = f;
+    this.args = args;
+    this.effort = effort;
+    this.act();
+}
+
+action.prototype.act = function() {
+        var shipID = this.args[0];
+        var massRatio = galaxy.shipRegistry(shipID)[11];
+        var origThis = this;
+        var origArg = this.args;
+        if(galaxy.getShipEnergy(shipID).toNumber() >= (massRatio * this.effort)) {
+            console.log("Sufficient Energy", galaxy.getShipEnergy(shipID));
+            f.apply(origThis, origArg);
+        } else {
+            console.log("Insufficient Energy", galaxy.getShipEnergy(shipID).toNumber());
+            this.waitFilter = web3.eth.filter("latest");
+            this.waitFilter.watch(function() {
+                if(galaxy.getShipEnergy(shipID).toNumber() >= (massRatio * this.effort)) {
+                    console.log("Energy now sufficient.", galaxy.getShipEnergy(shipID).toNumber());
+                    f.apply(origThis, origArg);
+                    this.waitFilter.stopWatching();
+                }
+                console.log("Energy still insufficient", galaxy.getShipEnergy(shipID).toNumber());
+            }.bind(this));
+        }
+
+function _impulse(shipID, x, y, owner) {
     console.log("Impulse move", shipID, x, y, owner);
     galaxy.impulse(shipID, x, y, {from: owner});
 }
+var impulse = actionDecorator(_impulse);
 
-function jump(shipID, destination, owner) {
+function _jump(shipID, destination, owner) {
     // We must get the hint first.
     // By brute force, apparently.
     for(var x = 0; x < 15; x++) {
@@ -286,6 +318,7 @@ function jump(shipID, destination, owner) {
     }
     console.log("No matching wormhole found. :(");
 }
+var jump = actionDecorator(_jump);
 
 function createSystem(name, callback) {
     galaxy.addSystem(name);
