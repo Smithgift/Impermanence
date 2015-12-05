@@ -83,6 +83,8 @@ contract Galaxy is named("Galaxy") {
     function Galaxy() {
         // This is a kludge to get the address of the Galaxy.
         log0("A new galaxy is born!");
+        // 0 is no ship.
+        nextShip = 1;
     }
 
     event systemAdded(string indexed _name, bytes32 indexed systemHash);
@@ -166,8 +168,10 @@ contract Galaxy is named("Galaxy") {
     
     using ShipLib for ShipLib.Ship;
      
-    ShipLib.Ship[] public shipRegistry;
-     
+    mapping (uint => ShipLib.Ship) public shipRegistry;
+    
+    uint nextShip;
+    
     modifier onlyshipowner(uint _shipID) {
         if(shipRegistry[_shipID].owner != msg.sender) {
             throw;
@@ -196,7 +200,7 @@ contract Galaxy is named("Galaxy") {
         Sector spawnSector = galacticMap[_system].map[_x][_y];
         if(spawnSector.st != SectorType.Planet) 
             throw; // Generally, empty space does not have an industrial base.
-        uint craneID = shipRegistry.length++;
+        uint craneID = nextShip++;
         ShipLib.Ship crane = shipRegistry[craneID];
         crane.exists = true;
         crane.currentSystem = _system;

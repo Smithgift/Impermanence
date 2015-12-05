@@ -222,14 +222,18 @@ function selectShip(ship) {
             //var mapCells = ;
             function moveTo(event) {
                 var coords = parseID(this.id);
-                console.log("Impulse move to ", coords);
-                galaxy.impulse(ship[0], coords[0], coords[1], {from: ship[0][5]});
+                impulse(ship[0], coords[0], coords[1], {from: ship[0][5]});
                 $("body").off("click", "#map tr td", moveTo);
             }
             $("#map tr td").click(moveTo);
         })
         $("#ship_div").append(move_btn);
     }
+}
+
+function impulse(shipID, x, y, owner) {
+    console.log("Impulse move", shipID, x, y, owner);
+    galaxy.impulse(shipID, x, y, {from: owner});
 }
 
 /*

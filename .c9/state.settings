@@ -136,7 +136,7 @@
     "panecycle": {
         "json()": [
             "tab14",
-            "tab6"
+            "tab8"
         ]
     },
     "panels": {
@@ -210,13 +210,12 @@
             "focus": "tab14",
             "meta": {
                 "accessList": [
-                    "tab6",
-                    "tab11",
                     "tab8",
                     "tab5",
-                    "tab17",
-                    "tab4",
                     "tab18",
+                    "tab6",
+                    "tab11",
+                    "tab17",
                     "tab0"
                 ]
             },
@@ -232,7 +231,7 @@
                     "document": {
                         "changed": false,
                         "meta": {
-                            "timestamp": 1449268745106
+                            "timestamp": 1449320787156
                         },
                         "filter": true,
                         "title": "index.html",
@@ -252,31 +251,11 @@
                     "document": {
                         "changed": false,
                         "meta": {
-                            "timestamp": 1449270896779
+                            "timestamp": 1449320169184
                         },
                         "filter": true,
                         "title": "impermanence.js",
                         "tooltip": "/frontend2/impermanence.js",
-                        "ace": {}
-                    },
-                    "editorType": "ace",
-                    "active": false
-                },
-                {
-                    "type": "tab",
-                    "name": "tab4",
-                    "path": "/frontend2/impermanence.css",
-                    "className": [
-                        "tab4"
-                    ],
-                    "document": {
-                        "changed": false,
-                        "meta": {
-                            "timestamp": 1449268609993
-                        },
-                        "filter": true,
-                        "title": "impermanence.css",
-                        "tooltip": "/frontend2/impermanence.css",
                         "ace": {}
                     },
                     "editorType": "ace",
@@ -310,36 +289,14 @@
                         "tab18"
                     ],
                     "document": {
-                        "filter": true,
-                        "title": "jsonhack.sh",
-                        "tooltip": "/jsonhack.sh",
-                        "ace": {
-                            "folds": [],
-                            "scrolltop": 0,
-                            "scrollleft": 0,
-                            "selection": {
-                                "start": {
-                                    "row": 11,
-                                    "column": 50
-                                },
-                                "end": {
-                                    "row": 11,
-                                    "column": 50
-                                },
-                                "isBackwards": false
-                            },
-                            "options": {
-                                "guessTabSize": true,
-                                "useWrapMode": false,
-                                "wrapToView": true
-                            },
-                            "firstLineState": 0
-                        },
-                        "hash": "f3e7ac00d86896d924fde5cfa01b49e1f78b4a91",
+                        "changed": false,
                         "meta": {
                             "timestamp": 1449182060100
                         },
-                        "changed": false
+                        "filter": true,
+                        "title": "jsonhack.sh",
+                        "tooltip": "/jsonhack.sh",
+                        "ace": {}
                     },
                     "editorType": "ace",
                     "active": false
@@ -354,7 +311,7 @@
                     "document": {
                         "changed": false,
                         "meta": {
-                            "timestamp": 1449268604564
+                            "timestamp": 1449321475205
                         },
                         "filter": true,
                         "title": "galaxy.sol",
@@ -362,7 +319,7 @@
                         "ace": {}
                     },
                     "editorType": "ace",
-                    "active": false
+                    "active": true
                 },
                 {
                     "type": "tab",
@@ -374,7 +331,7 @@
                     "document": {
                         "changed": false,
                         "meta": {
-                            "timestamp": 1449268573079
+                            "timestamp": 1449268572715
                         },
                         "filter": true,
                         "title": "shiplib.sol",
@@ -382,7 +339,7 @@
                         "ace": {}
                     },
                     "editorType": "ace",
-                    "active": true
+                    "active": false
                 },
                 {
                     "type": "tab",
@@ -437,6 +394,10 @@
     },
     "tree_selection": {
         "json()": [
+            "/frontend2/index.html"
+        ]
+    }
+}
             "/frontend2/index.html"
         ]
     }
