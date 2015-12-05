@@ -36,12 +36,12 @@ function setSystem(name) {
         var button = document.createElement("input");
         button.type = "button";
         button.onclick = function () {
-            galaxy.addSystem(name, function() {
+            //galaxy.addSystem(name, function() {
                 // TODO: Refresh.
                 //setTimeout("setSystem(name)", 1000);
-            });
-            //createSystem(name, setSystem);
-            //$("#screen").append("System under construction. This make take some time.")
+            //});
+            createSystem(name, setSystem);
+            $("#screen").append("<br /> System under construction!")
         };
         button.value = "YES!!!";
         $("#screen").append(button)
@@ -238,10 +238,9 @@ function impulse(shipID, x, y, owner) {
     galaxy.impulse(shipID, x, y, {from: owner});
 }
 
-/*
 function createSystem(name, callback) {
     galaxy.addSystem(name);
-    var systemCreated = galaxy.systemAdded({'_name': name});
+    var systemCreated = galaxy.systemAdded({'_systemHash': currentSystemHash});
     systemCreated.watch(function(err, result) {
         if(err) console.log(err);
         else {
@@ -249,4 +248,4 @@ function createSystem(name, callback) {
             callback(name);
         }
     });
-}*/
+}

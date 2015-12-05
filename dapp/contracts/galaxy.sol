@@ -87,7 +87,7 @@ contract Galaxy is named("Galaxy") {
         nextShip = 1;
     }
 
-    event systemAdded(string indexed _name, bytes32 indexed systemHash);
+    event systemAdded(bytes32 indexed _systemHash);
 
     function addSystem(string _name) {
         // Hack alert!
@@ -96,7 +96,7 @@ contract Galaxy is named("Galaxy") {
         newSystem.name = _name;
         newSystem.exists = true;
         generateMap(systemHash);
-        systemAdded(_name, systemHash);
+        systemAdded(systemHash);
         //galacticMap.push(newSystem);
     }
     

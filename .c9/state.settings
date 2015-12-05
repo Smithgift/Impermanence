@@ -136,7 +136,7 @@
     "panecycle": {
         "json()": [
             "tab14",
-            "tab11"
+            "tab5"
         ]
     },
     "panels": {
@@ -210,13 +210,13 @@
             "focus": "tab14",
             "meta": {
                 "accessList": [
+                    "tab5",
                     "tab11",
                     "tab6",
                     "tab8",
                     "tab17",
                     "tab18",
-                    "tab0",
-                    "tab5"
+                    "tab0"
                 ]
             },
             "name": "pane0",
@@ -239,7 +239,7 @@
                         "ace": {}
                     },
                     "editorType": "ace",
-                    "active": false
+                    "active": true
                 },
                 {
                     "type": "tab",
@@ -251,7 +251,7 @@
                     "document": {
                         "changed": false,
                         "meta": {
-                            "timestamp": 1449323955284
+                            "timestamp": 1449324461538
                         },
                         "filter": true,
                         "title": "impermanence.js",
@@ -259,7 +259,7 @@
                         "ace": {}
                     },
                     "editorType": "ace",
-                    "active": true
+                    "active": false
                 },
                 {
                     "type": "tab",
@@ -311,7 +311,7 @@
                     "document": {
                         "changed": false,
                         "meta": {
-                            "timestamp": 1449321475205
+                            "timestamp": 1449324489202
                         },
                         "filter": true,
                         "title": "galaxy.sol",
