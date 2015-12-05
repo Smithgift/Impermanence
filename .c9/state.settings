@@ -109,8 +109,8 @@
             "@document": 10,
             "@ethereum-console": 1,
             "@form": 5,
-            "@menu": 8,
-            "@menuitem": 19,
+            "@menu": 5,
+            "@menuitem": 13,
             "@pane": 2,
             "@postmessage": 1,
             "@preferences": 1,
@@ -212,8 +212,8 @@
                 "accessList": [
                     "tab11",
                     "tab5",
-                    "tab8",
                     "tab17",
+                    "tab8",
                     "tab6",
                     "tab18",
                     "tab0"
@@ -231,7 +231,7 @@
                     "document": {
                         "changed": false,
                         "meta": {
-                            "timestamp": 1449337385759
+                            "timestamp": 1449343006877
                         },
                         "filter": true,
                         "title": "index.html",
@@ -251,7 +251,7 @@
                     "document": {
                         "changed": false,
                         "meta": {
-                            "timestamp": 1449339132619
+                            "timestamp": 1449344119320
                         },
                         "filter": true,
                         "title": "impermanence.js",
@@ -289,14 +289,39 @@
                         "tab18"
                     ],
                     "document": {
-                        "changed": false,
-                        "meta": {
-                            "timestamp": 1449182060100
-                        },
                         "filter": true,
                         "title": "jsonhack.sh",
                         "tooltip": "/jsonhack.sh",
-                        "ace": {}
+                        "ace": {
+                            "folds": [],
+                            "scrolltop": 0,
+                            "scrollleft": 0,
+                            "selection": {
+                                "start": {
+                                    "row": 11,
+                                    "column": 50
+                                },
+                                "end": {
+                                    "row": 11,
+                                    "column": 50
+                                },
+                                "isBackwards": false
+                            },
+                            "options": {
+                                "guessTabSize": true,
+                                "useWrapMode": false,
+                                "wrapToView": true
+                            },
+                            "firstLineState": {
+                                "row": 261,
+                                "mode": "ace/mode/sh"
+                            }
+                        },
+                        "hash": "f3e7ac00d86896d924fde5cfa01b49e1f78b4a91",
+                        "meta": {
+                            "timestamp": 1449182060100
+                        },
+                        "changed": false
                     },
                     "editorType": "ace",
                     "active": false
@@ -311,7 +336,7 @@
                     "document": {
                         "changed": false,
                         "meta": {
-                            "timestamp": 1449337335307
+                            "timestamp": 1449337335022
                         },
                         "filter": true,
                         "title": "galaxy.sol",

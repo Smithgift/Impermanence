@@ -243,7 +243,12 @@ function selectShip(ship) {
             function moveTo(event) {
                 var coords = parseID(this.id);
                 console.log(ship[1][5]);
-                impulse(ship[0], coords[0], coords[1], ship[1][5]);
+                var action = new Action(
+                    impulse, 
+                    [ship[0], coords[0], coords[1], ship[1][5]], 
+                    getDistance([ship[1][2].toNumber(), ship[1][3].toNumber()], coords)
+                );
+                action.act();
                 $("body").off("click", "#map tr td", moveTo);
             }
             $("#map tr td").click(moveTo);
@@ -255,51 +260,81 @@ function selectShip(ship) {
             jmp_btn.value = "Enter wormhole!"
             $(jmp_btn).click(function(event) {
                 $("#ship_div").text("INITIATING JUMP SEQUENCE!");
-                jump(ship[0], focusedSector.destination, ship[1][5]);
+                var action = new Action(
+                    jump,
+                    [ship[0], focusedSector.destination, ship[1][5]],
+                    1
+                );
+                action.act();
             });
             $("#ship_div").append(jmp_btn);
         }
     }
 }
 
+function getDistance(coordsa, coordsb) {
+    var distance = 0;
+    distance += Math.abs(coordsa[0] - coordsb[0]);
+    distance += Math.abs(coordsa[1] - coordsb[1]);
+    return distance;
+}
+
 // Lo! in the middle of the hackathon I feel the urge to implement a
 // decorator.
 // By which I mean class.
-function action(f, args, effort) {
+function Action(f, args, effort) {
     this.f = f;
     this.args = args;
+    this.shipID = this.args[0];
     this.effort = effort;
-    this.act();
+    this.massRatio = galaxy.shipRegistry(this.shipID)[11];
 }
 
-action.prototype.act = function() {
-        var shipID = this.args[0];
-        var massRatio = galaxy.shipRegistry(shipID)[11];
+Action.prototype.condition = function() {
+    var energy = galaxy.getShipEnergy(this.shipID).toNumber() 
+    if(energy >= (this.massRatio * this.effort)) {
+        console.log("Condition met:", energy, (this.massRatio * this.effort));
+        return true;
+    } else {
+        console.log("Condition not met:", energy, (this.massRatio * this.effort));
+        return false;
+    }
+}
+
+Action.prototype.act = function() {
         var origThis = this;
         var origArg = this.args;
-        if(galaxy.getShipEnergy(shipID).toNumber() >= (massRatio * this.effort)) {
-            console.log("Sufficient Energy", galaxy.getShipEnergy(shipID));
-            f.apply(origThis, origArg);
+        var attempt = function() {
+            try {
+                this.f.apply(origThis, origArg);
+            } catch(err) {
+                console.log("Attempt failed:", err.toString());
+                // Hack! Let's just keep trying until it works.
+                setTimeout(attempt, 1000);
+            }
+        }.bind(this);
+        if(this.condition()) {
+            //console.log("Sufficient Energy", galaxy.getShipEnergy(shipID));
+            attempt();
         } else {
-            console.log("Insufficient Energy", galaxy.getShipEnergy(shipID).toNumber());
+            //console.log("Insufficient Energy", galaxy.getShipEnergy(shipID).toNumber());
             this.waitFilter = web3.eth.filter("latest");
             this.waitFilter.watch(function() {
-                if(galaxy.getShipEnergy(shipID).toNumber() >= (massRatio * this.effort)) {
-                    console.log("Energy now sufficient.", galaxy.getShipEnergy(shipID).toNumber());
-                    f.apply(origThis, origArg);
+                if(this.condition()) {
                     this.waitFilter.stopWatching();
+                    attempt();
                 }
-                console.log("Energy still insufficient", galaxy.getShipEnergy(shipID).toNumber());
+                //console.log("Energy still insufficient", galaxy.getShipEnergy(shipID).toNumber());
             }.bind(this));
         }
+}
 
-function _impulse(shipID, x, y, owner) {
+function impulse(shipID, x, y, owner) {
     console.log("Impulse move", shipID, x, y, owner);
     galaxy.impulse(shipID, x, y, {from: owner});
 }
-var impulse = actionDecorator(_impulse);
 
-function _jump(shipID, destination, owner) {
+function jump(shipID, destination, owner) {
     // We must get the hint first.
     // By brute force, apparently.
     for(var x = 0; x < 15; x++) {
@@ -318,7 +353,6 @@ function _jump(shipID, destination, owner) {
     }
     console.log("No matching wormhole found. :(");
 }
-var jump = actionDecorator(_jump);
 
 function createSystem(name, callback) {
     galaxy.addSystem(name);
