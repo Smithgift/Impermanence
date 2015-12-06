@@ -200,8 +200,8 @@ contract Galaxy is named("Galaxy") {
         return shipRegistry[_shipID].getEnergy();
     }
 
-    function getShipCargo(uint _shipID, uint8 _cargoType) returns (uint) {
-        return uint(shipRegistry[_shipID].cargo[_cargoType]);
+    function getShipCargo(uint _shipID, uint8 _cargoType) constant returns (uint) {
+        return shipRegistry[_shipID].cargo[_cargoType];
     }
 
     function insertShip(
@@ -310,7 +310,8 @@ contract Galaxy is named("Galaxy") {
         moveShip(_shipID, dest, destx, desty, 1);
     }
     
-    function canMine(uint _shipID, uint8 diff) constant returns (bool) {
+    function canMine(uint _shipID, uint16 diff) constant returns (bool) {
+        return true;
         var ship = shipRegistry[_shipID];
         var sector = galacticMap[ship.currentSystem].map[ship.x][ship.y];
         return ((uint(sha3(_shipID, (block.blockhash(block.number -1)))) % diff) 
@@ -318,17 +319,18 @@ contract Galaxy is named("Galaxy") {
     }
     
     function mine(uint _shipID) {
+        return;
         var ship = shipRegistry[_shipID];
         ship.genericAction(8);
         var sector = galacticMap[ship.currentSystem].map[ship.x][ship.y];
         uint st = uint(sector.st);
-        uint8 diff;
+        uint16 diff;
         if(st == 0) {
             throw; // You said there was something to mine HERE?
         } else if (st < 4) {
             diff = 16;
         } else if (st < 7) {
-            diff = 255;
+            diff = 256;
         } else if (st == 7) {
             diff = 32;
         } else {
@@ -336,7 +338,10 @@ contract Galaxy is named("Galaxy") {
         }
         if(canMine(_shipID, diff)) {
             ship.cargo[st - 1]++;
+            log1("New cargo:",bytes32(ship.cargo[st - 1]));
+            ship.refreshMassRatio();
             sector.mine++;
+            shipActivity(ship.currentSystem, ship.x, ship.y, _shipID);
             if(st > 3) {
                 if(st < 7) {
                     sector.st = SectorType(st - 3);
@@ -346,6 +351,25 @@ contract Galaxy is named("Galaxy") {
             }
         } else {
             throw; // It was here a moment ago, I swear!
+        }
+    }
+    
+    function upgrade(uint _shipID, uint8 cargoType) {
+        var ship = shipRegistry[_shipID];
+        var sector = galacticMap[ship.currentSystem].map[ship.x][ship.y];
+        var system = galacticMap[ship.currentSystem];
+        if(sector.st != SectorType.Planet)
+            throw; // What are you upgrading (with?)
+        if(cargoType > 5) {
+            throw; // I don't think that will help.
+        } else if(cargoType > 2) {
+            system.techLevels[cargoType - 3]++;
+        } else if(cargoType == 2) {
+            ship.eng++;
+        } else if(cargoType == 1) {
+            ship.def++;
+        } else if(cargoType == 0) {
+            ship.eng++;
         }
     }
 }

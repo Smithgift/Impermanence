@@ -29,7 +29,7 @@ library ShipLib {
         uint eng;
         uint damage;
         uint massRatio;
-        uint[] cargo;
+        uint[7] cargo;
         string name;
     }
     
@@ -61,7 +61,7 @@ library ShipLib {
         if(!self.exists)
             throw; // IT'S THE ORBITING DUTCHMAN!
         refreshEnergy(self);
-        //log1(bytes32(effort), bytes32(self.energy));
+        log1(bytes32(effort), bytes32(self.energy));
         //_
         return;
         if((self.massRatio * effort) > self.energy)

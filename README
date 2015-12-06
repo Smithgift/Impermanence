@@ -1,0 +1,99 @@
+Here lies Smithgift's sanity. RIP.
+
+I hoped to do more, but innumarable technical issues prevented me from finishing
+this. As I write this, the Ethereum sandbox has broken, and it's the last day. 
+So this is what I was able to do.
+
+INSTRUCTIONS:
+
+Starting:
+
+1. Go to a contract that is NOT galaxy.sol and Run Active Contract.
+   If you run galaxy.sol, or all contracts, it won't deploy.
+2. Run jsonhack.sh. This both links a working binary for galaxy.sol and sticks 
+   a functioning abi in abi.js (which actually contains the binary, too.)
+3. Cut and paste the sandbox id into the relevant function in index.html.
+4. Start http-server in frontend2.
+5. Navigate on a browser to <whereeverthisis>.on.ether.camp:8080/
+6. (optional) Open up a broswer console to see hillarious debug messages.
+
+ACTUAL USE:
+
+1. Enter a system name in the box and press Go!
+2. It will ask you if you want to make a system. Press YES!!!
+   Technical note: This generates a system based on a deterministic seed:
+   the hash of the name. For example, Sol always has four rifts and two 
+   habitable planets.
+3. The system should generate and load in a few seconds. Click on a lower-case
+   o. These are inhabited planets, as it will tell you.
+4. Click on "Construct CRaNE" to build your own personal 
+   Cargo Reconnaissance and Naught Else vessel. Give it a wacky name!
+5. Things you can do with your CRaNE!
+   a) Click on Launch! and then click on another sector to sent your ship!
+      Technical note: Normally, this would take an increasing amount of energy
+      based on the distance (manhattan, not pythagorean.) However, I 
+      discovered a bug in *SOLIDITY* that made this system broken. Thus distance
+      is essentially commented out. It does still wait until it has enough 
+      energy, but the energy is now trivial.
+      Technical note for Technical note: That mentions a way-cool system to have
+      realtime energy with in a world with discrete blocks. Check it out!
+   b) Mine things! Actually, this doesn't work. The bug I was hunting that 
+      breaks is still on the loose, as the sandbox is now broken. Still, check
+      out the code at least.
+      Technical note: The mining system is probabilistic, but is also 
+      deterministic so that a prospector doesn't need to spend a single wei
+      in unsuccessful mining attempts (ignoring latency.) It also discourages
+      race situations, as every miner has a different "roll", though it does
+      not prevent them.
+   c) If you somehow get cargo, you can use to upgrade techLevels of systems
+      or your CRaNE. I mean, theoretically. I never got to test this code.
+      Tech levels were supposed to increase the power of upgrades, but I never
+      got to this, by which I mean I forgot when I was writing that code.
+   d) Engage in faster-than-light travel! You'll need to manually create a link
+      between two systems (galaxy.createLink()). Once you've made a wormhole,
+      (a "*") ships can normally travel through them.
+   e) Mess around with the console. You can access the galaxy contract with 
+      galaxy.
+   f) Implement stub functions to get to ShipLib.attack() and blow things up.
+
+THINGS I WISHED TO DO:
+
+Interstellar trade, based on galactic zones (one byte of system hash).
+Multiple forms of FTL (short-range hyperspace, difficult to make wormholes,
+                       extremely difficult omnigate to anywhere)
+End-game megastructures (To blow up the sun, disintegrate all the fleet in a 
+                         sector, or go anywhere.)
+Way to win (Ascension Gate built on a system's sun, that would permanently 
+            record the winners, but take away their high-tech worlds.)
+Autopilot. (It's sorta there!)
+Computer controlled empires (Run in client-side JS. A guild might run one, say.)
+
+CONCLUSION:
+
+This was fun. I was intending to make The Impermanence of Space a real thing,
+long before this hackathon. I signed up the night before it started, and 
+rather than taking a more complete project, I rebuilt this from the ground up.
+
+Hackathons force you to get things done. This is why they are hackathons and not
+elegathons.
+
+In the future, I plan to rebuild the frontend from the ground up again. One of 
+of my main issues was the flaws in my tools. Much of my time was spent 
+compensating for technical issues. In particular, I have never found a complete
+system for Ethereum development, with debugger, unit testing, sandbox, 
+highlighting, integration with frontend, etc. Solidity and web3 are still new
+technologies, to say nothing of Ethereum itself. Something as simple as running
+something after a transaction is mined requires a framework.
+
+Also, jQuery. I'm sorry dude, but next time I'm using something like angular.js
+You're just not suited for this kind of project. I mean, look how many times I 
+created elements out of nothing just for a few seconds until a refresh!
+
+I did learn more about fancy web development in five days than in normal months.
+If I see one more closure, though, I'm going to put an insult in a variable and 
+let it fall into scope.
+
+For everyone who helped me, thanks y'all. I couldn't have done it without you.
+
+This is Smithgift, little sleep, little food, little sanity, signing off before
+I become even more incoherenat.

@@ -242,7 +242,7 @@ function getShipHold(_shipID) {
     var i = 0; // Manual iteration in a for loop. Take that, elegance!
     ["a", "d", "e", "A", "D", "E", "U"].forEach(function(entry) {
         var cargo = galaxy.getShipCargo(_shipID, i++)
-        if(cargo)
+        if(cargo.toNumber())
             cargoList[entry] = cargo;
     });
     return cargoList;
@@ -299,15 +299,16 @@ function selectShip(ship) {
                     8
                 );
                 // And they say tables are bad in HTML...
-                var difficulty = [-1, 16, 16, 16, 255, 255, 255, 32][focusedSector.st];
+                var difficulty = [-1, 16, 16, 16, 256, 256, 256, 32][focusedSector.st];
                 action.condition = function() {
                     if(!Action.prototype.condition.call(this))
                         return false;
+                    console.log("Prospecting.")
                     return galaxy.canMine(this.shipID, difficulty);
                 }
                 action.act();
             });
-            $("#ship_div").append(jmp_btn);
+            $("#ship_div").append(mine_btn);
         }
     }
 }
@@ -398,7 +399,12 @@ function jump(shipID, destination, owner) {
 
 function mine(shipID, owner) {
     console.log("MINE! MINE! MINE!", shipID);
-    galaxy.mine(shipID); // That was easy.
+    tx = galaxy.mine(shipID); // That was easy.
+    console.log("THIS TRANSACTION IS MINE!", tx);
+}
+
+function ctx() {
+    return web3.eth.getTransactionReceipt(tx);
 }
 
 function createSystem(name, callback) {
