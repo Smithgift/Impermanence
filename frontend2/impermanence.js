@@ -155,9 +155,7 @@ function focusSector(event) {
         $("#focus").append(button);        
     } else if(mapLegend[focusedSector.st][0] == "*") { // Wormhole.
         focusedSector.destination = galaxy.getWormhole(
-            currentSystemHash, 
-            focusedSector.x,
-            focusedSector.y
+            currentSystemHash, [focusedSector.x, focusedSector.y]
         );
         focusedSector.destinationName = galaxy.galacticMap(
             focusedSector.destination
@@ -385,6 +383,40 @@ function selectShip(ship) {
                 $("#ship_div").append(target_select);
             }
         }
+        if((mapLegend[focusedSector.st][0] == "&nbsp;") && (ship.hold["Unobtainium Orb"] > 0)) {
+            var wormhole_btn = document.createElement("input");
+            wormhole_btn.type = "button";
+            wormhole_btn.value = "Make wormhole!";
+            $("#ship_div").append(wormhole_btn);
+            // You know what? I'm not creating three inputs by hand.
+            $("#ship_div").append("<input id='hash' type=text /><input id='x' type=number /><input id='y' type=number />");
+            $(wormhole_btn).click(function(event) {
+                var toHash = ("0x" + web3.sha3($("#hash").val()));
+                console.log(toHash);
+                if(!galaxy.galacticMap(toHash)[1]) {
+                    alert("That doesn't appear to be a system that exists. Are you sure you typed the name correctly?");
+                    return;
+                }
+                var x = $("#x").val();
+                var y = $("#y").val();
+                if((x > 15) || (y > 15)) {
+                    alert("Those coords are off the map!");
+                    return;
+                }
+                var toST = galaxy.getSectorType(toHash, x, y);
+                if(toST != 0) {
+                    alert("That isn't empty!");
+                    return;
+                }
+                $("#ship_div").text("Drilling through the heavens!");
+                var action = new Action(
+                    wormhole,
+                    [ship[0], toHash, [x, y], ship[1][5]],
+                    16
+                );
+                action.act();
+            });
+        }
 
     }
 }
@@ -458,21 +490,23 @@ function jump(shipID, destination, owner) {
     // By brute force, apparently.
     for(var x = 0; x < 15; x++) {
         for(var y = 0; y < 15; y++) {
-            if(galaxy.getWormhole(
+            galaxy.getWormhole(
                 currentSystemHash, 
-                focusedSector.x,
-                focusedSector.y
-            ) == destination) {
-                var hint = galaxy.compressCoords([x, y]);
-                console.log("ATTEMPTING JUMP!", destination, hint, x, y);
-                tx = galaxy.jump(shipID, hint);
-                console.log("INTO THE WORMHOLE!", tx);
-                return;
-            }
+                [focusedSector.x, focusedSector.y],
+                function(err, result) {
+                    console.log("Brute force:", result);
+                    if(result == destination) {
+                        var hint = galaxy.compressCoords([x, y]);
+                        console.log("ATTEMPTING JUMP!", destination, hint, x, y);
+                        tx = galaxy.jump(shipID, hint);
+                        console.log("INTO THE WORMHOLE!", tx);
+                    }
+            }); 
         }
     }
-    console.log("No matching wormhole found. :(");
 }
+    //console.log("No matching wormhole found. :(");
+
 
 function mine(shipID, owner) {
     console.log("MINE! MINE! MINE!", shipID);
@@ -491,6 +525,12 @@ function attack(shipID, targetID, owner) {
     console.log("Opening fire!", shipID, targetID);
     tx = galaxy.attack(shipID, targetID); // OK, so really only that one was hard.
     console.log("Pew pew pew!", tx);
+}
+
+function wormhole(shipID, toHash, toCoords, owner) {
+    console.log("PUNCHING THROUGH SPACETIME", arguments);
+    tx = galaxy.createWormhole(shipID, toHash, toCoords, {from: owner}); // Fine, this one's hard, too.
+    console.log("Take that, relativity!", tx);
 }
 
 function ctx() {

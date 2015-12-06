@@ -135,12 +135,12 @@
     "panecycle": {
         "json()": [
             "tab1",
-            "tab8"
+            "tab4"
         ]
     },
     "panels": {
         "@active-left": "tree",
-        "@active-right": "ethergit.ethereum.sandbox.panel",
+        "@active-right": "none",
         "@width-right": 373,
         "collab": {
             "@enabled": "true",
@@ -242,7 +242,7 @@
                             "document": {
                                 "changed": false,
                                 "meta": {
-                                    "timestamp": 1449427832415
+                                    "timestamp": 1449431462939
                                 },
                                 "filter": true,
                                 "title": "impermanence.js",
@@ -302,7 +302,7 @@
                             "document": {
                                 "changed": false,
                                 "meta": {
-                                    "timestamp": 1449428234787
+                                    "timestamp": 1449428550258
                                 },
                                 "filter": true,
                                 "title": "galaxy.sol",
@@ -310,7 +310,7 @@
                                 "ace": {}
                             },
                             "editorType": "ace",
-                            "active": true
+                            "active": false
                         },
                         {
                             "type": "tab",
@@ -385,57 +385,31 @@
                                 "tab4"
                             ],
                             "document": {
+                                "changed": false,
+                                "meta": {
+                                    "timestamp": 1449431995086
+                                },
                                 "filter": true,
                                 "title": "README",
                                 "tooltip": "/README",
-                                "ace": {
-                                    "folds": [],
-                                    "scrolltop": 1308,
-                                    "scrollleft": 0,
-                                    "selection": {
-                                        "start": {
-                                            "row": 104,
-                                            "column": 39
-                                        },
-                                        "end": {
-                                            "row": 104,
-                                            "column": 39
-                                        },
-                                        "isBackwards": false
-                                    },
-                                    "options": {
-                                        "guessTabSize": true,
-                                        "useWrapMode": false,
-                                        "wrapToView": true
-                                    },
-                                    "firstLineState": {
-                                        "row": 62,
-                                        "state": "start",
-                                        "mode": "ace/mode/text"
-                                    }
-                                },
-                                "hash": "2c6eeeb5589d69ed909d1d8de810dbd2f87af2eb",
-                                "meta": {
-                                    "timestamp": 1449412004938
-                                },
-                                "changed": false
+                                "ace": {}
                             },
                             "editorType": "ace",
-                            "active": false
+                            "active": true
                         }
                     ],
                     "skin": "editor_tab",
                     "skinset": "default",
                     "meta": {
                         "accessList": [
-                            "tab8",
+                            "tab4",
+                            "tab5",
                             "tab11",
+                            "tab8",
+                            "tab17",
                             "tab6",
                             "tab18",
-                            "tab17",
-                            "tab5",
-                            "tab0",
-                            "tab4"
+                            "tab0"
                         ]
                     }
                 },
@@ -460,7 +434,7 @@
                                 "terminal": {
                                     "id": "devel_63",
                                     "cwd": "",
-                                    "width": 635,
+                                    "width": 1008,
                                     "height": 144
                                 }
                             },
@@ -485,7 +459,7 @@
                                 "terminal": {
                                     "id": "devel_40",
                                     "cwd": "",
-                                    "width": 635,
+                                    "width": 1008,
                                     "height": 144
                                 }
                             },
@@ -516,8 +490,8 @@
                     "meta": {
                         "accessList": [
                             "tab1",
-                            "tab3",
-                            "tab2"
+                            "tab2",
+                            "tab3"
                         ]
                     }
                 }

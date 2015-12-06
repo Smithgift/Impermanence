@@ -459,6 +459,7 @@ contract Galaxy is named("Galaxy") {
         var ship = shipRegistry[_shipID];
         if(ship.cargo[6] == 0)
             throw; // No unobtanium, no FTL.
+        ship.genericAction(16);
         ship.cargo[6]--;
         uint8[2] memory fromCoords;
         fromCoords[0] = ship.x;

@@ -1,9 +1,3 @@
-Here lies Smithgift's sanity. RIP.
-
-I hoped to do more, but innumarable technical issues prevented me from finishing
-this. As I write this, the Ethereum sandbox has broken, and it's the last day. 
-So this is what I was able to do.
-
 INSTRUCTIONS:
 
 Starting:
@@ -30,31 +24,27 @@ ACTUAL USE:
    Cargo Reconnaissance and Naught Else vessel. Give it a wacky name!
 5. Things you can do with your CRaNE!
    a) Click on Launch! and then click on another sector to sent your ship!
-      Technical note: Normally, this would take an increasing amount of energy
-      based on the distance (manhattan, not pythagorean.) However, I 
-      discovered a bug in *SOLIDITY* that made this system broken. Thus distance
-      is essentially commented out. It does still wait until it has enough 
-      energy, but the energy is now trivial.
-      Technical note for Technical note: That mentions a way-cool system to have
+      Technical note: Movement. takes energy based on the manhattan distance
+      to the destination, using a way-cool system to have
       realtime energy with in a world with discrete blocks. Check it out!
-   b) Mine things! Actually, this doesn't work. The bug I was hunting that 
-      breaks is still on the loose, as the sandbox is now broken. Still, check
-      out the code at least.
+   b) Mine things! Go to a Rift, asteriod, or monolith and click mine resources
+      Then wait. Asteriods are minable, on average 16 blocks, rifts 32, and
+      monoliths 256.
       Technical note: The mining system is probabilistic, but is also 
       deterministic so that a prospector doesn't need to spend a single wei
       in unsuccessful mining attempts (ignoring latency.) It also discourages
       race situations, as every miner has a different "roll", though it does
       not prevent them.
-   c) If you somehow get cargo, you can use to upgrade techLevels of systems
-      or your CRaNE. I mean, theoretically. I never got to test this code.
-      Tech levels were supposed to increase the power of upgrades, but I never
-      got to this, by which I mean I forgot when I was writing that code.
-   d) Engage in faster-than-light travel! You'll need to manually create a link
-      between two systems (galaxy.createLink()). Once you've made a wormhole,
-      (a "*") ships can normally travel through them.
-   e) Mess around with the console. You can access the galaxy contract with 
-      galaxy.
-   f) Implement stub functions to get to ShipLib.attack() and blow things up.
+   c) Bring resources to a planet and use them to upgrade the system or your
+      ship. Upgraded tech levels allow all ship upgrades to be more efficient.
+      Helpful note: Don't want to wait? Cheat with galaxy.cheatCargo().
+   d) Engage in faster-than-light travel! Create a link with an unobtanium orb
+      on an empty spot to create wormhole.
+      Note: The system-to-system travel code is possibly broken, but you can
+      try it anyway.
+   e) Blow stuff up! You'll need to have an enemy. galaxy.transferShip(<some shipID>, foe)
+      will give you one. Select it and attack!
+   f) Mess around with the console. galaxy gives you access to the galaxy.
 
 THINGS I WISHED TO DO:
 
@@ -95,11 +85,4 @@ let it fall into scope.
 
 For everyone who helped me, thanks y'all. I couldn't have done it without you.
 
-This is Smithgift, little sleep, little food, little sanity, signing off before
-I become even more incoherenat.
-
-* * * * *
-
-EDIT: I WILL NEVER GIVE UP!
-
-Mining now works. It's awesome. Try it.
+This is Smithgift, having regained sanity, finishing this.
