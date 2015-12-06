@@ -101,23 +101,23 @@
     },
     "ext": {
         "counters": {
-            "@ace": 2,
+            "@ace": 1,
             "@ace.repl": 1,
-            "@acestatus": 2,
+            "@acestatus": 1,
             "@divider": 4,
-            "@document": 14,
+            "@document": 11,
             "@ethereum-console": 1,
             "@form": 5,
-            "@menu": 8,
-            "@menuitem": 19,
+            "@menu": 5,
+            "@menuitem": 13,
             "@pane": 2,
             "@postmessage": 1,
             "@preferences": 1,
             "@preview": 1,
-            "@session": 14,
+            "@session": 11,
             "@tab": 10,
             "@tree": 2,
-            "@undoManager": 14
+            "@undoManager": 11
         }
     },
     "findinfiles": {
@@ -135,7 +135,7 @@
     "panecycle": {
         "json()": [
             "tab3",
-            "tab5"
+            "tab11"
         ]
     },
     "panels": {
@@ -206,7 +206,7 @@
     },
     "tabs": {
         "json()": {
-            "focus": "/frontend2/index.html",
+            "focus": "tab3",
             "nodes": [
                 {
                     "type": "pane",
@@ -217,13 +217,12 @@
                             "name": "tab5",
                             "path": "/frontend2/index.html",
                             "className": [
-                                "tab5",
-                                "focus"
+                                "tab5"
                             ],
                             "document": {
                                 "changed": false,
                                 "meta": {
-                                    "timestamp": 1449411034117
+                                    "timestamp": 1449419874380
                                 },
                                 "filter": true,
                                 "title": "index.html",
@@ -231,19 +230,20 @@
                                 "ace": {}
                             },
                             "editorType": "ace",
-                            "active": true
+                            "active": false
                         },
                         {
                             "type": "tab",
                             "name": "tab11",
                             "path": "/frontend2/impermanence.js",
                             "className": [
-                                "tab11"
+                                "tab11",
+                                "changed"
                             ],
                             "document": {
-                                "changed": false,
+                                "changed": true,
                                 "meta": {
-                                    "timestamp": 1449411863309
+                                    "timestamp": 1449419969684
                                 },
                                 "filter": true,
                                 "title": "impermanence.js",
@@ -251,7 +251,7 @@
                                 "ace": {}
                             },
                             "editorType": "ace",
-                            "active": false
+                            "active": true
                         },
                         {
                             "type": "tab",
@@ -303,7 +303,7 @@
                             "document": {
                                 "changed": false,
                                 "meta": {
-                                    "timestamp": 1449411848645
+                                    "timestamp": 1449419915723
                                 },
                                 "filter": true,
                                 "title": "galaxy.sol",
@@ -323,7 +323,7 @@
                             "document": {
                                 "changed": false,
                                 "meta": {
-                                    "timestamp": 1449410888779
+                                    "timestamp": 1449410888832
                                 },
                                 "filter": true,
                                 "title": "shiplib.sol",
@@ -386,14 +386,40 @@
                                 "tab4"
                             ],
                             "document": {
-                                "changed": false,
-                                "meta": {
-                                    "timestamp": 1449412004950
-                                },
                                 "filter": true,
                                 "title": "README",
                                 "tooltip": "/README",
-                                "ace": {}
+                                "ace": {
+                                    "folds": [],
+                                    "scrolltop": 1308,
+                                    "scrollleft": 0,
+                                    "selection": {
+                                        "start": {
+                                            "row": 104,
+                                            "column": 39
+                                        },
+                                        "end": {
+                                            "row": 104,
+                                            "column": 39
+                                        },
+                                        "isBackwards": false
+                                    },
+                                    "options": {
+                                        "guessTabSize": true,
+                                        "useWrapMode": false,
+                                        "wrapToView": true
+                                    },
+                                    "firstLineState": {
+                                        "row": 62,
+                                        "state": "start",
+                                        "mode": "ace/mode/text"
+                                    }
+                                },
+                                "hash": "2c6eeeb5589d69ed909d1d8de810dbd2f87af2eb",
+                                "meta": {
+                                    "timestamp": 1449412004938
+                                },
+                                "changed": false
                             },
                             "editorType": "ace",
                             "active": false
@@ -403,14 +429,14 @@
                     "skinset": "default",
                     "meta": {
                         "accessList": [
-                            "tab5",
-                            "tab4",
                             "tab11",
                             "tab8",
+                            "tab6",
+                            "tab5",
                             "tab18",
                             "tab17",
-                            "tab6",
-                            "tab0"
+                            "tab0",
+                            "tab4"
                         ]
                     }
                 },
@@ -420,51 +446,11 @@
                     "nodes": [
                         {
                             "type": "tab",
-                            "name": "tab1",
-                            "path": "",
-                            "className": [
-                                "tab1"
-                            ],
-                            "document": {
-                                "changed": false,
-                                "meta": {
-                                    "timestamp": 1449361444892
-                                },
-                                "filter": true,
-                                "title": "Terminal",
-                                "terminal": {
-                                    "id": "devel_416",
-                                    "cwd": "",
-                                    "width": 635,
-                                    "height": 89
-                                }
-                            },
-                            "editorType": "terminal",
-                            "active": false
-                        },
-                        {
-                            "type": "tab",
-                            "name": "tab2",
-                            "path": "",
-                            "className": [],
-                            "document": {
-                                "changed": false,
-                                "meta": {
-                                    "timestamp": 1449362868936
-                                },
-                                "filter": true,
-                                "title": "Ethereum Console",
-                                "ethereum-console": {}
-                            },
-                            "editorType": "ethereum-console",
-                            "active": false
-                        },
-                        {
-                            "type": "tab",
                             "name": "tab3",
                             "path": "",
                             "className": [
-                                "tab3"
+                                "tab3",
+                                "focus"
                             ],
                             "document": {
                                 "changed": false,
@@ -482,6 +468,23 @@
                             },
                             "editorType": "terminal",
                             "active": true
+                        },
+                        {
+                            "type": "tab",
+                            "name": "tab2",
+                            "path": "",
+                            "className": [],
+                            "document": {
+                                "changed": false,
+                                "meta": {
+                                    "timestamp": 1449362868936
+                                },
+                                "filter": true,
+                                "title": "Ethereum Console",
+                                "ethereum-console": {}
+                            },
+                            "editorType": "ethereum-console",
+                            "active": false
                         }
                     ],
                     "height": "13.895582329317268%",
@@ -490,8 +493,7 @@
                     "meta": {
                         "accessList": [
                             "tab3",
-                            "tab2",
-                            "tab1"
+                            "tab2"
                         ]
                     }
                 }

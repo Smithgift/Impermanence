@@ -384,6 +384,7 @@ contract Galaxy is named("Galaxy") {
         var ship = shipRegistry[_shipID];
         var sector = galacticMap[ship.currentSystem].map[ship.x][ship.y];
         var system = galacticMap[ship.currentSystem];
+        ship.genericAction(1);
         if(sector.st != SectorType.Planet)
             throw; // What are you upgrading (with?)
         if(cargoType > 5) {
@@ -391,11 +392,22 @@ contract Galaxy is named("Galaxy") {
         } else if(cargoType > 2) {
             system.techLevels[cargoType - 3]++;
         } else if(cargoType == 2) {
-            ship.eng++;
+            ship.eng += (1 + system.techLevels[2]);
         } else if(cargoType == 1) {
-            ship.def++;
+            ship.def += (1 + system.techLevels[1]);
         } else if(cargoType == 0) {
-            ship.eng++;
+            ship.atk += (1 + system.techLevels[0]);
         }
+        ship.cargo[cargoType]--;
+        shipActivity(ship.currentSystem, ship.x, ship.y, _shipID);
+        ship.refreshMassRatio();
+    }
+    
+    // Because I seriously don't want to mine while testing.
+    function cheatCargo(uint _shipID, uint8 cargoType) {
+        var ship = shipRegistry[_shipID];
+        ship.cargo[cargoType]++;
+        ship.refreshMassRatio();
+        shipActivity(ship.currentSystem, ship.x, ship.y, _shipID);        
     }
 }

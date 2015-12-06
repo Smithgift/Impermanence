@@ -9,7 +9,7 @@
             function sandbox(id) {
                 window.web3.setProvider(new web3.providers.HttpProvider('http://the-impermanence-of-space.on.ether.camp:8555/sandbox/' + id));
             }
-            sandbox("ac2d83019a7c939aa3db570c4090b91fbad55628");
+            sandbox("074710f7a4391ebd70ff64674d574daa3a04795c");
        </script>
        <script src="abi.js"></script>
        <script>
@@ -58,7 +58,7 @@ build.contracts.Galaxy.bin = "0x" + build.contracts.Galaxy.bin
 nameReg.addressOf("Galaxy", function(err, address) {
  ga = address;
 // THIS IS BROKEN VVV BUT THAT'S OK!
-if(web3.toDecimal(ga) && (web3.eth.getCode(ga) == build.contracts.Galaxy.bin)) {
+if(web3.toDecimal(ga) /*&& (web3.eth.getCode(ga) == build.contracts.Galaxy.bin)*/) {
     galaxy = Galaxy.at(ga);
 } else { 
 // Get? This is a kludge to CREATE the galaxy!

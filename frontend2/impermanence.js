@@ -205,7 +205,7 @@ function getSectorShips(systemHash, x, y, shipList, shipTable, shipSelect)
             }
             var ship = [result];
             galaxy.shipRegistry(ship[0], function(err, result) {
-                ship.push(result); 
+                ship.push(result);
                 if(ship[1][0]) {
                     shipList[ship[0]] = ship;
                     if(!(typeof shipTable === "undefined")) {
@@ -215,9 +215,9 @@ function getSectorShips(systemHash, x, y, shipList, shipTable, shipSelect)
                             $(colTD).text(ship[1][col].toString());
                             $(row).append(colTD);
                         });
-                        hold = getShipHold(ship[0]);
+                        ship.hold = getShipHold(ship[0]);
                         var itemStr = "";
-                        Object.keys(hold).forEach(function(entry) {
+                        Object.keys(ship.hold).forEach(function(entry) {
                             itemStr += entry + ": " + hold[entry];  
                         });
                         if(itemStr)
@@ -286,6 +286,29 @@ function selectShip(ship) {
                 action.act();
             });
             $("#ship_div").append(jmp_btn);
+        }
+        if((focusedSector.st > 0) && (focusedSector.st < 8)) {
+            var mine_btn = document.createElement("input");
+            mine_btn.type = "button";
+            mine_btn.value = "Mine resources!";
+            $(mine_btn).click(function(event) {
+                $("#ship_div").text("Beginning prospecting!");
+                var action = new Action(
+                    mine,
+                    [ship[0], ship[1][5]],
+                    8
+                );
+                // And they say tables are bad in HTML...
+                var difficulty = [-1, 16, 16, 16, 256, 256, 256, 32][focusedSector.st];
+                action.condition = function() {
+                    if(!Action.prototype.condition.call(this))
+                        return false;
+                    console.log("Prospecting.")
+                    return galaxy.canMine(this.shipID, difficulty);
+                }
+                action.act();
+            });
+            $("#ship_div").append(mine_btn);
         }
         if((focusedSector.st > 0) && (focusedSector.st < 8)) {
             var mine_btn = document.createElement("input");
