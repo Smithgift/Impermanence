@@ -135,7 +135,7 @@
     "panecycle": {
         "json()": [
             "tab1",
-            "tab11"
+            "tab8"
         ]
     },
     "panels": {
@@ -242,7 +242,7 @@
                             "document": {
                                 "changed": false,
                                 "meta": {
-                                    "timestamp": 1449427638252
+                                    "timestamp": 1449427832415
                                 },
                                 "filter": true,
                                 "title": "impermanence.js",
@@ -250,7 +250,7 @@
                                 "ace": {}
                             },
                             "editorType": "ace",
-                            "active": true
+                            "active": false
                         },
                         {
                             "type": "tab",
@@ -302,7 +302,7 @@
                             "document": {
                                 "changed": false,
                                 "meta": {
-                                    "timestamp": 1449426959538
+                                    "timestamp": 1449428234787
                                 },
                                 "filter": true,
                                 "title": "galaxy.sol",
@@ -310,7 +310,7 @@
                                 "ace": {}
                             },
                             "editorType": "ace",
-                            "active": false
+                            "active": true
                         },
                         {
                             "type": "tab",
@@ -428,12 +428,12 @@
                     "skinset": "default",
                     "meta": {
                         "accessList": [
-                            "tab11",
-                            "tab5",
-                            "tab17",
                             "tab8",
+                            "tab11",
                             "tab6",
                             "tab18",
+                            "tab17",
+                            "tab5",
                             "tab0",
                             "tab4"
                         ]

@@ -156,7 +156,9 @@ contract Galaxy is named("Galaxy") {
         uint8[2] _fromCoords, 
         bytes32 _to, 
         uint8[2] _toCoords
-    ) {
+    ) 
+        internal
+    {
         System fromSystem = galacticMap[_from];
         Sector fromSector = fromSystem.map[_fromCoords[0]][_fromCoords[1]];
         if(fromSector.st != SectorType.Empty) 
@@ -445,5 +447,23 @@ contract Galaxy is named("Galaxy") {
             //return;
             throw; // Sir, our weapons don't shoot THAT far. 
         }
+    }
+    
+    function createWormhole(
+        uint _shipID,         
+        bytes32 _to, 
+        uint8[2] _toCoords
+    )
+        onlyshipowner(_shipID)
+    {
+        var ship = shipRegistry[_shipID];
+        if(ship.cargo[6] == 0)
+            throw; // No unobtanium, no FTL.
+        ship.cargo[6]--;
+        uint8[2] memory fromCoords;
+        fromCoords[0] = ship.x;
+        fromCoords[1] = ship.y;
+        createLink(ship.currentSystem, fromCoords, _to, _toCoords);
+        shipActivity(ship.currentSystem, ship.x, ship.y, _shipID);
     }
 }

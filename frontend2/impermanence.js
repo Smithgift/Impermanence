@@ -385,6 +385,7 @@ function selectShip(ship) {
                 $("#ship_div").append(target_select);
             }
         }
+
     }
 }
 
