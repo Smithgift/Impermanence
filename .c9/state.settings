@@ -108,8 +108,8 @@
             "@document": 11,
             "@ethereum-console": 1,
             "@form": 5,
-            "@menu": 5,
-            "@menuitem": 13,
+            "@menu": 8,
+            "@menuitem": 19,
             "@pane": 2,
             "@postmessage": 1,
             "@preferences": 1,
@@ -237,13 +237,12 @@
                             "name": "tab11",
                             "path": "/frontend2/impermanence.js",
                             "className": [
-                                "tab11",
-                                "changed"
+                                "tab11"
                             ],
                             "document": {
-                                "changed": true,
+                                "changed": false,
                                 "meta": {
-                                    "timestamp": 1449419969684
+                                    "timestamp": 1449421227687
                                 },
                                 "filter": true,
                                 "title": "impermanence.js",

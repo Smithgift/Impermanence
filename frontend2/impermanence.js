@@ -23,6 +23,16 @@ var mapLegend = [
     ["^", "Ascension Gate"]     //AscensionGate
 ]
 
+var cargoNames = [ 
+            "Kaboomium", 
+            "Bouncium", 
+            "Zoomium", 
+            "Ancient War Tech", 
+            "Ancient Barrier Tech", 
+            "Ancient Travel Tech", 
+            "Unobtainium Orb"
+        ]
+
 function setSystem(name) {
     currentSystemName = name;
     $("#title").text(currentSystemName);
@@ -218,7 +228,7 @@ function getSectorShips(systemHash, x, y, shipList, shipTable, shipSelect)
                         ship.hold = getShipHold(ship[0]);
                         var itemStr = "";
                         Object.keys(ship.hold).forEach(function(entry) {
-                            itemStr += entry + ": " + hold[entry];  
+                            itemStr += entry + ": " + ship.hold[entry] + "<br />";  
                         });
                         if(itemStr)
                             $(row).append("<td>" + itemStr + "</td>");
@@ -239,8 +249,8 @@ function getSectorShips(systemHash, x, y, shipList, shipTable, shipSelect)
 
 function getShipHold(_shipID) {
     cargoList = {}
-    var i = 0; // Manual iteration in a for loop. Take that, elegance!
-    ["a", "d", "e", "A", "D", "E", "U"].forEach(function(entry) {
+    var i = 0; // Manual iteration in a forEach loop. Take that, elegance!
+    cargoNames.forEach(function(entry) {
         var cargo = galaxy.getShipCargo(_shipID, i++)
         if(cargo.toNumber())
             cargoList[entry] = cargo;
@@ -310,28 +320,35 @@ function selectShip(ship) {
             });
             $("#ship_div").append(mine_btn);
         }
-        if((focusedSector.st > 0) && (focusedSector.st < 8)) {
-            var mine_btn = document.createElement("input");
-            mine_btn.type = "button";
-            mine_btn.value = "Mine resources!";
-            $(mine_btn).click(function(event) {
-                $("#ship_div").text("Beginning prospecting!");
+        if(Object.keys(ship.hold).length) {
+            var upgrade_btn = document.createElement("input");
+            upgrade_btn.type = "button";
+            upgrade_btn.value = "Upgrade things!";
+            var hold_select = document.createElement("select");
+            var hold_labels = [
+                "Upgrades ATK", 
+                "Upgrades DEF", 
+                "Upgrades ENG", 
+                "Upgrades this system's ATK tech", 
+                "Upgrades this system's DEF tech", 
+                "Upgrades this system's ENG tech", 
+                "Opens wormholes, but you can't do that here."
+            ]
+            Object.keys(ship.hold).forEach(function(entry) {
+                var i = cargoNames.indexOf(entry);
+                $(hold_select).append("<option value='" + i + "'>" + entry + " (" + hold_labels[i] + ")" + "</option>");
+            });
+            $(upgrade_btn).click(function(event) {
+                $("#ship_div").text("UPGRADING!!!");
                 var action = new Action(
-                    mine,
-                    [ship[0], ship[1][5]],
-                    8
+                    upgrade,
+                    [ship[0], $(hold_select).val(), ship[1][5]],
+                    1
                 );
-                // And they say tables are bad in HTML...
-                var difficulty = [-1, 16, 16, 16, 256, 256, 256, 32][focusedSector.st];
-                action.condition = function() {
-                    if(!Action.prototype.condition.call(this))
-                        return false;
-                    console.log("Prospecting.")
-                    return galaxy.canMine(this.shipID, difficulty);
-                }
                 action.act();
             });
-            $("#ship_div").append(mine_btn);
+            $("#ship_div").append(upgrade_btn);
+            $("#ship_div").append(hold_select);
         }
     }
 }
@@ -412,7 +429,8 @@ function jump(shipID, destination, owner) {
             ) == destination) {
                 var hint = galaxy.compressCoords([x, y]);
                 console.log("ATTEMPTING JUMP!", destination, hint, x, y);
-                galaxy.jump(shipID, hint);
+                tx = galaxy.jump(shipID, hint);
+                console.log("INTO THE WORMHOLE!", tx);
                 return;
             }
         }
@@ -424,7 +442,13 @@ function mine(shipID, owner) {
     console.log("MINE! MINE! MINE!", shipID);
     tx = galaxy.mine(shipID); // That was easy.
     console.log("THIS TRANSACTION IS MINE!", tx);
-    setTimeout(ctx, 1000)
+    //setTimeout(ctx, 1000);
+}
+
+function upgrade(shipID, cargoType, owner) {
+    console.log("UPGRADING!!!!!!", shipID, cargoType);
+    tx = galaxy.upgrade(shipID, cargoType); // Almost as easy.
+    console.log("The world and/or your ship is now a better place.", tx);
 }
 
 function ctx() {
