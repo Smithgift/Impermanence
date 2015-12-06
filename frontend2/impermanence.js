@@ -320,7 +320,7 @@ function selectShip(ship) {
             });
             $("#ship_div").append(mine_btn);
         }
-        if(Object.keys(ship.hold).length) {
+        if((mapLegend[focusedSector.st][0] == "o") && (Object.keys(ship.hold).length > 0)) {
             var upgrade_btn = document.createElement("input");
             upgrade_btn.type = "button";
             upgrade_btn.value = "Upgrade things!";
@@ -342,7 +342,7 @@ function selectShip(ship) {
                 $("#ship_div").text("UPGRADING!!!");
                 var action = new Action(
                     upgrade,
-                    [ship[0], $(hold_select).valu(), ship[1][5]],
+                    [ship[0], $(hold_select).val(), ship[1][5]],
                     1
                 );
                 action.act();

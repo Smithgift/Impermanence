@@ -73,7 +73,9 @@ library ShipLib {
     }
     
     function transferOwnership(Ship storage self, address _newOwner) {
+        log0(bytes32(self.owner));
         self.owner = _newOwner;
+        log0(bytes32(self.owner));
     }
     
     function move(
@@ -89,11 +91,17 @@ library ShipLib {
     }
     
     function attack(Ship storage self, Ship storage target) act(self, 1) {
-        if(self.owner == target.owner)
+        if(self.owner == target.owner) {
+            //log2("Friendly fire.", bytes32(self.owner), bytes32(target.owner));
+            //return;
             throw; // I'm sure this would be amusing. Once.
+        }
         self.damage += target.atk;
-        if(self.damage >= self.def)
+        if(self.damage >= self.def) {
+            //log0("Suicidal attack.");
+            //return;
             throw; // The attack will bring nothing good.
+        }
         target.damage += self.atk;
         if(target.damage >= target.def) {
             target.exists = false;

@@ -328,7 +328,7 @@ contract Galaxy is named("Galaxy") {
                 == ((sector.mine) % diff));
     }
     
-    function mine(uint _shipID) {
+    function mine(uint _shipID) onlyshipowner(_shipID) {
         var ship = shipRegistry[_shipID];
         ship.genericAction(8);
         var sector = galacticMap[ship.currentSystem].map[ship.x][ship.y];
@@ -390,13 +390,15 @@ contract Galaxy is named("Galaxy") {
         }
     }
     
-    function upgrade(uint _shipID, uint8 cargoType) {
+    function upgrade(uint _shipID, uint8 cargoType) onlyshipowner(_shipID) {
         var ship = shipRegistry[_shipID];
         var sector = galacticMap[ship.currentSystem].map[ship.x][ship.y];
         var system = galacticMap[ship.currentSystem];
         ship.genericAction(1);
         if(sector.st != SectorType.Planet)
             throw; // What are you upgrading (with?)
+        if(ship.cargo[cargoType] == 0)
+            throw; // Sir, I'm pretty sure that's an empty cargo pod.
         if(cargoType > 5) {
             throw; // I don't think that will help.
         } else if(cargoType > 2) {
@@ -419,5 +421,29 @@ contract Galaxy is named("Galaxy") {
         ship.cargo[cargoType]++;
         ship.refreshMassRatio();
         shipActivity(ship.currentSystem, ship.x, ship.y, _shipID);        
+    }
+
+    function transferShip(uint _shipID, address _newOwner) 
+        onlyshipowner(_shipID) // THAT'S NOT YOURS TO BEGIN WITH!
+    {
+        var ship = shipRegistry[_shipID];
+        ship.transferOwnership(_newOwner);
+        shipActivity(ship.currentSystem, ship.x, ship.y, _shipID);        
+    }
+    
+    function attack(uint _shipID, uint _targetID) onlyshipowner(_shipID) {
+        var ship = shipRegistry[_shipID];
+        var target = shipRegistry[_targetID];
+        if((ship.currentSystem == target.currentSystem) && 
+           (ship.x == ship.x) && 
+           (ship.y == ship.y)
+        ) {
+            ship.attack(target);
+            shipActivity(ship.currentSystem, ship.x, ship.y, _shipID);
+        } else {
+            //log0("Ship not in range");
+            //return;
+            throw; // Sir, our weapons don't shoot THAT far. 
+        }
     }
 }
