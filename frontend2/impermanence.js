@@ -401,6 +401,7 @@ function mine(shipID, owner) {
     console.log("MINE! MINE! MINE!", shipID);
     tx = galaxy.mine(shipID); // That was easy.
     console.log("THIS TRANSACTION IS MINE!", tx);
+    setTimeout(ctx, 1000)
 }
 
 function ctx() {

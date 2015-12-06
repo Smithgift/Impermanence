@@ -63,7 +63,7 @@ library ShipLib {
         refreshEnergy(self);
         log1(bytes32(effort), bytes32(self.energy));
         //_
-        return;
+        //return;
         if((self.massRatio * effort) > self.energy)
             throw;
         // The following conversion is safe, because if massRatio was 

@@ -9,7 +9,7 @@
             function sandbox(id) {
                 window.web3.setProvider(new web3.providers.HttpProvider('http://the-impermanence-of-space.on.ether.camp:8555/sandbox/' + id));
             }
-            sandbox("baee2bf983b3dcb8fb09702f2ce1acaa52b3493d");
+            sandbox("ac2d83019a7c939aa3db570c4090b91fbad55628");
        </script>
        <script src="abi.js"></script>
        <script>
@@ -54,20 +54,22 @@ var galaxy;
 // Just pretend this part doesn't exist.
 var nameReg = web3.eth.contract(nameRegAbi).at('0x084f6a99003dae6d3906664fdbf43dd09930d0e3');
 var ga;
+build.contracts.Galaxy.bin = "0x" + build.contracts.Galaxy.bin
 nameReg.addressOf("Galaxy", function(err, address) {
  ga = address;
-if(web3.toDecimal(ga)) {
+// THIS IS BROKEN VVV BUT THAT'S OK!
+if(web3.toDecimal(ga) && (web3.eth.getCode(ga) == build.contracts.Galaxy.bin)) {
     galaxy = Galaxy.at(ga);
 } else { 
 // Get? This is a kludge to CREATE the galaxy!
+    console.log("NEW GALAXY TIME")
     createGalaxy();
 }
 });
 
+
 function createGalaxy() {
 // Hey guys, if you want to run compiled code, shove 0x in front first!
-build.contracts.Galaxy.bin = "0x" + build.contracts.Galaxy.bin
-
 var gt;
 web3.eth.sendTransaction({data: build.contracts.Galaxy.bin}, function(err, result) {
     if(err) console.log("Error!", err);
@@ -79,6 +81,10 @@ web3.eth.sendTransaction({data: build.contracts.Galaxy.bin}, function(err, resul
     }, 1000)
 });    
 }
+/*if() {
+    console.log("Galaxy contract changed, rebuilding.")
+    createGalaxy();
+}*/
 
         </script>
         <script src="bower_components/jquery/dist/jquery.js"></script>

@@ -311,7 +311,7 @@ contract Galaxy is named("Galaxy") {
     }
     
     function canMine(uint _shipID, uint16 diff) constant returns (bool) {
-        return true;
+        //return true;
         var ship = shipRegistry[_shipID];
         var sector = galacticMap[ship.currentSystem].map[ship.x][ship.y];
         return ((uint(sha3(_shipID, (block.blockhash(block.number -1)))) % diff) 
@@ -319,14 +319,38 @@ contract Galaxy is named("Galaxy") {
     }
     
     function mine(uint _shipID) {
-        return;
         var ship = shipRegistry[_shipID];
         ship.genericAction(8);
         var sector = galacticMap[ship.currentSystem].map[ship.x][ship.y];
+        // HORRIFING HACK TIME! It seems direct conversion from a sectortype
+        // does not actually work. So, tables.
         uint st = uint(sector.st);
+        /*
+        if(sector.st == SectorType.AtkAsteriod) {
+            st = 1;
+        } else if(sector.st == SectorType.DefAsteriod) {
+            st = 2;
+        } else if(sector.st == SectorType.EngAsteriod) {
+            st = 3;
+        } else if(sector.st == SectorType.AtkMonolith) {
+            st = 4;
+        } else if(sector.st == SectorType.DefMonolith) {
+            st = 5;
+        } else if(sector.st == SectorType.EngMonolith) {
+            st = 6;
+        } else if(sector.st == SectorType.UnobRift) {
+            st = 7;
+        } else {
+            log1("I'm not throwing.", bytes32(st));
+            return;
+        }
+        */
         uint16 diff;
+        log1("This is ST:", bytes32(st));
         if(st == 0) {
-            throw; // You said there was something to mine HERE?
+            //throw; // You said there was something to mine HERE?
+            log0("How is this even possibly?");
+            return;
         } else if (st < 4) {
             diff = 16;
         } else if (st < 7) {
@@ -334,7 +358,9 @@ contract Galaxy is named("Galaxy") {
         } else if (st == 7) {
             diff = 32;
         } else {
-            throw; // I don't know if you get what mining means.
+            //throw; // I don't know if you get what mining means.
+            log0("I'd think it was this one?");
+            return;
         }
         if(canMine(_shipID, diff)) {
             ship.cargo[st - 1]++;
