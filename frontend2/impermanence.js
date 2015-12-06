@@ -342,7 +342,7 @@ function selectShip(ship) {
                 $("#ship_div").text("UPGRADING!!!");
                 var action = new Action(
                     upgrade,
-                    [ship[0], $(hold_select).val(), ship[1][5]],
+                    [ship[0], $(hold_select).valu(), ship[1][5]],
                     1
                 );
                 action.act();
@@ -354,7 +354,7 @@ function selectShip(ship) {
 }
 
 function getDistance(coordsa, coordsb) {
-    return 1; // Until solidity is unbroken.
+    //return 1; // Until solidity is unbroken.
     var distance = 0;
     distance += Math.abs(coordsa[0] - coordsb[0]);
     distance += Math.abs(coordsa[1] - coordsb[1]);

@@ -282,10 +282,20 @@ contract Galaxy is named("Galaxy") {
     ) 
         onlyshipowner(_shipID) 
     {
-        uint distance = 1;
+        uint distance = 0;
         ShipLib.Ship mover = shipRegistry[_shipID];
         // Guess what, kids? absolute values are broken!
-        //distance += uint(+(int(mover.x) - int(_newX)));
+        // So we do them ourselves.
+        int xdiff = 0;
+        xdiff = (int(mover.x) - int(_newX));
+        if(xdiff < 0) 
+            xdiff *= -1;
+        int ydiff = 0;
+        ydiff = (int(mover.y) - int(_newY));
+        if(ydiff < 0) 
+            ydiff *= -1;
+        // It's not really worth it to do the pythagorean formula here.
+        distance = uint(xdiff + ydiff);
         //log2(bytes32(mover.x), bytes32(_newX), bytes32(distance));
         //distance += uint(+(int(mover.y) - int(_newY)));
         //log2(bytes32(mover.y), bytes32(_newY), bytes32(distance));
