@@ -181,7 +181,7 @@ function focusSector(event) {
         var shipTable = document.createElement("table");
         shipTable.id = "ship_table";
         $("#focus").append(shipTable);
-        $(shipTable).append("<tr><td>Name:</td><td>Owner:</td><td>A</td><td>D</td><td>E</td><td>HP</td><td>MR</td><td>ENERGY</td>")
+        $(shipTable).append("<tr><td>Name:</td><td>Owner:</td><td>A</td><td>D</td><td>E</td><td>DMG</td><td>MR</td><td>ENERGY</td>")
         var shipSelect = document.createElement("select");
         shipSelect.id = "ship_select";
         $("#focus").append(shipSelect);
@@ -205,8 +205,7 @@ function focusSector(event) {
     }
 }
 
-function getSectorShips(systemHash, x, y, shipList, shipTable, shipSelect)
-{
+function getSectorShips(systemHash, x, y, shipList, shipTable, shipSelect) {
     for(var i = 0; i < galaxy.getSectorShipsLength(systemHash, x, y); i++) {
         galaxy.getSectorShip(systemHash, x, y, i, function(err, result) {
             if(err) {
@@ -248,7 +247,7 @@ function getSectorShips(systemHash, x, y, shipList, shipTable, shipSelect)
 }
 
 function getShipHold(_shipID) {
-    cargoList = {}
+    var cargoList = {}
     var i = 0; // Manual iteration in a forEach loop. Take that, elegance!
     cargoNames.forEach(function(entry) {
         var cargo = galaxy.getShipCargo(_shipID, i++)
@@ -350,6 +349,42 @@ function selectShip(ship) {
             $("#ship_div").append(upgrade_btn);
             $("#ship_div").append(hold_select);
         }
+        if(ship[1][7] > 0) {
+            var targets = [];
+            Object.keys(focusedSector.ships).forEach(function(entry) {
+                var e = focusedSector.ships[entry];
+                if(ship[1][5] != e[1][5])
+                    targets.push(e);
+            });
+            console.log(targets);
+            if(targets.length > 0) {
+                var attack_btn = document.createElement("input");
+                attack_btn.type = "button";
+                attack_btn.value = "Fire!";
+                var target_select = document.createElement("select");
+                targets.forEach(function(entry) {
+                    $(target_select).append("<option value='" + entry[0] + "'>" + entry[1][12] + "</option>");
+                });
+                $(attack_btn).click(function(event) {
+                    var target = $(target_select).val();
+                    if(focusedSector.ships[target][1][7] >= (ship[1][8] - ship[1][10])) {
+                        // This is not the time to implement a new message system.
+                        alert("That attack would be suicidial. The target's attack of " + focusedSector.ships[target][1][7] + " is more than your defense of " + ship[1][8] + " minus taken damage of " + ship[1][10]);
+                        //$("#ship_div").append("That attack would be suicidal.");
+                        return;
+                    }
+                    $("#ship_div").text("FIRE AT WILL!!!");
+                    var action = new Action(
+                        attack,
+                        [ship[0], $(target_select).val(), ship[1][5]],
+                        1
+                    );
+                    action.act();
+                });
+                $("#ship_div").append(attack_btn);
+                $("#ship_div").append(target_select);
+            }
+        }
     }
 }
 
@@ -449,6 +484,12 @@ function upgrade(shipID, cargoType, owner) {
     console.log("UPGRADING!!!!!!", shipID, cargoType);
     tx = galaxy.upgrade(shipID, cargoType); // Almost as easy.
     console.log("The world and/or your ship is now a better place.", tx);
+}
+
+function attack(shipID, targetID, owner) {
+    console.log("Opening fire!", shipID, targetID);
+    tx = galaxy.attack(shipID, targetID); // OK, so really only that one was hard.
+    console.log("Pew pew pew!", tx);
 }
 
 function ctx() {

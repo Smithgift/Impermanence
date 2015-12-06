@@ -135,7 +135,7 @@
     "panecycle": {
         "json()": [
             "tab1",
-            "tab8"
+            "tab11"
         ]
     },
     "panels": {
@@ -222,7 +222,7 @@
                             "document": {
                                 "changed": false,
                                 "meta": {
-                                    "timestamp": 1449425027270
+                                    "timestamp": 1449427002727
                                 },
                                 "filter": true,
                                 "title": "index.html",
@@ -242,7 +242,7 @@
                             "document": {
                                 "changed": false,
                                 "meta": {
-                                    "timestamp": 1449423036223
+                                    "timestamp": 1449427638252
                                 },
                                 "filter": true,
                                 "title": "impermanence.js",
@@ -250,7 +250,7 @@
                                 "ace": {}
                             },
                             "editorType": "ace",
-                            "active": false
+                            "active": true
                         },
                         {
                             "type": "tab",
@@ -302,7 +302,7 @@
                             "document": {
                                 "changed": false,
                                 "meta": {
-                                    "timestamp": 1449424995780
+                                    "timestamp": 1449426959538
                                 },
                                 "filter": true,
                                 "title": "galaxy.sol",
@@ -310,7 +310,7 @@
                                 "ace": {}
                             },
                             "editorType": "ace",
-                            "active": true
+                            "active": false
                         },
                         {
                             "type": "tab",
@@ -322,7 +322,7 @@
                             "document": {
                                 "changed": false,
                                 "meta": {
-                                    "timestamp": 1449424983463
+                                    "timestamp": 1449426958361
                                 },
                                 "filter": true,
                                 "title": "shiplib.sol",
@@ -428,11 +428,11 @@
                     "skinset": "default",
                     "meta": {
                         "accessList": [
-                            "tab8",
-                            "tab17",
-                            "tab5",
-                            "tab6",
                             "tab11",
+                            "tab5",
+                            "tab17",
+                            "tab8",
+                            "tab6",
                             "tab18",
                             "tab0",
                             "tab4"
