@@ -1,3 +1,63 @@
+var galaxy;
+var shipLib;
+
+var ShipLib = web3.eth.contract(JSON.parse(build.contracts.ShipLib.abi));
+var Galaxy = web3.eth.contract(JSON.parse(build.contracts.Galaxy.abi));
+
+// Hack alert! This is a terrible idea in a production environment.
+if(typeof web3.eth.defaultAccount === "undefined") {
+	web3.eth.defaultAccount = web3.eth.accounts[0];
+}
+
+function createShipLib(callback) {
+	var shipLibCode = "0x" + build.contracts.ShipLib.bin;
+	ShipLib.new({data: shipLibCode}, function(err, newShipLib) {
+		if(newShipLib.address) {
+			shipLib = newShipLib;
+			callback();
+		}
+	});
+}
+
+function createGalaxy(callback) {
+	if(typeof shipLib.address === undefined) {
+		throw new Error("No shipLib exists.");
+	}
+	// Runtime linking! Right before your eyes!
+	var galaxyCode = "0x" + build.contracts.Galaxy.bin.replace(
+		/_+ShipLib_+/g,
+		shipLib.address.replace("0x", "")
+	);
+	console.log(galaxyCode);
+	console.log(galaxyCode.replace(/0[xX][0-9a-fA-F]+/, ""));
+	Galaxy.new({data: galaxyCode}, function(err, newGalaxy) {
+		if(err) {
+			console.log(err);
+			return;
+		}
+		if(newGalaxy.address) {
+			galaxy = newGalaxy;
+			callback();
+		}
+	});    
+}
+
+function createUniverse(callback) {
+	if(typeof shipLib === "undefined") {
+		createShipLib(function() { 
+			createGalaxy(callback);
+		});
+	} else {
+		createGalaxy(callback);
+	}
+}
+
+/*if() {
+    console.log("Galaxy contract changed, rebuilding.")
+    createGalaxy();
+}*/
+
+
 var currentSystemName;
 var currentSystemHash;
 var currentSystem;
