@@ -6,7 +6,7 @@ cd dapp/contracts/
 pwd
 solc --libraries ShipLib:0x0101010101010101010101010101010101010101 --combined-json abi,bin ../_pre/shiplib.sol *.sol > ../../build.json
 cd -
-echo "var build = " > frontend2/abi.js
+echo "module.exports = " > frontend2/abi.js
 cat build.json >> frontend2/abi.js
-echo "var Galaxy = web3.eth.contract(JSON.parse(build" >> frontend2/abi.js
-echo ".contracts.Galaxy.abi))" >> frontend2/abi.js
+#echo "var Galaxy = web3.eth.contract(JSON.parse(build" >> frontend2/abi.js
+#echo ".contracts.Galaxy.abi))" >> frontend2/abi.js
