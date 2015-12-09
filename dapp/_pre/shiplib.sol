@@ -35,8 +35,8 @@ library ShipLib {
     
     function getEnergy(Ship storage self) constant returns (uint) {
         uint baseEnergy = (self.energy + (now - self.lastRefreshed));
-        if(baseEnergy > 255) {
-            return 255;
+        if(baseEnergy > (256 * self.massRatio)) {
+            return (256 * self.massRatio);
         } else {
             return baseEnergy;
         }

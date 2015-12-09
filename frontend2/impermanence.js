@@ -12,6 +12,10 @@ if(typeof web3.eth.defaultAccount === "undefined") {
 function createShipLib(callback) {
 	var shipLibCode = "0x" + build.contracts.ShipLib.bin;
 	ShipLib.new({data: shipLibCode}, function(err, newShipLib) {
+		if(err) {
+			console.log(err);
+			return;
+		}
 		if(newShipLib.address) {
 			shipLib = newShipLib;
 			callback();
@@ -19,16 +23,19 @@ function createShipLib(callback) {
 	});
 }
 
+var galaxyCode
+
 function createGalaxy(callback) {
 	if(typeof shipLib.address === undefined) {
 		throw new Error("No shipLib exists.");
 	}
 	// Runtime linking! Right before your eyes!
-	var galaxyCode = "0x" + build.contracts.Galaxy.bin.replace(
+	galaxyCode = "0x" + build.contracts.Galaxy.bin.replace(
 		/_+ShipLib_+/g,
 		shipLib.address.replace("0x", "")
 	);
 	console.log(galaxyCode);
+	console.log(galaxyCode.length);
 	console.log(galaxyCode.replace(/0[xX][0-9a-fA-F]+/, ""));
 	Galaxy.new({data: galaxyCode}, function(err, newGalaxy) {
 		if(err) {
