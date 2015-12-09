@@ -91,7 +91,7 @@ contract Galaxy is named("Galaxy") {
 
     function Galaxy() {
         // This is a kludge to get the address of the Galaxy.
-        log0("A new galaxy is born!");
+        //log0("A new galaxy is born!");
         // 0 is no ship.
         nextShip = 1;
     }
