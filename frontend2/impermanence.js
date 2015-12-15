@@ -11,7 +11,7 @@ if(typeof web3.eth.defaultAccount === "undefined") {
 
 function createShipLib(callback) {
 	var shipLibCode = "0x" + build.contracts.ShipLib.bin;
-	ShipLib.new({data: shipLibCode}, function(err, newShipLib) {
+	ShipLib.new({data: shipLibCode, gas: 3000000}, function(err, newShipLib) {
 		if(err) {
 			console.log(err);
 			return;
@@ -37,7 +37,7 @@ function createGalaxy(callback) {
 	console.log(galaxyCode);
 	console.log(galaxyCode.length);
 	console.log(galaxyCode.replace(/0[xX][0-9a-fA-F]+/, ""));
-	Galaxy.new({data: galaxyCode}, function(err, newGalaxy) {
+	Galaxy.new({data: galaxyCode, gas: 3141592}, function(err, newGalaxy) {
 		if(err) {
 			console.log(err);
 			return;
@@ -605,7 +605,7 @@ function ctx() {
 }
 
 function createSystem(name, callback) {
-    galaxy.addSystem(name);
+    galaxy.addSystem(name, {gas: 3000000});
     var systemCreated = galaxy.systemAdded({'_systemHash': currentSystemHash});
     systemCreated.watch(function(err, result) {
         if(err) console.log(err);
