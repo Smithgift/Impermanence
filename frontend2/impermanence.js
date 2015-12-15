@@ -211,11 +211,12 @@ function focusSector(event) {
         button.type = "button";
         button.onclick = function() {
             console.log($(craneName).val());
-            galaxy.spawnCrane(
+            tx = galaxy.spawnCrane(
                 currentSystemHash, 
                 focusedSector.x, 
                 focusedSector.y,
-                $(craneName).val()
+                $(craneName).val(),
+                {gas: 500000}
             );
         };
         button.value = "Construct CRaNE!";
@@ -548,7 +549,7 @@ Action.prototype.act = function() {
 
 function impulse(shipID, x, y, owner) {
     console.log("Impulse move", shipID, x, y, owner);
-    var tx = galaxy.impulse(shipID, x, y, {from: owner});
+    tx = galaxy.impulse(shipID, x, y, {from: owner, gas: 500000});
     console.log("Impulse done.", tx);
 }
 
@@ -565,7 +566,7 @@ function jump(shipID, destination, owner) {
                     if(result == currentSystemHash) {
                         var hint = galaxy.compressCoords([this.x, this.y]);
                         console.log("ATTEMPTING JUMP!", destination, hint, this.x, this.y);
-                        tx = galaxy.jump(shipID, hint);
+                        tx = galaxy.jump(shipID, hint, {from: owner, gas: 500000});
                         console.log("INTO THE WORMHOLE!", tx);
                     }
 				}.bind({x: x, y: y})
@@ -597,7 +598,7 @@ function attack(shipID, targetID, owner) {
 
 function wormhole(shipID, toHash, toCoords, owner) {
     console.log("PUNCHING THROUGH SPACETIME", arguments);
-    tx = galaxy.createWormhole(shipID, toHash, toCoords, {from: owner}); // Fine, this one's hard, too.
+    tx = galaxy.createWormhole(shipID, toHash, toCoords, {from: owner, gas: 500000}); // Fine, this one's hard, too.
     console.log("Take that, relativity!", tx);
 }
 
