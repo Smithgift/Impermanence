@@ -558,17 +558,18 @@ function jump(shipID, destination, owner) {
     for(var x = 0; x < 15; x++) {
         for(var y = 0; y < 15; y++) {
             galaxy.getWormhole(
-                currentSystemHash, 
-                [focusedSector.x, focusedSector.y],
+                destination, 
+                [x, y],
                 function(err, result) {
                     console.log("Brute force:", result);
-                    if(result == destination) {
-                        var hint = galaxy.compressCoords([x, y]);
-                        console.log("ATTEMPTING JUMP!", destination, hint, x, y);
+                    if(result == currentSystemHash) {
+                        var hint = galaxy.compressCoords([this.x, this.y]);
+                        console.log("ATTEMPTING JUMP!", destination, hint, this.x, this.y);
                         tx = galaxy.jump(shipID, hint);
                         console.log("INTO THE WORMHOLE!", tx);
                     }
-            }); 
+				}.bind({x: x, y: y})
+			); 
         }
     }
 }
