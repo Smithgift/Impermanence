@@ -605,7 +605,7 @@ function ctx() {
 }
 
 function createSystem(name, callback) {
-    galaxy.addSystem(name, {gas: 3000000});
+    galaxy.addSystem(name, {gas: 500000});
     var systemCreated = galaxy.systemAdded({'_systemHash': currentSystemHash});
     systemCreated.watch(function(err, result) {
         if(err) console.log(err);
