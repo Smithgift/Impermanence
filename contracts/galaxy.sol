@@ -1,8 +1,7 @@
-import "std.sol";
-import "../_pre/shiplib.sol";
+import "shiplib.sol";
 
 ///@title The Impermanence of Space: Galaxy Contract.
-contract Galaxy is named("Galaxy") {
+contract Galaxy {
 
     /*enum TechTypes {
         Atk,
