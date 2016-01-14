@@ -27,70 +27,43 @@ contract Galaxy {
         AscensionGate
     }
     
-    struct Sector {
-        SectorType st;
-        uint8 mine;
-        uint[] sectorShips;
-    }
-    
     struct System {
-        Sector[15][15] map;
+        SectorType[225] map;
+        uint[] localShips;
         string name;
-        uint[3] techLevels;
         bool exists;
+        uint[3] techLevels;
         mapping (uint8 => bytes32) Wormholes;
     }
-    
-    ///@dev convert an array of uints into a single uint. 
-    function compressCoords(uint8[2] coords) constant returns (uint8)
-    {
-        return coords[0] + (coords[1] * 16);
-    }
-    
-    function decompressCoords(uint8 compressedCoords) 
-        constant 
-        returns (uint8 x, uint8 y)
-    {
-        y = compressedCoords / 16;
-        x = compressedCoords % 16;
-    }
-    
+
     mapping (bytes32 => System) public galacticMap;
     
     // And now for a zillion helper functions. Recursive structs and 
-    // getters do not mix. The good news is that calls are free.
+    // getters do not mix. The good news is that calls are free. *
+    // * Y'know, except for local performance.
     
-    function getSectorType(bytes32 s, uint8 x, uint8 y) 
+    function getSystemMap(bytes32 system) 
         constant 
-        returns (SectorType) 
+        returns (SectorType[225]) 
     {
-        return galacticMap[s].map[x][y].st;
+        return galacticMap[system].map;
     }
     
-    function getWormhole(bytes32 s, uint8[2] coords) 
+    function getWormhole(bytes32 system, uint8 coords) 
         constant
         returns (bytes32)
     {
-        return galacticMap[s].Wormholes[compressCoords(coords)];
+        return galacticMap[system].Wormholes[coords];
     }
 
-    function getSectorShipsLength(bytes32 s, uint8 x, uint8 y)
+    function getSystemShips(bytes32 system)
         constant 
-        returns (uint) 
+        returns (uint[]) 
     {
-        return galacticMap[s].map[x][y].sectorShips.length;   
-    }
-
-    function getSectorShip(bytes32 s, uint8 x, uint8 y, uint i)
-        constant 
-        returns (uint) 
-    {
-        return galacticMap[s].map[x][y].sectorShips[i];
+        return galacticMap[system].localShips;
     }
 
     function Galaxy() {
-        // This is a kludge to get the address of the Galaxy.
-        //log0("A new galaxy is born!");
         // 0 is no ship.
         nextShip = 1;
     }
@@ -98,78 +71,74 @@ contract Galaxy {
     event systemAdded(bytes32 indexed _systemHash);
 
     function addSystem(string _name) {
-        // Hack alert!
         bytes32 systemHash = sha3(_name);
         System newSystem = galacticMap[systemHash];
         newSystem.name = _name;
         newSystem.exists = true;
         generateMap(systemHash);
         systemAdded(systemHash);
-        //galacticMap.push(newSystem);
     }
     
-    // We want the hash, not a pointer, because we need the hash as a seed.
     function generateMap(bytes32 systemHash) internal {
+        // The hash is the argument, not a pointer, not a pointer, 
+        // because we need the hash as a seed.
         System newSystem = galacticMap[systemHash];
-        newSystem.map[7][7].st = SectorType.Sun;
+        newSystem.map[(7 * 16) + 7] = SectorType.Sun;
         uint256 seed = uint256(systemHash);
-        uint8 x;
-        uint8 y;
+        uint8 newCoords;
         uint8 newST;
         for(uint8 i = 0; i < 16; i++) {
-            x = uint8(seed % 16);
-            seed /= 16;
-            y = uint8(seed % 16);
-            seed /= 16;
+          newCoords = uint8(seed);
+            seed /= 256;
+            // TODO: Use better tables so no need to mod.
             newST = uint8(seed % 16);
             seed /= 256;
-            if((x == 15) || (y == 15)) {
+            if(((newCoords / 16) == 0) || ((newCoords % 16) == 0)) {
                 continue; // We're off the map.
             } else {
-                Sector chosenSector = newSystem.map[x][y];
-                if(chosenSector.st != SectorType.Empty) continue;
+                var chosenSector = newSystem.map[newCoords];
+                if(chosenSector != SectorType.Empty) continue;
                 if(newST <= 2) {
-                    chosenSector.st = SectorType.AtkAsteriod;
+                    chosenSector = SectorType.AtkAsteriod;
                 } else if (newST <= 5) {
-                    chosenSector.st = SectorType.DefAsteriod;
+                    chosenSector = SectorType.DefAsteriod;
                 } else if (newST <= 8) {
-                    chosenSector.st = SectorType.EngAsteriod;
+                    chosenSector = SectorType.EngAsteriod;
                 } else if (newST == 9) {
-                    chosenSector.st = SectorType.AtkMonolith;
+                    chosenSector = SectorType.AtkMonolith;
                 } else if (newST == 10) {
-                    chosenSector.st = SectorType.DefMonolith;
+                    chosenSector = SectorType.DefMonolith;
                 } else if (newST == 11) {
-                    chosenSector.st = SectorType.EngMonolith;
+                    chosenSector = SectorType.EngMonolith;
                 } else if (newST <= 13) {
-                    chosenSector.st = SectorType.UnobRift;
+                    chosenSector = SectorType.UnobRift;
                 } else {
-                    chosenSector.st = SectorType.Planet;
+                    chosenSector = SectorType.Planet;
                 }
             }
         }
     }
     
-    // TODO: Make internal.
     function createLink(
         bytes32 _from, 
-        uint8[2] _fromCoords, 
+        uint8 _fromCoords, 
         bytes32 _to, 
-        uint8[2] _toCoords
+        uint8 _toCoords
     ) 
         internal
     {
-        System fromSystem = galacticMap[_from];
-        Sector fromSector = fromSystem.map[_fromCoords[0]][_fromCoords[1]];
-        if(fromSector.st != SectorType.Empty) 
+        var fromSystem = galacticMap[_from];
+        var fromSector = fromSystem.map[_fromCoords];
+        if(fromSector != SectorType.Empty) 
             throw;
-        System toSystem = galacticMap[_to];
-        Sector toSector = toSystem.map[_toCoords[0]][_toCoords[1]];
-        if(toSector.st != SectorType.Empty) 
+        var toSystem = galacticMap[_to];
+        var toSector = toSystem.map[_toCoords];
+        if(toSector != SectorType.Empty) 
             throw;
-        fromSector.st = SectorType.Wormhole;
-        fromSystem.Wormholes[compressCoords(_fromCoords)] = _to;
-        toSector.st = SectorType.Wormhole;
-        toSystem.Wormholes[compressCoords(_toCoords)] = _from;
+        fromSector = SectorType.Wormhole;
+        fromSystem.Wormholes[_fromCoords] = _to;
+        toSector = SectorType.Wormhole;
+        toSystem.Wormholes[_toCoords] = _from;
     }
 
     //
@@ -192,63 +161,57 @@ contract Galaxy {
     
     event shipActivity(
         bytes32 indexed system, 
-        uint8 indexed x, 
-        uint8 indexed y,
-        uint shipID
+        uint8 indexed coords,
+        uint indexed shipID
     );
     
     function getShipEnergy(uint _shipID) constant returns (uint) {
         return shipRegistry[_shipID].getEnergy();
     }
 
-    function getShipCargo(uint _shipID, uint8 _cargoType) constant returns (uint) {
+    function getShipCargo(uint _shipID, uint8 _cargoType) 
+        constant 
+        returns (uint) 
+    {
         return shipRegistry[_shipID].cargo[_cargoType];
     }
 
     function insertShip(
         bytes32 _system, 
-        uint8 _x, 
-        uint8 _y, 
         uint _shipID
     ) 
         internal 
     {
-        // Optimiziation smoptimization.
-        Sector _sector = galacticMap[_system].map[_x][_y];
-        _sector.sectorShips.push(_shipID);
-        shipActivity(_system, _x, _y, _shipID);
+        galacticMap[_system].localShips.push(_shipID);
     }
     
     function removeShip(
         bytes32 _system, 
-        uint8 _x, 
-        uint8 _y, 
         uint _shipID
     ) 
         internal 
     {
-        Sector _sector = galacticMap[_system].map[_x][_y];
-        uint i = 0;
-        while(true) {
-            if(_sector.sectorShips[i] == _shipID) {
-                _sector.sectorShips[i] = 0;
-                shipActivity(_system, _x, _y, _shipID);
+        var system = galacticMap[_system];
+        for(var i = 0; i < system.localShips.length; i++) {
+            if(system.localShips[i] == _shipID) {
+                system.localShips[i] = system.localShips[system.localShips.length];
+                system.localShips.length--;
                 return;
             }
-            i++; // Yes, if we go off, we'll throw. That's the point.
         }
+        // Is it not here? Throw!
+        throw;
     }
     
-    function spawnCrane(bytes32 _system, uint8 _x, uint8 _y, string _name) {
-        Sector spawnSector = galacticMap[_system].map[_x][_y];
-        if(spawnSector.st != SectorType.Planet) 
+    function spawnCrane(bytes32 _system, uint8 _coords, string _name) {
+        var spawnSector = galacticMap[_system].map[_coords];
+        if(spawnSector != SectorType.Planet) 
             throw; // Generally, empty space does not have an industrial base.
         uint craneID = nextShip++;
-        ShipLib.Ship crane = shipRegistry[craneID];
+        var crane = shipRegistry[craneID];
         crane.exists = true;
-        crane.currentSystem = _system;
-        crane.x = _x;
-        crane.y = _y;
+        crane.system = _system;
+        crane.coords = _coords;
         crane.energy = 0;
         crane.owner = msg.sender;
         crane.lastRefreshed = now;
@@ -257,111 +220,78 @@ contract Galaxy {
         crane.name = _name;
         crane.refreshMassRatio();
         crane.restoreHP();
-        insertShip(_system,_x, _y, craneID);
+        insertShip(_system, craneID);
     }
     
     function moveShip(
         uint _shipID, 
         bytes32 _newSystem, 
-        uint8 _newX, 
-        uint8 _newY, 
+        uint8 _newCoords,
         uint distance
-    ) internal
+    ) 
+        internal
     {
-        ShipLib.Ship mover = shipRegistry[_shipID];
-        //Sector oldSector=galacticMap[mover.currentSystem].map[mover.x][mover.y];
-        removeShip(mover.currentSystem, mover.x, mover.y, _shipID);
-        mover.move(_newSystem, _newX, _newY, distance);
-        //Sector newSector=galacticMap[_newSystem].map[_newX][_newX];
-        insertShip(_newSystem, _newX, _newY, _shipID);
+        var mover = shipRegistry[_shipID];
+        shipActivity(mover.system, mover.coords, _shipID);
+        if(mover.system != _newSystem) {
+          removeShip(mover.system, _shipID);
+          insertShip(_newSystem, _shipID);
+        }
+        mover.move(_newSystem, _newCoords, distance);
+        shipActivity(mover.system, mover.coords, _shipID);
     }
     
     function impulse(
         uint _shipID, 
-        uint8 _newX, 
-        uint8 _newY
+        uint8 _newCoords
     ) 
         onlyshipowner(_shipID) 
     {
         uint distance = 0;
-        ShipLib.Ship mover = shipRegistry[_shipID];
-        // Guess what, kids? absolute values are broken!
-        // So we do them ourselves.
-        int xdiff = 0;
-        xdiff = (int(mover.x) - int(_newX));
+        var mover = shipRegistry[_shipID];
+        uint8 curX = mover.coords / 16;
+        uint8 newX = _newCoords / 16; 
+        int8 xdiff = (int8(curX) - int8(newX));
         if(xdiff < 0) 
             xdiff *= -1;
-        int ydiff = 0;
-        ydiff = (int(mover.y) - int(_newY));
+        uint8 curY = mover.coords / 16;
+        uint8 newY = _newCoords / 16; 
+        int8 ydiff = (int8(curY) - int8(newY));
         if(ydiff < 0) 
             ydiff *= -1;
         // It's not really worth it to do the pythagorean formula here.
         distance = uint(xdiff + ydiff);
-        //log2(bytes32(mover.x), bytes32(_newX), bytes32(distance));
-        //distance += uint(+(int(mover.y) - int(_newY)));
-        //log2(bytes32(mover.y), bytes32(_newY), bytes32(distance));
-        moveShip(_shipID, mover.currentSystem, _newX, _newY, distance);
+        moveShip(_shipID, mover.system, _newCoords, distance);
     }
     
-    function jump(uint _shipID, uint8 destHint) onlyshipowner(_shipID) {
-        ShipLib.Ship ship = shipRegistry[_shipID];
-        uint8[2] memory homecoords;
-        homecoords[0] = ship.x;
-        homecoords[1] = ship.y;
-        bytes32 dest = galacticMap[ship.currentSystem]
-                                        .Wormholes[compressCoords(homecoords)];
+    function jump(uint _shipID, uint8 destCoords) onlyshipowner(_shipID) {
+        var mover = shipRegistry[_shipID];
+        uint8 homeCoords = mover.coords;
+        bytes32 dest = galacticMap[mover.system].Wormholes[homeCoords];
         if(dest == 0x0) 
-            throw; // There wasn't a wormhole here.
-        System destSystem = galacticMap[dest];
-        if(destSystem.Wormholes[destHint] != ship.currentSystem)
+            throw; // Sir, there's no wormhole here.
+        var destSystem = galacticMap[dest];
+        if(destSystem.Wormholes[destCoords] != mover.system)
             throw; // YOU SHOULD HAVE TAKEN THAT META-LEFT TURN!
-        uint8 destx;
-        uint8 desty;
-        (destx, desty) = decompressCoords(destHint);
-        moveShip(_shipID, dest, destx, desty, 1);
+        moveShip(_shipID, dest, destCoords, 1);
     }
     
     function canMine(uint _shipID, uint16 diff) constant returns (bool) {
+        // TODO: Fix multiple mining.
         //return true;
         var ship = shipRegistry[_shipID];
-        var sector = galacticMap[ship.currentSystem].map[ship.x][ship.y];
-        return ((uint(sha3(_shipID, (block.blockhash(block.number -1)))) % diff) 
-                == ((sector.mine) % diff));
+        var sector = galacticMap[ship.system].map[ship.coords];
+        return ((uint(sha3(_shipID, (block.blockhash(block.number -1)))) % diff) == 0);
     }
     
     function mine(uint _shipID) onlyshipowner(_shipID) {
         var ship = shipRegistry[_shipID];
         ship.genericAction(8);
-        var sector = galacticMap[ship.currentSystem].map[ship.x][ship.y];
-        // HORRIFING HACK TIME! It seems direct conversion from a sectortype
-        // does not actually work. So, tables.
-        uint st = uint(sector.st);
-        /*
-        if(sector.st == SectorType.AtkAsteriod) {
-            st = 1;
-        } else if(sector.st == SectorType.DefAsteriod) {
-            st = 2;
-        } else if(sector.st == SectorType.EngAsteriod) {
-            st = 3;
-        } else if(sector.st == SectorType.AtkMonolith) {
-            st = 4;
-        } else if(sector.st == SectorType.DefMonolith) {
-            st = 5;
-        } else if(sector.st == SectorType.EngMonolith) {
-            st = 6;
-        } else if(sector.st == SectorType.UnobRift) {
-            st = 7;
-        } else {
-            log1("I'm not throwing.", bytes32(st));
-            return;
-        }
-        */
+        var sector = galacticMap[ship.system].map[ship.coords];
+        uint st = uint(sector);
         uint16 diff;
-        log1("This is ST:", bytes32(st));
         if(st == 0) {
-            //throw; // You said there was something to mine HERE?
-            log0("How is this even possibly?");
-            return;
+            throw; // Yes, sir, we'll start loading up that empty vacuum.
         } else if (st < 4) {
             diff = 16;
         } else if (st < 7) {
@@ -369,21 +299,17 @@ contract Galaxy {
         } else if (st == 7) {
             diff = 32;
         } else {
-            //throw; // I don't know if you get what mining means.
-            log0("I'd think it was this one?");
-            return;
+            throw; // I don't know if you get what mining means.
         }
         if(canMine(_shipID, diff)) {
             ship.cargo[st - 1]++;
-            log1("New cargo:",bytes32(ship.cargo[st - 1]));
             ship.refreshMassRatio();
-            sector.mine++;
-            shipActivity(ship.currentSystem, ship.x, ship.y, _shipID);
+            shipActivity(ship.system, ship.coords, _shipID);
             if(st > 3) {
                 if(st < 7) {
-                    sector.st = SectorType(st - 3);
+                    galacticMap[ship.system].map[ship.coords] = SectorType(st - 3);
                 } else {
-                    sector.st = SectorType.Empty;
+                    galacticMap[ship.system].map[ship.coords] = SectorType.Empty;
                 }
             }
         } else {
@@ -393,10 +319,10 @@ contract Galaxy {
     
     function upgrade(uint _shipID, uint8 cargoType) onlyshipowner(_shipID) {
         var ship = shipRegistry[_shipID];
-        var sector = galacticMap[ship.currentSystem].map[ship.x][ship.y];
-        var system = galacticMap[ship.currentSystem];
+        var sector = galacticMap[ship.system].map[ship.coords];
+        var system = galacticMap[ship.system];
         ship.genericAction(1);
-        if(sector.st != SectorType.Planet)
+        if(sector != SectorType.Planet)
             throw; // What are you upgrading (with?)
         if(ship.cargo[cargoType] == 0)
             throw; // Sir, I'm pretty sure that's an empty cargo pod.
@@ -412,7 +338,7 @@ contract Galaxy {
             ship.atk += (1 + system.techLevels[0]);
         }
         ship.cargo[cargoType]--;
-        shipActivity(ship.currentSystem, ship.x, ship.y, _shipID);
+        shipActivity(ship.system, ship.coords, _shipID);
         ship.refreshMassRatio();
     }
     
@@ -421,7 +347,7 @@ contract Galaxy {
         var ship = shipRegistry[_shipID];
         ship.cargo[cargoType]++;
         ship.refreshMassRatio();
-        shipActivity(ship.currentSystem, ship.x, ship.y, _shipID);        
+        shipActivity(ship.system, ship.coords, _shipID);        
     }
 
     function transferShip(uint _shipID, address _newOwner) 
@@ -429,21 +355,20 @@ contract Galaxy {
     {
         var ship = shipRegistry[_shipID];
         ship.transferOwnership(_newOwner);
-        shipActivity(ship.currentSystem, ship.x, ship.y, _shipID);        
+        // It's potentially important to you if some third party changes
+        // a ship's ownership.
+        shipActivity(ship.system, ship.coords, _shipID);        
     }
     
     function attack(uint _shipID, uint _targetID) onlyshipowner(_shipID) {
         var ship = shipRegistry[_shipID];
         var target = shipRegistry[_targetID];
-        if((ship.currentSystem == target.currentSystem) && 
-           (ship.x == ship.x) && 
-           (ship.y == ship.y)
+        if((ship.system == target.system) && 
+           (ship.coords == target.coords)
         ) {
             ship.attack(target);
-            shipActivity(ship.currentSystem, ship.x, ship.y, _shipID);
+            shipActivity(ship.system, ship.coords, _shipID);
         } else {
-            //log0("Ship not in range");
-            //return;
             throw; // Sir, our weapons don't shoot THAT far. 
         }
     }
@@ -451,7 +376,7 @@ contract Galaxy {
     function createWormhole(
         uint _shipID,         
         bytes32 _to, 
-        uint8[2] _toCoords
+        uint8 _toCoords
     )
         onlyshipowner(_shipID)
     {
@@ -460,10 +385,7 @@ contract Galaxy {
             throw; // No unobtanium, no FTL.
         ship.genericAction(16);
         ship.cargo[6]--;
-        uint8[2] memory fromCoords;
-        fromCoords[0] = ship.x;
-        fromCoords[1] = ship.y;
-        createLink(ship.currentSystem, fromCoords, _to, _toCoords);
-        shipActivity(ship.currentSystem, ship.x, ship.y, _shipID);
+        createLink(ship.system, ship.coords, _to, _toCoords);
+        shipActivity(ship.system, ship.coords, _shipID);
     }
 }

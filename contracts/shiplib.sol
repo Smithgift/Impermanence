@@ -9,20 +9,19 @@ library ShipLib {
         EngTech,
         UnobOrb
     }
-    
+    /* Currently nonfunctional
     struct Cargo {
         CargoType ct;
         uint amount;
         byte originZone; //Why not?
     }
-    
+    */
     struct Ship {
         bool exists;
-        bytes32 currentSystem;
-        uint8 x;
-        uint8 y;
-        uint energy;
         address owner;
+        bytes32 system;
+        uint8 coords;
+        uint energy;
         uint lastRefreshed;
         uint atk;
         uint def;
@@ -61,45 +60,36 @@ library ShipLib {
         if(!self.exists)
             throw; // IT'S THE ORBITING DUTCHMAN!
         refreshEnergy(self);
-        log1(bytes32(effort), bytes32(self.energy));
+        //log1(bytes32(effort), bytes32(self.energy));
         //_
         //return;
         if((self.massRatio * effort) > self.energy)
             throw;
-        // The following conversion is safe, because if massRatio was 
-        // greater than 255, we'd just have thrown.
         self.energy -= (self.massRatio * effort);
         _
     }
-    
+
+    // TODO: Does this function actually need to exist?
     function transferOwnership(Ship storage self, address _newOwner) {
-        log0(bytes32(self.owner));
         self.owner = _newOwner;
-        log0(bytes32(self.owner));
     }
     
     function move(
         Ship storage self, 
         bytes32 _newSystem, 
-        uint8 _newX, 
-        uint8 _newY, 
+        uint8 _newCoords,
         uint distance
     ) act(self, distance) {
-        self.currentSystem = _newSystem;
-        self.x = _newX;
-        self.y = _newY;
+        self.system = _newSystem;
+        self.coords = _newCoords;
     }
     
     function attack(Ship storage self, Ship storage target) act(self, 1) {
         if(self.owner == target.owner) {
-            //log2("Friendly fire.", bytes32(self.owner), bytes32(target.owner));
-            //return;
             throw; // I'm sure this would be amusing. Once.
         }
         self.damage += target.atk;
         if(self.damage >= self.def) {
-            //log0("Suicidal attack.");
-            //return;
             throw; // The attack will bring nothing good.
         }
         target.damage += self.atk;
@@ -112,7 +102,9 @@ library ShipLib {
         self.damage = 0;
     }
     
-    function genericAction(Ship storage self, uint effort) act(self, effort) {
+    function genericAction(Ship storage self, uint effort) 
+      act(self, effort) 
+    {
         // Just for some random action you want to spend energy on.
     }
 }
