@@ -3,11 +3,30 @@ function PageViewModel() {
 } 
 
 var SystemSelect = {
+  controller: function(args) {
+    return {
+      changeSystem: function() {
+        m.route("/system/" + args.pvm.nextSys());
+      }
+    };
+  },
   view: function(ctrl, args) {
-       return m("div", [
-        "System name:",
-        m("input", {oninput: m.withAttr("value", args.pvm.nextSys)})
-      ]);
+    return m("div", [
+      "System name:",
+      m("input", {oninput: m.withAttr("value", args.pvm.nextSys)}),
+      m("button", {onclick: ctrl.changeSystem}, ["Go!"])
+    ]);
+  }
+}
+
+var SystemMap = {
+  controller: function(args) {
+    return {
+      name: m.route.param("name")
+    };
+  },
+  view: function(ctrl, args) {
+    return m("h1", [ctrl.name]);
   }
 }
 

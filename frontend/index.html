@@ -13,7 +13,8 @@
           
           $(document).ready(function() {
             m.route(document.body, "/", {
-              "/": m.component(FrontPage, {pvm: pvm}) 
+              "/": m.component(FrontPage, {pvm: pvm}),
+              "/system/:name": m.component(SystemMap, {pvm: pvm})
             });
           })
         </script>
