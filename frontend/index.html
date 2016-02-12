@@ -8,6 +8,15 @@
         <script src="bower_components/jquery/dist/jquery.js"></script>
         <script src="impermanence.js"></script>
         <script src="ui.js"></script>
+        <script>
+          var pvm = new PageViewModel();
+          
+          $(document).ready(function() {
+            m.route(document.body, "/", {
+              "/": m.component(FrontPage, {pvm: pvm}) 
+            });
+          })
+        </script>
     </head>
     <body>
          System name: <input type=text id="name" /><input type=button value="Go!" onclick="setSystem($('#name')[0].value)">
