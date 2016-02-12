@@ -3,94 +3,11 @@
     <head>
         <title>The Impermanence of Space</title>
         <link rel="stylesheet" type="text/css" href="impermanence.css" />
-        <!--<script src="frontend.js"></script>
-        <script>
-            // kludge to connect to the sandbox.
-            function sandbox(id) {
-                window.web3.setProvider(new web3.providers.HttpProvider('http://the-impermanence-of-space.on.ether.camp:8555/sandbox/' + id));
-            }
-            sandbox("b74ff48503cdd2894193bdb3d0937ef99ba66df8");
-            foe = "0x17956ba5f4291844bc25aedb27e69bc11b5bda39";
-       </script>
-       <script src="abi.js"></script>
-       <script>
-            /*
-            // Kludge to get the galaxy.
-            var kfilter = window.web3.eth.filter({fromBlock: 0});
-            var kevent; 
-            var GalaxyAddress;
-            var galaxy;
-            kfilter.get(function(err, result) {
-                console.log(result);
-                kevent = result;
-                // Hack alert. Hi future self, this is why your events are breaking.
-                GalaxyAddress = kevent[1].address;
-                galaxy = Galaxy.at(GalaxyAddress) 
-
-            });
-            */
-var nameRegAbi = [
-{
-    "constant": true,
-    "inputs": [
-      {
-        "name": "name",
-        "type": "bytes32"
-      }
-    ],
-    "name": "addressOf",
-    "outputs": [
-      {
-        "name": "addr",
-        "type": "address"
-      }
-    ],
-    "type": "function"
-  }
-];
-
-web3.eth.defaultAccount = web3.eth.accounts[0]
-
-var galaxy;
-// Just pretend this part doesn't exist.
-var nameReg = web3.eth.contract(nameRegAbi).at('0x084f6a99003dae6d3906664fdbf43dd09930d0e3');
-var ga;
-build.contracts.Galaxy.bin = "0x" + build.contracts.Galaxy.bin
-nameReg.addressOf("Galaxy", function(err, address) {
- ga = address;
-// THIS IS BROKEN VVV BUT THAT'S OK!
-if(web3.toDecimal(ga) /*&& (web3.eth.getCode(ga) == build.contracts.Galaxy.bin)*/) {
-    galaxy = Galaxy.at(ga);
-} else { 
-// Get? This is a kludge to CREATE the galaxy!
-    console.log("NEW GALAXY TIME")
-    createGalaxy();
-}
-});
-
-
-function createGalaxy() {
-// Hey guys, if you want to run compiled code, shove 0x in front first!
-var gt;
-web3.eth.sendTransaction({data: build.contracts.Galaxy.bin}, function(err, result) {
-    if(err) console.log("Error!", err);
-    console.log(result);
-    gt = result;
-    // Hello, I'm a hack.
-    setTimeout(function() {
-        galaxy = Galaxy.at(web3.eth.getTransactionReceipt(gt).contractAddress);
-    }, 1000)
-});    
-}
-/*if() {
-    console.log("Galaxy contract changed, rebuilding.")
-    createGalaxy();
-}*/
-
-        </script>-->
         <script src="app.js"></script>
+        <script src="mithril.js"></script>
         <script src="bower_components/jquery/dist/jquery.js"></script>
         <script src="impermanence.js"></script>
+        <script src="ui.js"></script>
     </head>
     <body>
          System name: <input type=text id="name" /><input type=button value="Go!" onclick="setSystem($('#name')[0].value)">
