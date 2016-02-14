@@ -4,20 +4,17 @@
         <title>The Impermanence of Space</title>
         <link rel="stylesheet" type="text/css" href="impermanence.css" />
         <script src="app.js"></script>
-        <script src="mithril.js"></script>
+        <!--<script src="mithril.js"></script>-->
         <script src="bower_components/jquery/dist/jquery.js"></script>
         <script src="impermanence.js"></script>
         <script src="ui.js"></script>
-        <script>
+        <!--<script>
           var pvm = new PageViewModel();
           
           $(document).ready(function() {
-            m.route(document.body, "/", {
-              "/": m.component(FrontPage, {pvm: pvm}),
-              "/system/:name": m.component(SystemMap, {pvm: pvm})
-            });
+          
           })
-        </script>
+        </script>-->
     </head>
     <body>
          System name: <input type=text id="name" /><input type=button value="Go!" onclick="setSystem($('#name')[0].value)">
