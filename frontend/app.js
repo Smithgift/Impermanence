@@ -8,6 +8,11 @@ var $ = require("jquery");
 var ui = require("./ui");
 $(document).ready(function() {ui.init();});
 
-window.cu = require("./universe").cu;
+u = require("./universe");
 
+// Scary debug function. Only run on your private testnet!
+window.dcu = function() {
+  web3.eth.defaultAccount = web3.eth.accounts[0];
+  u.cu();
+}
 window.tg = require("./system").tg;
