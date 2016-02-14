@@ -8,6 +8,6 @@ var $ = require("jquery");
 var ui = require("./ui");
 $(document).ready(function() {ui.init();});
 
-window.cu = require("./galaxy").cu;
+window.cu = require("./universe").cu;
 
 window.tg = require("./system").tg;

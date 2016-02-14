@@ -1,6 +1,6 @@
 // ORM of a system.
 
-var galaxy = require("./galaxy").galaxy;
+var u = require("./universe");
 
 function System(name) {
   this.name = name;
@@ -13,4 +13,4 @@ System.prototype.refreshMap = function() {
   this.map = galaxy.getSystemMap(this.hash);
 };
 
-exports.tg = function() { console.log(galaxy); };
+exports.tg = function() { console.log(u.galaxy); };
