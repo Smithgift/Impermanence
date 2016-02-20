@@ -1,4 +1,3 @@
 frontend.js
 abi.js
-build.json
-build.js
+build/*

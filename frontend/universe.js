@@ -1,6 +1,6 @@
 module.exports = function(web3) {
   var exports = {};
-  var build = require("./build");
+  var build = require("../build/contracts.js");
 
   var ShipLibBin = "0x" + build.contracts.ShipLib.bin;
   var ShipLib = web3.eth.contract(JSON.parse(build.contracts.ShipLib.abi));
@@ -14,7 +14,7 @@ module.exports = function(web3) {
           return;
         }
         if(newShipLib.address) {
-          callback();
+          callback(newShipLib);
         }
       }
     );

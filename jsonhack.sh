@@ -4,9 +4,9 @@
 
 cd contracts/
 pwd
-solc --combined-json abi,bin *.sol > ../build.json
+solc --combined-json abi,bin *.sol > ../build/contracts.json
 cd -
-echo "module.exports = " > frontend/build.js
-cat build.json >> frontend/build.js
+echo "module.exports = " > build/contracts.js
+cat build/contracts.json >> build/contracts.js
 #echo "var Galaxy = web3.eth.contract(JSON.parse(build" >> frontend2/abi.js
 #echo ".contracts.Galaxy.abi))" >> frontend2/abi.js
