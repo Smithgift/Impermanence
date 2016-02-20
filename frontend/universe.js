@@ -53,11 +53,5 @@ module.exports = function(web3) {
 
   exports.createUniverse = createUniverse;
 
-  // For easy development.
-  exports.cu = function() { 
-    createUniverse(function() {
-      console.log("Ready!")
-    })
-  }
   return exports;
 }
