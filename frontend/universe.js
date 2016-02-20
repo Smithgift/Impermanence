@@ -6,12 +6,11 @@ module.exports = function(web3) {
   var ShipLib = web3.eth.contract(JSON.parse(build.contracts.ShipLib.abi));
 
   function createShipLib(callback) {
-    exports.shipLib = ShipLib.new(
+    ShipLib.new(
       {data: ShipLibBin, gas: 3000000}, 
       function(err, newShipLib) {
         if(err) {
-          console.log(err);
-          return;
+          throw err;
         }
         if(newShipLib.address) {
           callback(newShipLib);
@@ -24,24 +23,20 @@ module.exports = function(web3) {
   var GalaxyBin = "0x" + build.contracts.Galaxy.bin;
   var Galaxy = web3.eth.contract(JSON.parse(build.contracts.Galaxy.abi));
 
-  function createGalaxy(callback) {
-    if(typeof exports.shipLib.address === undefined) {
-      throw new Error("No shipLib exists.");
-    }
-    // Runtime linking! Right before your eyes!
+  function createGalaxy(shipLib, callback) {
+    // Runtime linking! Right before your very eyes!
     var linkedGalaxyCode = GalaxyBin.replace(
         /_+ShipLib_+/g,
-      exports.shipLib.address.replace("0x", "")
+      shipLib.address.replace("0x", "")
     );
-    exports.galaxy = Galaxy.new(
+    Galaxy.new(
       {data: linkedGalaxyCode, gas: 3141592}, 
       function(err, newGalaxy) {
         if(err) {
-          console.log(err);
-          return;
+          throw err;
         }
         if(newGalaxy.address) {
-          callback();
+          callback(newGalaxy);
         }
       }
     );    
