@@ -44,14 +44,11 @@ module.exports = function(web3) {
 
   exports.createGalaxy = createGalaxy;
 
+  // Create both a shipLib and a galaxy.
   function createUniverse(callback) {
-    if(typeof shipLib === "undefined") {
-      createShipLib(function() { 
-        createGalaxy(callback);
-      });
-    } else {
-      createGalaxy(callback);
-    }
+    createShipLib(function(shipLib) { 
+      createGalaxy(shipLib, callback);
+    });
   }
 
   exports.createUniverse = createUniverse;
