@@ -1,5 +1,5 @@
 var assert = require("assert");
-var universe = require("../frontend/universe");
+var universe = require("../src/universe");
 var build = require("../build/contracts.js");
 
 describe('universe', function() {
