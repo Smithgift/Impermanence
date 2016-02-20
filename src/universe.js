@@ -44,7 +44,7 @@ module.exports = function(web3) {
 
   exports.createGalaxy = createGalaxy;
 
-  // Create both a shipLib and a galaxy.
+  // Create both a ShipLib and a Galaxy.
   function createUniverse(callback) {
     createShipLib(function(shipLib) { 
       createGalaxy(shipLib, callback);
@@ -52,6 +52,12 @@ module.exports = function(web3) {
   }
 
   exports.createUniverse = createUniverse;
+
+  function linkGalaxy(address) {
+    return Galaxy.at(address);
+  }
+
+  exports.linkGalaxy = linkGalaxy;
 
   return exports;
 }

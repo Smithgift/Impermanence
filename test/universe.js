@@ -26,7 +26,15 @@ describe('universe', function() {
     })
   });
 
-  it('creats Universes', function(done) {
+  it('creates Universes', function(done) {
     u.createUniverse(function() {done()});
   })
+
+  it('connects to existing Galaxies', function(done) {
+    u.createUniverse(function(newGalaxy) {
+      var galaxy = u.linkGalaxy(newGalaxy.address);
+      // TODO: Determine that it actually is a galaxy.
+      done();
+    })
+  });
 });
