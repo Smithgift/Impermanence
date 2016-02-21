@@ -1,6 +1,6 @@
-var assert = require("assert");
-var universe = require("../src/universe");
-var build = require("../build/contracts.js");
+var assert = require('assert');
+var universe = require('../src/universe');
+var build = require('../build/contracts.js');
 
 describe('universe', function() {
   this.timeout(10000);
