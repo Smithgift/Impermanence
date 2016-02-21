@@ -3,7 +3,7 @@ var universe = require('../src/universe');
 var build = require('../build/contracts.js');
 
 describe('universe', function() {
-  this.timeout(10000);
+  this.timeout(0);
 
   var u;
   before('setup web3', function() {
