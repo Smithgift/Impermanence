@@ -31,7 +31,7 @@ describe('system', function() {
     }); 
 
     it('has nothing in the map', function() {
-      assert.deepEqual(tauceti.map.map((bn) => bn.toNumber()), Array.from({length: 225}, () => 0));
+      assert.deepEqual(tauceti.map, Array.from({length: 225}, () => 0));
     });
   });
 });
