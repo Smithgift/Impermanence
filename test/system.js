@@ -34,5 +34,18 @@ describe('system', function() {
       assert.deepEqual(tauceti.map, Array.from({length: 225}, () => 0));
     });
   });
+
+  describe('#created system', function() {
+    var polaris;
+    
+    before('create polaris', function(done) {
+      polaris = new System('polaris');
+      polaris.create().then(function() {done()});
+    });
+
+    it.only('has the correct map', function() {
+      assert.deepEqual(polaris.map, Array.from({length: 225}, () => 0));
+    })
+  })
 });
 

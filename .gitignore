@@ -1,3 +1,4 @@
 frontend.js
 abi.js
 build/*
+.node-*

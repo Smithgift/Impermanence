@@ -28,7 +28,7 @@ contract Galaxy {
     }
     
     struct System {
-        SectorType[225] map;
+        SectorType[256] map;
         uint[] localShips;
         string name;
         bool exists;
@@ -44,7 +44,7 @@ contract Galaxy {
     
     function getSystemMap(bytes32 system) 
         constant 
-        returns (SectorType[225]) 
+        returns (SectorType[256]) 
     {
         return galacticMap[system].map;
     }
@@ -84,37 +84,37 @@ contract Galaxy {
         // because we need the hash as a seed.
         System newSystem = galacticMap[systemHash];
         newSystem.map[(7 * 16) + 7] = SectorType.Sun;
+        newSystem.map[(7 * 16) + 8] = SectorType.Sun;
+        newSystem.map[(8 * 16) + 7] = SectorType.Sun;
+        newSystem.map[(8 * 16) + 8] = SectorType.Sun;
         uint256 seed = uint256(systemHash);
         uint8 newCoords;
         uint8 newST;
         for(uint8 i = 0; i < 16; i++) {
-          newCoords = uint8(seed);
+            newCoords = uint8(seed);
             seed /= 256;
             // TODO: Use better tables so no need to mod.
             newST = uint8(seed % 16);
             seed /= 256;
-            if(((newCoords / 16) == 0) || ((newCoords % 16) == 0)) {
-                continue; // We're off the map.
+            var chosenSector = newSystem.map[newCoords / 16];
+            if(chosenSector != SectorType.Empty) {
+              continue;
+            } else if(newST <= 2) {
+              chosenSector = SectorType.AtkAsteriod;
+            } else if (newST <= 5) {
+              chosenSector = SectorType.DefAsteriod;
+            } else if (newST <= 8) {
+              chosenSector = SectorType.EngAsteriod;
+            } else if (newST == 9) {
+              chosenSector = SectorType.AtkMonolith;
+            } else if (newST == 10) {
+              chosenSector = SectorType.DefMonolith;
+            } else if (newST == 11) {
+              chosenSector = SectorType.EngMonolith;
+            } else if (newST <= 13) {
+              chosenSector = SectorType.UnobRift;
             } else {
-                var chosenSector = newSystem.map[newCoords];
-                if(chosenSector != SectorType.Empty) continue;
-                if(newST <= 2) {
-                    chosenSector = SectorType.AtkAsteriod;
-                } else if (newST <= 5) {
-                    chosenSector = SectorType.DefAsteriod;
-                } else if (newST <= 8) {
-                    chosenSector = SectorType.EngAsteriod;
-                } else if (newST == 9) {
-                    chosenSector = SectorType.AtkMonolith;
-                } else if (newST == 10) {
-                    chosenSector = SectorType.DefMonolith;
-                } else if (newST == 11) {
-                    chosenSector = SectorType.EngMonolith;
-                } else if (newST <= 13) {
-                    chosenSector = SectorType.UnobRift;
-                } else {
-                    chosenSector = SectorType.Planet;
-                }
+              chosenSector = SectorType.Planet;
             }
         }
     }
