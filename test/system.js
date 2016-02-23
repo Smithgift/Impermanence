@@ -43,8 +43,9 @@ describe('system', function() {
       polaris.create().then(function() {done()});
     });
 
-    it.only('has the correct map', function() {
-      assert.deepEqual(polaris.map, Array.from({length: 225}, () => 0));
+    it('doesn\'t have an empty map', function() {
+      // TODO: Set this to the actual map.
+      assert.notDeepEqual(polaris.map, Array.from({length: 225}, () => 0));
     })
   })
 });
