@@ -1,4 +1,4 @@
-assert = require('assert');
+var assert = require('chai').assert;
 var universe = require('../src/universe');
 var system = require('../src/system');
 
@@ -9,7 +9,7 @@ describe('system', function() {
 
   before('setup universe', function(done) {
     var u = universe(web3);
-    u.createUniverse(function(galaxy) {
+    u.createUniverse().then(function(galaxy) {
       System = system(web3, galaxy);
       done();
     });
@@ -31,7 +31,7 @@ describe('system', function() {
     }); 
 
     it('has nothing in the map', function() {
-      assert.deepEqual(tauceti.map, Array.from({length: 225}, () => 0));
+      assert.deepEqual(tauceti.map, Array.from({length: 256}, () => 0));
     });
   });
 
@@ -45,7 +45,7 @@ describe('system', function() {
 
     it('doesn\'t have an empty map', function() {
       // TODO: Set this to the actual map.
-      assert.notDeepEqual(polaris.map, Array.from({length: 225}, () => 0));
+      assert.notDeepEqual(polaris.map, Array.from({length: 256}, () => 0));
     })
   })
 });
