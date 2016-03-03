@@ -1,5 +1,3 @@
-var m = require('mithril');
-
 // ORM of a system.
 module.exports = function(web3, galaxy) {
   function System(name) {
@@ -13,18 +11,17 @@ module.exports = function(web3, galaxy) {
   };
 
   System.prototype.create = function() {
-    var created = m.deferred();
-    var systemAdded = galaxy.systemAdded({'_systemHash': this.hash});
-    galaxy.addSystem(this.name, {gas: 500000});
-    systemAdded.watch(function(err, result) {
-      if(err) {
-        created.reject();
-      } else {
-        systemAdded.stopWatching();
-        created.resolve(result);
-      }
-    });
-    return created.promise;
+    return new Promise(function(resolve, reject) {
+      var systemAdded = galaxy.systemAdded({'_systemHash': this.hash});
+      galaxy.addSystem(this.name, {gas: 500000});
+      systemAdded.watch(function(err, result) {
+        if(err) {
+          reject(err);
+        } else {
+          systemAdded.stopWatching();
+          resolve(result);
+        }
+    })});
   }
 
   return System;
