@@ -43,10 +43,15 @@ describe('system', function() {
       polaris.create().then(function() {done()});
     });
 
-    it.only('doesn\'t have an empty map', function() {
+    it.only('is identical to itself', function() {
+      var polaris2 = new System(polaris.name);
+      assert.deepEqual(polaris.map, polaris2.map);
+    });
+
+    it.skip('doesn\'t have an empty map', function() {
       // TODO: Set this to the actual map.
       assert.notDeepEqual(polaris.map, Array.from({length: 256}, () => 0));
-    })
+    });
   })
 });
 

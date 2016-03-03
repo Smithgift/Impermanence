@@ -20,9 +20,13 @@ module.exports = function(web3, galaxy) {
         } else {
           systemAdded.stopWatching();
           resolve(result);
-        }
-    })});
-  }
+        };
+      });
+    }).then((result) => {
+      this.refreshMap();
+      return result;
+    });
+  };
 
   return System;
 }
