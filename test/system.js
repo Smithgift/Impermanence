@@ -22,6 +22,10 @@ describe('system', function() {
       tauceti = new System("tauceti");
     });
 
+    it('does not exist', function() {
+      assert.equal(tauceti.exists(), false);
+    })
+
     it('has a name', function() {
       assert.equal(tauceti.name, "tauceti");
     });
@@ -40,17 +44,28 @@ describe('system', function() {
     
     before('create polaris', function(done) {
       polaris = new System('polaris');
-      polaris.create().then(function() {done()});
+      polaris.create().then(function() {
+        done();
+      }).catch(function(err) {
+        done();
+        throw err;
+      });
     });
 
-    it.only('is identical to itself', function() {
+    it.only('exists', function() {
+      assert.equal(polaris.exists(), true);
+    });
+
+    it('is identical to itself', function() {
       var polaris2 = new System(polaris.name);
       assert.deepEqual(polaris.map, polaris2.map);
     });
 
-    it.skip('doesn\'t have an empty map', function() {
+    it('doesn\'t have an empty map', function(done) {
+      var nowhere = new System('nowhere')
       // TODO: Set this to the actual map.
-      assert.notDeepEqual(polaris.map, Array.from({length: 256}, () => 0));
+      //assert.notEqual(polaris.map.reduce((a, b) => (a +b)), 0);
+      assert.notDeepEqual(polaris.map, nowhere.map);
     });
   })
 });

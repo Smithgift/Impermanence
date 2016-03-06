@@ -72,7 +72,7 @@ contract Galaxy {
 
     function addSystem(string _name) {
         bytes32 systemHash = sha3(_name);
-        System newSystem = galacticMap[systemHash];
+        var newSystem = galacticMap[systemHash];
         newSystem.name = _name;
         newSystem.exists = true;
         generateMap(systemHash);

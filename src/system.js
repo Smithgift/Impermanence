@@ -10,6 +10,10 @@ module.exports = function(web3, galaxy) {
     this.map = galaxy.getSystemMap(this.hash).map((bn) => (bn.toNumber()));
   };
 
+  System.prototype.exists = function() {
+    return galaxy.galacticMap(this.hash)[1];
+  }
+
   System.prototype.create = function() {
     return new Promise(function(resolve, reject) {
       var systemAdded = galaxy.systemAdded({'_systemHash': this.hash});

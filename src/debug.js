@@ -7,7 +7,23 @@ var universe = require('./universe');
 var u = universe(web3);
 
 var system = require('./system');
-var System = system(web3, u)
+
+var galaxy;
+var System; 
+
+u.createUniverse().then(function(_galaxy) {
+  galaxy = _galaxy;
+  System = system(web3, galaxy);
+  r();
+});
+
+function r() {
+  console.log("READY!!!")
+}
+
+function l() {
+  console.log(arguments);
+}
 
 module.exports = {
   web3: web3,
