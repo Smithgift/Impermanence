@@ -6,16 +6,18 @@ describe('system', function() {
   this.timeout(0);
   
   var System;
+  var galaxy;
 
   before('setup universe', function(done) {
     var u = universe(web3);
-    u.createUniverse().then(function(galaxy) {
+    u.createUniverse().then(function(_galaxy) {
+      galaxy = _galaxy;
       System = system(web3, galaxy);
       done();
     });
   })
 
-  describe('#empty systems', function() {
+  describe('#empty system', function() {
     var tauceti;
 
     before('create empty system', function() {
@@ -52,7 +54,7 @@ describe('system', function() {
       });
     });
 
-    it.only('exists', function() {
+    it('exists', function() {
       assert.equal(polaris.exists(), true);
     });
 
@@ -61,8 +63,8 @@ describe('system', function() {
       assert.deepEqual(polaris.map, polaris2.map);
     });
 
-    it('doesn\'t have an empty map', function(done) {
-      var nowhere = new System('nowhere')
+    it('doesn\'t have an empty map', function() {
+      var nowhere = new System('nowhere');
       // TODO: Set this to the actual map.
       //assert.notEqual(polaris.map.reduce((a, b) => (a +b)), 0);
       assert.notDeepEqual(polaris.map, nowhere.map);

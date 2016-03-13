@@ -12,12 +12,11 @@ module.exports = function(web3, galaxy) {
 
   System.prototype.exists = function() {
     return galaxy.galacticMap(this.hash)[1];
-  }
+  };
 
   System.prototype.create = function() {
-    return new Promise(function(resolve, reject) {
+    return new Promise((resolve, reject) => {
       var systemAdded = galaxy.systemAdded({'_systemHash': this.hash});
-      galaxy.addSystem(this.name, {gas: 500000});
       systemAdded.watch(function(err, result) {
         if(err) {
           reject(err);
@@ -26,6 +25,7 @@ module.exports = function(web3, galaxy) {
           resolve(result);
         };
       });
+      this.createTx  = galaxy.addSystem(this.name, {gas: 500000});
     }).then((result) => {
       this.refreshMap();
       return result;
