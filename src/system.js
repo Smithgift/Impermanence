@@ -16,6 +16,9 @@ module.exports = function(web3, galaxy) {
 
   System.prototype.create = function() {
     return new Promise((resolve, reject) => {
+      if(this.exists()) {
+        reject(new Error('This system was already created!'));
+      }
       var systemAdded = galaxy.systemAdded({'_systemHash': this.hash});
       systemAdded.watch(function(err, result) {
         if(err) {

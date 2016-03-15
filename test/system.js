@@ -29,7 +29,7 @@ describe('system', function() {
     })
 
     it('has a name', function() {
-      assert.equal(tauceti.name, "tauceti");
+      assert.equal(tauceti.name, 'tauceti');
     });
 
     it('has the right hash', function() {
@@ -49,8 +49,7 @@ describe('system', function() {
       polaris.create().then(function() {
         done();
       }).catch(function(err) {
-        done();
-        throw err;
+        done(err);
       });
     });
 
@@ -63,10 +62,21 @@ describe('system', function() {
       assert.deepEqual(polaris.map, polaris2.map);
     });
 
+    it.only('cannot be recreated', function(done) {
+      polaris.create().then(function() {
+        done(new Error('create() worked'));
+      }).catch(function(err) {
+        if(err.message === 'This system was already created!') {
+          done();
+        } else {
+          done(err);
+        };
+      });
+    });
+
     it('doesn\'t have an empty map', function() {
       var nowhere = new System('nowhere');
       // TODO: Set this to the actual map.
-      //assert.notEqual(polaris.map.reduce((a, b) => (a +b)), 0);
       assert.notDeepEqual(polaris.map, nowhere.map);
     });
   })
