@@ -62,7 +62,7 @@ describe('system', function() {
       assert.deepEqual(polaris.map, polaris2.map);
     });
 
-    it.only('cannot be recreated', function(done) {
+    it('cannot be recreated', function(done) {
       polaris.create().then(function() {
         done(new Error('create() worked'));
       }).catch(function(err) {
