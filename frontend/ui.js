@@ -1,61 +1,82 @@
 var m = require("mithril");
 
-function PageViewModel() {
-  this.nextSys = m.prop("");
-}
-
-var pvm = new PageViewModel();
-
-var SystemSelect = {
-  controller: function(args) {
-    return {
-      changeSystem: function() {
-        m.route("/system/" + pvm.nextSys());
-      }
-    };
-  },
-  view: function(ctrl, args) {
-    return m("div", [
-      "System name:",
-      m("input", {oninput: m.withAttr("value", pvm.nextSys)}),
-      m("button", {onclick: ctrl.changeSystem}, ["Go!"])
-    ]);
+module.exports = function(System) {
+  
+  function PageViewModel() {
+    this.nextSys = m.prop("");
   }
-}
+  
+  var pvm = new PageViewModel();
 
-var SystemMap = {
-  controller: function(args) {
-    return {
-      name: m.route.param("name"),
-      mapTable: function() {
-        if()
-        return m()
+  var SystemSelect = {
+    controller: function(args) {
+      return {
+        changeSystem: function() {
+          m.route("/system/" + pvm.nextSys());
+        }
       };
-    };
-  },
-  view: function(ctrl, args) {
-    return m("div", [
-      m("h1", [ctrl.name]),
-      ctrl.mapTable(),
-    ]);
+    },
+    view: function(ctrl, args) {
+      return m("div", [
+        "System name:",
+        m("input", {oninput: m.withAttr("value", pvm.nextSys)}),
+        m("button", {onclick: ctrl.changeSystem}, ["Go!"])
+      ]);
+    }
   }
-};
-
-var FrontPage = {
-  view: function(ctrl, args) {
-    return m("div", [
-      m.component(SystemSelect),
-      m("br"),
-      "Enter a system name to begin."
-    ]);
+  
+  var CreateBtn = {
+    controller: function(args) {
+      return {
+        create: function() {
+          args.sys.create()
+            .then(() => {m.route("/system/" + name)})
+            .catch((err) => {console.log(err)}); //TODO: Better handling.
+        }
+      };
+    },
+    view: function(ctrl, args) {
+      return m("div", [
+        "No system by this name exists.",
+        m("button", {onclick: ctrl.create}, "Create it!")
+      ])
+    }
   }
-};
+  
+  var SystemComponent = {
+    controller: function(args) {
+      var name = m.route.param("name");
+      var sys = new System(name);
+      return {
+        name: name,
+        sys: sys
+      };
+    },
+    view: function(ctrl, args) {
+      return m("div", [
+        m("h1", [ctrl.name]),
+        ctrl.sys.exists() ? 
+          m.component(CreateBtn, {sys: ctrl.sys}) : m("System exists.")
+      ]);
+    }
+  };
+  
+  var FrontPage = {
+    view: function(ctrl, args) {
+      return m("div", [
+        m.component(SystemSelect),
+        m("br"),
+        "Enter a system name to begin."
+      ]);
+    }
+  };
 
-function init() {
-  m.route(document.body, "/", {
-    "/": m.component(FrontPage, {pvm: pvm}),
-    "/system/:name": m.component(SystemMap, {pvm: pvm})
-  });
+  function init() {
+    m.route(document.body, "/", {
+      "/": m.component(FrontPage, {pvm: pvm}),
+      "/system/:name": m.component(SystemComponent, {pvm: pvm})
+    });
+  }
+
+  return {init: init};
 }
-
-exports.init = init;

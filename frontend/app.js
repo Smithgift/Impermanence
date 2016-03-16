@@ -5,19 +5,21 @@ web3.setProvider(new window.web3.providers.HttpProvider('http://localhost:8555')
 
 var $ = require('jquery');
 var ui = require('./ui');
-$(document).ready(function() {ui.init();});
 
-var u = require('../src/universe');
+var universe = require('../src/universe');
+var u = universe(web3);
+
 var galaxy;
 
-var s = require('../src/system')
+var s = require('../src/system');
 var System;
 
 // Scary debug function. Only run on your private testnet!
 window.dcu = function() {
   web3.eth.defaultAccount = web3.eth.accounts[0];
-  u.cu().then(function(_galaxy) {
+  u.createUniverse().then(function(_galaxy) {
     galaxy = _galaxy;
     System = s(web3, galaxy);
+    ui(System).init();
   });
 }
