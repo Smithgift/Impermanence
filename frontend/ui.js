@@ -26,11 +26,18 @@ var SystemSelect = {
 var SystemMap = {
   controller: function(args) {
     return {
-      name: m.route.param("name")
+      name: m.route.param("name"),
+      mapTable: function() {
+        if()
+        return m()
+      };
     };
   },
   view: function(ctrl, args) {
-    return m("h1", [ctrl.name]);
+    return m("div", [
+      m("h1", [ctrl.name]),
+      ctrl.mapTable(),
+    ]);
   }
 };
 
