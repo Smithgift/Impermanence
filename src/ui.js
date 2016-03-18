@@ -30,8 +30,8 @@ module.exports = function(System) {
       return {
         create: function() {
           args.sys.create()
-            .then(() => {m.route("/system/" + name)})
-            .catch((err) => {console.log(err)}); //TODO: Better handling.
+            .then(() => {m.redraw();})
+            .catch((err) => {console.log(err);}); //TODO: Better handling.
         }
       };
     },
