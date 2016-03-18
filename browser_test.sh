@@ -2,4 +2,4 @@
 ./build.sh
 onchange 'contracts/*.sol' -- ./build.sh &
 cd test
-beefy runner.js 9977 #--live
+wzrd runner.js -p 9977 #--live
