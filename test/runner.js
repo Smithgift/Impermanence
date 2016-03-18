@@ -1,3 +1,3 @@
 require("./meta");
-require("./universe");
-require("./system");
+require("./test.universe");
+require("./test.system");
