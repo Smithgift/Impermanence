@@ -10,8 +10,8 @@
   <script>mocha.setup('bdd')</script>
   <script src="runner.js"></script>
   <script>
-    mocha.checkLeaks();
-    mocha.globals(['jQuery']);
+    //For the moment we're abusing globals.
+    //mocha.checkLeaks();
     mocha.run();
   </script>
 </body>

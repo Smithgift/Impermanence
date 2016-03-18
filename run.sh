@@ -1,5 +1,5 @@
 #!/bin/sh
-./jsonhack.sh
-onchange 'dapp/**/*.sol' -- ./jsonhack.sh &
+./build.sh
+onchange 'contracts/*.sol' -- ./build.sh &
 cd frontend
 beefy app.js #--live

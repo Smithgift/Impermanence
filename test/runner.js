@@ -5,3 +5,7 @@ describe("A test", function() {
     assert.equal(1, 1);
   });
 });
+
+require("./meta");
+require("./universe");
+require("./system");
