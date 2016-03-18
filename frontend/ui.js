@@ -78,5 +78,9 @@ module.exports = function(System) {
     });
   }
 
-  return {init: init};
+  return {
+    SystemSelect: SystemSelect,
+    CreateBtn: CreateBtn,
+    init: init
+  };
 }
