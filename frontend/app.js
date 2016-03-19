@@ -4,7 +4,9 @@ web3 = new Web3();
 web3.setProvider(new window.web3.providers.HttpProvider('http://localhost:8555'))
 
 var $ = require('jquery');
-var ui = require('./ui');
+var m = require('mithril');
+
+var ui = require('../src/ui');
 
 var universe = require('../src/universe');
 var u = universe(web3);
@@ -20,6 +22,9 @@ window.dcu = function() {
   u.createUniverse().then(function(_galaxy) {
     galaxy = _galaxy;
     System = s(web3, galaxy);
-    ui(System).init();
+    ui(m, System).init();
   });
-}
+};
+
+// Scarier automatic use of debug function.
+$(document).ready(dcu);

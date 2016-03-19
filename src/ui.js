@@ -54,7 +54,7 @@ module.exports = function(m, System) {
       return m("div", [
         m("h1", [ctrl.name]),
         ctrl.sys.exists() ? 
-          m.component(CreateBtn, {sys: ctrl.sys}) : m("System exists.")
+          "System exists." : m.component(CreateBtn, {sys: ctrl.sys})
       ]);
     }
   };

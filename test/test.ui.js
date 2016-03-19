@@ -53,7 +53,7 @@ describe('ui', function() {
       assert.equal(console.log.callCount, 1, 'console.log');
     });
 
-    it.only('view correct', function() {
+    it('view correct', function() {
       var tpl = ui.CreateBtn.view(ctrl, {sys: testSys});
       assert.equal(tpl.children[0], "No system by this name exists.");
       var btn = tpl.children[1];
