@@ -1,6 +1,4 @@
-var m = require("mithril");
-
-module.exports = function(System) {
+module.exports = function(m, System) {
   
   function PageViewModel() {
     this.nextSys = m.prop("");
