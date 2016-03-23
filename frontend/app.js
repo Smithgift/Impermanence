@@ -6,6 +6,7 @@ web3.setProvider(new window.web3.providers.HttpProvider('http://localhost:8555')
 var $ = require('jquery');
 var m = require('mithril');
 
+var global = require('../src/global');
 var ui = require('../src/ui');
 
 var universe = require('../src/universe');
@@ -19,7 +20,7 @@ var System;
 function connect(_galaxy) {
   galaxy = _galaxy;
   System = s(web3, galaxy);
-  ui(m, System).init();
+  ui(m, global, System).init();
 }
 
 // Scary debug function. Only run on your private testnet!
@@ -33,5 +34,5 @@ window.dcu = function() {
 // Scarier automatic use of debug function.
 $(document).ready(() => {
   web3.eth.defaultAccount = web3.eth.accounts[0];
-  connect(u.linkGalaxy('0xfffeb276f004ea8b05366ac9763beb25b5b4d946'));
+  connect(u.linkGalaxy('0x141078569a913deca5e087a2f5b5039d1cd85f10'));
 });

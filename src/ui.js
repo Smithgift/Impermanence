@@ -1,4 +1,4 @@
-module.exports = function(m, System) {
+module.exports = function(m, global, System) {
   
   function PageViewModel() {
     this.nextSys = m.prop("");
@@ -49,7 +49,7 @@ module.exports = function(m, System) {
           for(var y = 0; y < 256; y += 16) {
             rows.push(m("tr", 
                 args.sys.sysMap.slice(y, y + 16).map(function(num) {
-                  return m("td", [num.toString()]);
+                  return m("td", m.trust(global.mapLegend[num][0]));
                 })
              ));
           }
