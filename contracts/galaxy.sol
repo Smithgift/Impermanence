@@ -96,25 +96,24 @@ contract Galaxy {
             // TODO: Use better tables so no need to mod.
             newST = uint8(seed % 16);
             seed /= 256;
-            var chosenSector = newMap[newCoords];
-            if(chosenSector != SectorType.Empty) {
+            if(newMap[newCoords] != SectorType.Empty) {
               continue;
             } else if(newST <= 2) {
-              chosenSector = SectorType.AtkAsteriod;
+              newMap[newCoords] = SectorType.AtkAsteriod;
             } else if (newST <= 5) {
-              chosenSector = SectorType.DefAsteriod;
+              newMap[newCoords] = SectorType.DefAsteriod;
             } else if (newST <= 8) {
-              chosenSector = SectorType.EngAsteriod;
+              newMap[newCoords] = SectorType.EngAsteriod;
             } else if (newST == 9) {
-              chosenSector = SectorType.AtkMonolith;
+              newMap[newCoords] = SectorType.AtkMonolith;
             } else if (newST == 10) {
-              chosenSector = SectorType.DefMonolith;
+              newMap[newCoords] = SectorType.DefMonolith;
             } else if (newST == 11) {
-              chosenSector = SectorType.EngMonolith;
+              newMap[newCoords] = SectorType.EngMonolith;
             } else if (newST <= 13) {
-              chosenSector = SectorType.UnobRift;
+              newMap[newCoords] = SectorType.UnobRift;
             } else {
-              chosenSector = SectorType.Planet;
+              newMap[newCoords] = SectorType.Planet;
             }
         }
     }
