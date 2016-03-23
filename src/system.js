@@ -7,7 +7,7 @@ module.exports = function(web3, galaxy) {
   }
 
   System.prototype.refreshMap = function() {
-    this.map = galaxy.getSystemMap(this.hash).map((bn) => (bn.toNumber()));
+    this.sysMap = galaxy.getSystemMap(this.hash).map((bn) => (bn.toNumber()));
   };
 
   System.prototype.exists = function() {

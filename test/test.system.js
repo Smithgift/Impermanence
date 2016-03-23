@@ -37,7 +37,7 @@ describe('system', function() {
     }); 
 
     it('has nothing in the map', function() {
-      assert.deepEqual(tauceti.map, Array.from({length: 256}, () => 0));
+      assert.deepEqual(tauceti.sysMap, Array.from({length: 256}, () => 0));
     });
   });
 
@@ -59,7 +59,7 @@ describe('system', function() {
 
     it('is identical to itself', function() {
       var polaris2 = new System(polaris.name);
-      assert.deepEqual(polaris.map, polaris2.map);
+      assert.deepEqual(polaris.sysMap, polaris2.sysMap);
     });
 
     it('cannot be recreated', function(done) {
@@ -74,10 +74,10 @@ describe('system', function() {
       });
     });
 
-    it('doesn\'t have an empty map', function() {
+    it.only('doesn\'t have an empty map', function() {
       var nowhere = new System('nowhere');
       // TODO: Set this to the actual map.
-      assert.notDeepEqual(polaris.map, nowhere.map);
+      assert.notDeepEqual(polaris.sysMap, nowhere.sysMap);
     });
   })
 });

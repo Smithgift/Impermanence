@@ -16,15 +16,22 @@ var galaxy;
 var s = require('../src/system');
 var System;
 
+function connect(_galaxy) {
+  galaxy = _galaxy;
+  System = s(web3, galaxy);
+  ui(m, System).init();
+}
+
 // Scary debug function. Only run on your private testnet!
 window.dcu = function() {
   web3.eth.defaultAccount = web3.eth.accounts[0];
-  u.createUniverse().then(function(_galaxy) {
-    galaxy = _galaxy;
-    System = s(web3, galaxy);
-    ui(m, System).init();
-  });
+  u.createUniverse().then(connect);
 };
 
+// 0xfffeb276f004ea8b05366ac9763beb25b5b4d946
+
 // Scarier automatic use of debug function.
-$(document).ready(dcu);
+$(document).ready(() => {
+  web3.eth.defaultAccount = web3.eth.accounts[0];
+  connect(u.linkGalaxy('0xfffeb276f004ea8b05366ac9763beb25b5b4d946'));
+});

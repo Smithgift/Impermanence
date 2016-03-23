@@ -41,6 +41,28 @@ module.exports = function(m, System) {
     }
   }
   
+  var SystemMap = { 
+    controller: function(args) {
+      return {
+        buildMap: function() {
+          var rows = new Array();
+          for(var y = 0; y < 256; y += 16) {
+            rows.push(m("tr", 
+                args.sys.sysMap.slice(y, y + 16).map(function(num) {
+                  return m("td", [num.toString()]);
+                })
+             ));
+          }
+          return rows;
+        }
+      }
+    },
+    view: function(ctrl, args) {
+      return m("table", ctrl.buildMap());
+    }
+  }
+
+
   var SystemComponent = {
     controller: function(args) {
       var name = m.route.param("name");
@@ -55,11 +77,12 @@ module.exports = function(m, System) {
         m.component(SystemSelect),
         m("h1", [ctrl.name]),
         ctrl.sys.exists() ? 
-          "System exists." : m.component(CreateBtn, {sys: ctrl.sys})
+          m.component(SystemMap, {sys: ctrl.sys}) 
+        : m.component(CreateBtn, {sys: ctrl.sys})
       ]);
     }
   };
-  
+
   var FrontPage = {
     view: function(ctrl, args) {
       return m("div", [
