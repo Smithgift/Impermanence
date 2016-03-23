@@ -75,18 +75,18 @@ contract Galaxy {
         var newSystem = galacticMap[systemHash];
         newSystem.name = _name;
         newSystem.exists = true;
-        generateMap(systemHash);
+        newSystem.map = generateMap(systemHash);
         systemAdded(systemHash);
     }
     
-    function generateMap(bytes32 systemHash) internal {
-        // The hash is the argument, not a pointer, not a pointer, 
-        // because we need the hash as a seed.
-        System newSystem = galacticMap[systemHash];
-        newSystem.map[(7 * 16) + 7] = SectorType.Sun;
-        newSystem.map[(7 * 16) + 8] = SectorType.Sun;
-        newSystem.map[(8 * 16) + 7] = SectorType.Sun;
-        newSystem.map[(8 * 16) + 8] = SectorType.Sun;
+    function generateMap(bytes32 systemHash) 
+      constant 
+      returns (SectorType[256] newMap) 
+    {
+        newMap[(7 * 16) + 7] = SectorType.Sun;
+        newMap[(7 * 16) + 8] = SectorType.Sun;
+        newMap[(8 * 16) + 7] = SectorType.Sun;
+        newMap[(8 * 16) + 8] = SectorType.Sun;
         uint256 seed = uint256(systemHash);
         uint8 newCoords;
         uint8 newST;
@@ -96,7 +96,7 @@ contract Galaxy {
             // TODO: Use better tables so no need to mod.
             newST = uint8(seed % 16);
             seed /= 256;
-            var chosenSector = newSystem.map[newCoords / 16];
+            var chosenSector = newMap[newCoords];
             if(chosenSector != SectorType.Empty) {
               continue;
             } else if(newST <= 2) {
