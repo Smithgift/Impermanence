@@ -28,7 +28,7 @@ module.exports = function(web3, galaxy) {
           resolve(result);
         };
       });
-      this.createTx  = galaxy.addSystem(this.name, {gas: 500000});
+      this.createTx  = galaxy.addSystem(this.name, {gas: 2500000});
     }).then((result) => {
       this.refreshMap();
       return result;

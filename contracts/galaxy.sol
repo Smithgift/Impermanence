@@ -91,7 +91,7 @@ contract Galaxy {
         uint8 newCoords;
         uint8 newST;
         for(uint8 i = 0; i < 16; i++) {
-            newCoords = uint8(seed);
+            newCoords = uint8(seed % 256);
             seed /= 256;
             // TODO: Use better tables so no need to mod.
             newST = uint8(seed % 16);

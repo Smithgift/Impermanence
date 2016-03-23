@@ -74,7 +74,7 @@ describe('system', function() {
       });
     });
 
-    it.only('doesn\'t have an empty map', function() {
+    it('doesn\'t have an empty map', function() {
       var nowhere = new System('nowhere');
       // TODO: Set this to the actual map.
       assert.notDeepEqual(polaris.sysMap, nowhere.sysMap);
