@@ -53,13 +53,13 @@ describe('ui', function() {
       assert.equal(console.log.callCount, 1, 'console.log');
     });
 
-    it('view correct', function() {
+    it.only('view correct', function() {
       var tpl = ui.CreateBtn.view(ctrl, {sys: testSys});
-      assert.equal(tpl.children[0], "No system by this name exists.");
+      assert.isString(tpl.children[0]);
       var btn = tpl.children[1];
       assert.equal(btn.tag, "button");
       assert.equal(btn.attrs.onclick, ctrl.create);
-      assert.equal(btn.children[0], "Create it!")
+      assert.isString(btn.children[0]);
     });
 
     afterEach(function() {
@@ -88,13 +88,14 @@ describe('ui', function() {
       m.route.calledWith("/system/mizar");
     });
 
-    it.only("view correct", function() {
+    it("view correct", function() {
       var tpl = ui.SystemSelect.view(ctrl, {pvm: pvm});
       assert.isString(tpl.children[0]);
       assert.equal(tpl.children[1].tag, "input");
       assert.equal(tpl.children[2].tag, "button");
       assert.isString(tpl.children[2].children[0])
     });
+
 
   });
 
