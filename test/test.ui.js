@@ -82,10 +82,18 @@ describe('ui', function() {
       m.route.restore();
     })
 
-    it.only("changes system", function() {
+    it("changes system", function() {
       pvm.nextSys("mizar");
       ctrl.changeSystem();
       m.route.calledWith("/system/mizar");
+    });
+
+    it.only("view correct", function() {
+      var tpl = ui.SystemSelect.view(ctrl, {pvm: pvm});
+      assert.isString(tpl.children[0]);
+      assert.equal(tpl.children[1].tag, "input");
+      assert.equal(tpl.children[2].tag, "button");
+      assert.isString(tpl.children[2].children[0])
     });
 
   });
