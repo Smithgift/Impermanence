@@ -5,6 +5,8 @@ var assert = chai.assert;
 
 var sinon = require('sinon');
 
+var $ = require('jquery')
+
 function MockSystem() {};
 
 MockSystem.prototype.create = sinon.stub();
@@ -15,6 +17,8 @@ MockSystem.prototype.exists = function() {
 
 var m = require('mithril');
 var ui = require('../src/ui')(m, MockSystem);
+
+
 
 describe('ui', function() {
 
@@ -53,7 +57,7 @@ describe('ui', function() {
       assert.equal(console.log.callCount, 1, 'console.log');
     });
 
-    it.only('view correct', function() {
+    it('view correct', function() {
       var tpl = ui.CreateBtn.view(ctrl, {sys: testSys});
       assert.isString(tpl.children[0]);
       var btn = tpl.children[1];
@@ -82,20 +86,28 @@ describe('ui', function() {
       m.route.restore();
     })
 
-    it("changes system", function() {
-      pvm.nextSys("mizar");
+    it('changes system', function() {
+      pvm.nextSys('mizar');
       ctrl.changeSystem();
-      m.route.calledWith("/system/mizar");
+      m.route.calledWith('/system/mizar');
     });
 
-    it("view correct", function() {
+    it('view correct', function() {
       var tpl = ui.SystemSelect.view(ctrl, {pvm: pvm});
       assert.isString(tpl.children[0]);
-      assert.equal(tpl.children[1].tag, "input");
-      assert.equal(tpl.children[2].tag, "button");
+      assert.equal(tpl.children[1].tag, 'input');
+      assert.equal(tpl.children[2].tag, 'button');
       assert.isString(tpl.children[2].children[0])
     });
 
+    it.only('is bound to pvm', function() {
+      var testRoot = document.createElement('div');
+      m.render(testRoot, m.component(ui.SystemSelect, {pvm: pvm}));
+      var input = testRoot.getElementsByTagName('input')[0];
+      input.value = 'altair';
+      $(input).trigger('input');
+      assert.equal(pvm.nextSys(), 'altair');
+    })
 
   });
 
