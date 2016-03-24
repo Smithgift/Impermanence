@@ -30,7 +30,7 @@ describe('ui', function() {
     console.log.restore();
   })
 
-  describe('CreateBtn', function() {
+  describe('#CreateBtn', function() {
     var testSys;
     var ctrl;
 
@@ -66,4 +66,28 @@ describe('ui', function() {
       testSys.create.reset();
     });
   });
+
+  describe('#SystemSelect', function() {
+
+    var ctrl;
+    var pvm;
+
+    before(function() {
+      pvm = new ui.PageViewModel();
+      ctrl = new ui.SystemSelect.controller({pvm: pvm});
+      sinon.spy(m, "route");
+    });
+
+    after(function() {
+      m.route.restore();
+    })
+
+    it.only("changes system", function() {
+      pvm.nextSys("mizar");
+      ctrl.changeSystem();
+      m.route.calledWith("/system/mizar");
+    });
+
+  });
+
 });

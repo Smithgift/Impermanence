@@ -10,14 +10,14 @@ module.exports = function(m, global, System) {
     controller: function(args) {
       return {
         changeSystem: function() {
-          m.route("/system/" + pvm.nextSys());
+          m.route("/system/" + args.pvm.nextSys());
         }
       };
     },
     view: function(ctrl, args) {
       return m("div", [
         "System name:",
-        m("input", {oninput: m.withAttr("value", pvm.nextSys)}),
+        m("input", {oninput: m.withAttr("value", args.pvm.nextSys)}),
         m("button", {onclick: ctrl.changeSystem}, ["Go!"])
       ]);
     }
@@ -86,7 +86,7 @@ module.exports = function(m, global, System) {
   var FrontPage = {
     view: function(ctrl, args) {
       return m("div", [
-        m.component(SystemSelect),
+        m.component(SystemSelect, {pvm: args.pvm}),
         m("br"),
         "Enter a system name to begin."
       ]);
@@ -101,6 +101,7 @@ module.exports = function(m, global, System) {
   }
 
   return {
+    PageViewModel: PageViewModel,
     SystemSelect: SystemSelect,
     CreateBtn: CreateBtn,
     init: init
