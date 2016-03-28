@@ -74,13 +74,21 @@ describe('system', function() {
       });
     });
 
-    it.only('has the correct map', function() {
+    it('has the correct map', function() {
       var sysMap = galaxy.generateMap(polaris.hash).map(
         (bn) => (bn.toNumber())
       );
       // TODO: Set this to the actual map.
       assert.deepEqual(polaris.sysMap, sysMap);
     });
-  })
+  });
+
+/*  describe('#ships', function() {
+    var crane;
+    before('create Sol', function(done) {
+      
+    })
+
+  });*/
 });
 
