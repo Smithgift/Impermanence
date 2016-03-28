@@ -100,14 +100,14 @@ describe('ui', function() {
       assert.isString(tpl.children[2].children[0])
     });
 
-    it.only('is bound to pvm', function() {
+    it('is bound to pvm', function() {
       var testRoot = document.createElement('div');
       m.render(testRoot, m.component(ui.SystemSelect, {pvm: pvm}));
       var input = testRoot.getElementsByTagName('input')[0];
       input.value = 'altair';
       $(input).trigger('input');
       assert.equal(pvm.nextSys(), 'altair');
-    })
+    });
 
   });
 
