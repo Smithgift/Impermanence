@@ -74,10 +74,12 @@ describe('system', function() {
       });
     });
 
-    it('doesn\'t have an empty map', function() {
-      var nowhere = new System('nowhere');
+    it.only('has the correct map', function() {
+      var sysMap = galaxy.generateMap(polaris.hash).map(
+        (bn) => (bn.toNumber())
+      );
       // TODO: Set this to the actual map.
-      assert.notDeepEqual(polaris.sysMap, nowhere.sysMap);
+      assert.deepEqual(polaris.sysMap, sysMap);
     });
   })
 });
