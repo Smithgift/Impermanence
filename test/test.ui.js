@@ -5,8 +5,6 @@ var assert = chai.assert;
 
 var sinon = require('sinon');
 
-var $ = require('jquery')
-
 function MockSystem() {};
 
 MockSystem.prototype.create = sinon.stub();
@@ -24,8 +22,13 @@ var document;
 before('setup mock window', function() {
   document = jsdom("");
   m.deps(document.defaultView);
-  $ = require("jquery")(document.defaultView); 
 });
+
+function triggerEvent(el, type){
+  var e = document.createEvent('HTMLEvents');
+  e.initEvent(type, false, true);
+  el.dispatchEvent(e);
+}
 
 describe('ui', function() {
 
@@ -112,7 +115,7 @@ describe('ui', function() {
       m.render(testRoot, m.component(ui.SystemSelect, {pvm: pvm}));
       var input = testRoot.getElementsByTagName('input')[0];
       input.value = 'altair';
-      $(input).trigger('input');
+      triggerEvent(input, 'input');
       assert.equal(pvm.nextSys(), 'altair');
     });
 
