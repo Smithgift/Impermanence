@@ -74,7 +74,7 @@ module.exports = function(m, global, System) {
     },
     view: function(ctrl, args) {
       return m("div", [
-        m.component(SystemSelect),
+        m.component(SystemSelect, {pvm: args.pvm}),
         m("h1", [ctrl.name]),
         ctrl.sys.exists() ? 
           m.component(SystemMap, {sys: ctrl.sys}) 

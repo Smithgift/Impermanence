@@ -83,12 +83,37 @@ describe('system', function() {
     });
   });
 
-/*  describe('#ships', function() {
-    var crane;
+  describe('#ships', function() {
+    var sol;
+    
     before('create Sol', function(done) {
-      
-    })
+      sol = new System('Sol');
+      sol.create().then(function() {
+        done();
+      }).catch(function(err) {
+        done(err);
+      });
+    });
 
-  });*/
+    describe('#cranes', function() { 
+      var crane;
+      
+      before('create the crane', function(done) {
+        sol.createCrate().then(function(_crane) {
+          crane = _crane;
+          done();
+        }).catch(function() {
+          done(err);
+        });
+      });
+
+      it.only('is something', function() {
+        assert.notEqual(typeof crane, "undefined");
+      });
+
+    });
+
+  });
+
 });
 

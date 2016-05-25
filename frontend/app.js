@@ -34,5 +34,6 @@ window.dcu = function() {
 // Scarier automatic use of debug function.
 $(document).ready(() => {
   web3.eth.defaultAccount = web3.eth.accounts[0];
-  connect(u.linkGalaxy('0x141078569a913deca5e087a2f5b5039d1cd85f10'));
+  dcu();
+  //connect(u.linkGalaxy('0x141078569a913deca5e087a2f5b5039d1cd85f10'));
 });
