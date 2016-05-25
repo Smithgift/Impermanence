@@ -1,6 +1,6 @@
 {
-  "name": "the-impermanence-of-space",
-  "version": "0.5",
+  "name": "impermanence",
+  "version": "0.5.0",
   "description": "An Ethereum based DMMOG",
   "main": "index.js",
   "directories": {

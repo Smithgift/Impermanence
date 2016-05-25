@@ -2,3 +2,4 @@ frontend.js
 abi.js
 build/*
 .node-*
+node_modules
