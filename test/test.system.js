@@ -107,7 +107,7 @@ describe('system', function() {
         });
       });
 
-      it.only('is something', function() {
+      it('is something', function() {
         assert.notEqual(typeof crane, "undefined");
       });
 

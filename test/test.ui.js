@@ -18,7 +18,14 @@ MockSystem.prototype.exists = function() {
 var m = require('mithril');
 var ui = require('../src/ui')(m, MockSystem);
 
+var jsdom = require('jsdom').jsdom;
+var document;
 
+before('setup mock window', function() {
+  document = jsdom("");
+  m.deps(document.defaultView);
+  $ = require("jquery")(document.defaultView); 
+});
 
 describe('ui', function() {
 
