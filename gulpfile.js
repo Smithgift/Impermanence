@@ -6,6 +6,7 @@ var gutil = require('gulp-util');
 var run = require('gulp-run');
 var rename = require('gulp-rename');
 var gulpMultiProcess = require('gulp-multi-process');
+var gls = require('gulp-live-server');
 
 var TestRPC = require('ethereumjs-testrpc');
 
@@ -38,4 +39,9 @@ gulp.task('mocha', ['build'], function() {
   return gulp.src(['test/*.js'], { read: false })
     .pipe(mocha({ reporter: 'list' }))
     .on('error', gutil.log);
+});
+
+gulp.task('run', ['watch', 'testrpc'], function() {
+  var server = gls.new('server.js');
+  server.start();
 });
