@@ -1,4 +1,6 @@
-import "shiplib.sol";
+pragma solidity ^0.4.0;
+
+import "./shiplib.sol";
 
 ///@title The Impermanence of Space: Galaxy Contract.
 contract Galaxy {

@@ -13,7 +13,14 @@
     "mithril": "^0.2.4",
     "sinon": "^1.17.3",
     "watchify": "^3.7.0",
-    "web3": "^0.15.3"
+    "web3": "^0.15.3",
+    "ethereumjs-testrpc": "^3.0.0",
+    "gulp": "^3.9.1",
+    "gulp-mocha": "^3.0.1",
+    "gulp-multi-process": "0.0.3",
+    "gulp-rename": "^1.2.2",
+    "gulp-run": "^1.7.1",
+    "gulp-util": "^3.0.7"
   },
   "devDependencies": {},
   "scripts": {

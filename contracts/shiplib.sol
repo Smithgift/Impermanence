@@ -1,3 +1,5 @@
+pragma solidity ^0.4.0;
+
 ///@title The Impermanence of Space: Ship Library contract.
 library ShipLib {
     enum CargoType {
