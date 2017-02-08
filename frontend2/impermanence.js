@@ -215,7 +215,8 @@ function focusSector(event) {
                 currentSystemHash, 
                 focusedSector.x, 
                 focusedSector.y,
-                $(craneName).val()
+                $(craneName).val(),
+                {gas: 300000}
             );
         };
         button.value = "Construct CRaNE!";

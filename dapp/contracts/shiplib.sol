@@ -69,7 +69,7 @@ library ShipLib {
         // The following conversion is safe, because if massRatio was 
         // greater than 255, we'd just have thrown.
         self.energy -= (self.massRatio * effort);
-        _
+        _;
     }
     
     function transferOwnership(Ship storage self, address _newOwner) {
