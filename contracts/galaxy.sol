@@ -154,7 +154,7 @@ contract Galaxy {
         if(shipRegistry[_shipID].owner != msg.sender) {
             throw;
         } else { 
-            _
+            _;
         }
     }
     

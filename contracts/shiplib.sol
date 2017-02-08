@@ -66,7 +66,7 @@ library ShipLib {
         if((self.massRatio * effort) > self.energy)
             throw;
         self.energy -= (self.massRatio * effort);
-        _
+        _;
     }
 
     // TODO: Does this function actually need to exist?
