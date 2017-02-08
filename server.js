@@ -2,9 +2,9 @@ var browserify = require('browserify-middleware');
 var express = require('express');
 var app = express();
 
-app.get('/', express.static('frontend'));
-
 app.get('/app.js', browserify(__dirname + '/frontend/app.js'));
+
+app.use('/', express.static(__dirname + '/frontend'));
 
 var server = app.listen(3000, function () {
 
