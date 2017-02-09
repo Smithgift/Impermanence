@@ -222,6 +222,7 @@ contract Galaxy {
         crane.refreshMassRatio();
         crane.restoreHP();
         insertShip(_system, craneID);
+        shipActivity(_system, _coords, craneID);
     }
     
     function moveShip(

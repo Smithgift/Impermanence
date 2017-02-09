@@ -25,8 +25,30 @@ function l() {
   console.log(arguments);
 }
 
+var sol;
+
+function cSol() {
+  sol = new System('Sol');
+  sol.create().then(r);
+}
+
+function oog() {
+  sol.spawnCrane(39);
+}
+
+function work() {
+  sol.spawnCrane(39, 'crane');
+}
+
 module.exports = {
   web3: web3,
   u: u,
   System: System,  
-}
+};
+
+// To replicate the string OOG:
+// 1. Have a testrpc open at 8555. (Or, use "gulp testrpc")
+// 2. Load this module in node with ".load debug.js"
+// 3. cSol() to create a system.
+// 4a. oog() will go out of gas.
+// 4b. work() won't.

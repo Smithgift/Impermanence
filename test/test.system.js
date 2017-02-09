@@ -41,7 +41,7 @@ describe('system', function() {
     });
   });
 
-  describe('#created system', function() {
+  describe('created system', function() {
     var polaris;
     
     before('create polaris', function(done) {
@@ -83,7 +83,7 @@ describe('system', function() {
     });
   });
 
-  describe('#ships', function() {
+  describe('ships', function() {
     var sol;
     
     before('create Sol', function(done) {
@@ -95,11 +95,11 @@ describe('system', function() {
       });
     });
 
-    describe('#cranes', function() { 
+    describe('cranes', function() { 
       var crane;
       
       before('create the crane', function(done) {
-        sol.createCrate().then(function(_crane) {
+        sol.spawnCrane(39, "crane").then(function(_crane) {
           crane = _crane;
           done();
         }).catch(function() {
