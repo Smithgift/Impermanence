@@ -11,11 +11,15 @@ var gls = require('gulp-live-server');
 var TestRPC = require('ethereumjs-testrpc');
 
 gulp.task('default', function() {
-  return gulpMultiProcess(['testrpc', 'watch']);
+  return gulpMultiProcess(['testrpc', 'watch-build', 'watch-mocha']);
 });
 
-gulp.task('watch', function() {
-  gulp.watch(['contracts/**', 'src/**', 'test/**'], ['mocha']);
+gulp.task('watch-build', function() {
+  gulp.watch(['contracts/**'], ['build']);
+})
+
+gulp.task('watch-mocha', function() {
+  gulp.watch(['build/**', 'src/**', 'test/**'], ['mocha']);
 });
 
 gulp.task('testrpc', function() {
@@ -35,7 +39,7 @@ gulp.task('build', function() {
     .pipe(gulp.dest('./build/'));
 })
 
-gulp.task('mocha', ['build'], function() {
+gulp.task('mocha', function() {
   return gulp.src(['test/*.js'], { read: false })
     .pipe(mocha({ reporter: 'list' }))
     .on('error', gutil.log);
