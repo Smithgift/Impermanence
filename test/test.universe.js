@@ -12,11 +12,15 @@ describe('universe', function() {
 
   it('creates ShipLibs', function(done) {
     u.createShipLib().then(function(shipLib) {
-      assert.notEqual(web3.eth.getCode(shipLib.address), "0x");
-      done();
-    }).catch(function(err) {
-      assert.fail(err);
-    });
+      web3.eth.getCode(shipLib.address, (code) => {
+        try {
+          assert.notEqual(code, "0x")
+          done();
+        } catch (err) {
+          done(err);
+        }
+      });
+    }).catch(done);
   });
 
   it('creates Galaxies', function(done) {

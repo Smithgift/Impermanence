@@ -1,9 +1,15 @@
+var TestRPC = require('ethereumjs-testrpc');
 var Web3 = require('web3');
 
-before(function() {
-  web3 = new Web3();
+before(function(done) {
+  web3 = new Web3(TestRPC.provider());
   this.timeout(0);
-  // Deliberately set non-default to avoid accidental misconnections.
-  web3.setProvider(new web3.providers.HttpProvider('http://localhost:8555'))
-  web3.eth.defaultAccount = web3.eth.accounts[0];
+  web3.eth.getAccounts((err, result) => {
+    if(err) {
+      done(err);
+      return;
+    }
+    web3.eth.defaultAccount = result[0];
+    done();
+  });
 })
