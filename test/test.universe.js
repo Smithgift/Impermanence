@@ -23,34 +23,27 @@ describe('universe', function() {
     );
   });
 
-  it('creates Galaxies', function(done) {
-    u.createShipLib().then(function(shipLib) {
-      return u.createGalaxy(shipLib);
-    }).then(function(galaxy) {
-      web3.eth.getCode(galaxy.address, testCallback(done, (result) => {
-        assert.notEqual(result, "0x");
-      }));
-    });
+  it('creates Galaxies', function() {
+    return assert.eventually.notEqual(
+      u.createShipLib()
+        .then((shipLib) => u.createGalaxy(shipLib))
+        .then((galaxy) => web3.eth.getCodeAsync(galaxy.address)),
+      "0x"
+    );
   });
 
-  it('creates Universes', function(done) {
-    u.createUniverse().then(function(galaxy) {
-      assert.notEqual(web3.eth.getCode(galaxy.address), "0x");     
-      done();
-    });
+  it('creates Universes', function() {
+    return assert.eventually.notEqual(
+      u.createUniverse()
+        .then((galaxy) => web3.eth.getCodeAsync(galaxy.address)),
+      "0x"
+    );
   })
 
-  it('connects to existing Galaxies', function(done) {
-    u.createUniverse().then(function(galaxy) {
-      var _galaxy = u.linkGalaxy(galaxy.address);
-      // TODO: Determine that it actually is a galaxy.
-      // Like, I'm sure this helps:
-      assert.equal(
-        web3.eth.getCode(galaxy.address), 
-        web3.eth.getCode(_galaxy.address)
-      );
-      // I'd just hope there'd be more.
-      done();
-    })
+  it('connects to existing Galaxies', function() {
+    return assert.eventually.isOk(u.createUniverse().then((galaxy) => {
+          var _galaxy = u.linkGalaxy(galaxy.address);
+          return galaxy.prototype === _galaxy.prototype;
+    }));
   });
 });

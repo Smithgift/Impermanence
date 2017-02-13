@@ -14,6 +14,7 @@ module.exports = function(web3) {
         function(err, newShipLib) {
           if(err) {
             reject(err);
+            return;
           }
           if(newShipLib.address) {
             resolve(newShipLib);
@@ -38,6 +39,7 @@ module.exports = function(web3) {
         function(err, newGalaxy) {
           if(err) {
             reject(err);
+            return;
           }
           if(newGalaxy.address) {
             resolve(newGalaxy);
