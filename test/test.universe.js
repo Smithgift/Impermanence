@@ -1,4 +1,9 @@
-var assert = require('chai').assert;
+var chai = require('chai');
+var chaiAsPromised = require('chai-as-promised');
+chai.use(chaiAsPromised);
+
+var assert = chai.assert;
+
 var universe = require('../src/universe');
 var build = require('../build/contracts.js');
 
@@ -10,25 +15,21 @@ describe('universe', function() {
     u = universe(web3);
   });
 
-  it('creates ShipLibs', function(done) {
-    u.createShipLib().then(function(shipLib) {
-      web3.eth.getCode(shipLib.address, (code) => {
-        try {
-          assert.notEqual(code, "0x")
-          done();
-        } catch (err) {
-          done(err);
-        }
-      });
-    }).catch(done);
+  it('creates ShipLibs', function() {
+    return assert.eventually.notEqual(
+      u.createShipLib()
+        .then((shipLib) => web3.eth.getCodeAsync(shipLib.address)),
+      "0x"
+    );
   });
 
   it('creates Galaxies', function(done) {
     u.createShipLib().then(function(shipLib) {
       return u.createGalaxy(shipLib);
     }).then(function(galaxy) {
-      assert.notEqual(web3.eth.getCode(galaxy.address), "0x");
-      done();
+      web3.eth.getCode(galaxy.address, testCallback(done, (result) => {
+        assert.notEqual(result, "0x");
+      }));
     });
   });
 

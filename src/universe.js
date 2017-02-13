@@ -1,3 +1,5 @@
+var Promise = require('bluebird');
+
 module.exports = function(web3) {
   var exports = {};
   var build = require("../build/contracts.js");
