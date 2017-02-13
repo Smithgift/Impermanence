@@ -45,7 +45,7 @@ gulp.task('mocha', function() {
     .on('error', gutil.log);
 });
 
-gulp.task('run', ['watch', 'testrpc'], function() {
+gulp.task('run', ['watch-build', 'testrpc'], function() {
   var server = gls.new('server.js');
   server.start();
 });
