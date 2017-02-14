@@ -26,7 +26,7 @@ describe('universe', function() {
   it('creates Galaxies', function() {
     return assert.eventually.notEqual(
       u.createShipLib()
-        .then((shipLib) => u.createGalaxy(shipLib))
+        .then(u.createGalaxy)
         .then((galaxy) => web3.eth.getCodeAsync(galaxy.address)),
       "0x"
     );
