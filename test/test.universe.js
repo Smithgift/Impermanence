@@ -1,9 +1,3 @@
-var chai = require('chai');
-var chaiAsPromised = require('chai-as-promised');
-chai.use(chaiAsPromised);
-
-var assert = chai.assert;
-
 var universe = require('../src/universe');
 var build = require('../build/contracts.js');
 

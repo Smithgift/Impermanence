@@ -42,6 +42,7 @@ module.exports = function(web3) {
             return;
           }
           if(newGalaxy.address) {
+            Promise.promisifyAll(newGalaxy);
             resolve(newGalaxy);
           }
         }

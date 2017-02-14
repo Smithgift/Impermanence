@@ -6,7 +6,6 @@ module.exports = function(web3, galaxy) {
   function System(name) {
     this.name = name;
     this.hash = '0x' + web3.sha3(this.name);
-    this.refreshMap();
     this.shipActivity = galaxy.shipActivity({'system': this.hash});
     this.ships = []; // TODO: Discover existing ships.
     this.shipActivity.watch((err, result) => {
@@ -19,33 +18,31 @@ module.exports = function(web3, galaxy) {
     })
   }
 
-  System.prototype.refreshMap = function() {
-    this.sysMap = galaxy.getSystemMap(this.hash).map((bn) => (bn.toNumber()));
+  System.prototype.exists = function() {
+    return galaxy.galacticMapAsync(this.hash).then((sys) => sys[1]);
   };
 
-  System.prototype.exists = function() {
-    return galaxy.galacticMap(this.hash)[1];
+  System.prototype.sysMap = function() {
+    return galaxy.getSystemMapAsync(this.hash).then((_sysMap) => _sysMap.map((bn) => (bn.toNumber())));
   };
 
   System.prototype.create = function() {
-    return new Promise((resolve, reject) => {
-      if(this.exists()) {
-        reject(new Error('This system was already created!'));
-      }
-      var systemAdded = galaxy.systemAdded({'_systemHash': this.hash});
-      systemAdded.watch(function(err, result) {
-        if(err) {
-          reject(err);
-        } else {
+    return this.exists()
+      .then((e) => {
+        if(e) throw new Error('This system was already created!')
+      }).then(new Promise((resolve, reject) => {
+        var systemAdded = galaxy.systemAdded({'_systemHash': this.hash});
+        systemAdded.watch(function(err, result) {
+          if(err) {
+            reject(err);
+          } else {
+            resolve(result);
+          }
           systemAdded.stopWatching();
-          resolve(result);
-        };
-      });
-      this.createTx  = galaxy.addSystem(this.name, {gas: 2500000});
-    }).then((result) => {
-      this.refreshMap();
-      return result;
-    });
+        });
+        this.createTx = galaxy.addSystemAsync(this.name, {gas: 2500000})
+          .catch((err) => reject(err));
+      }));
   };
 
   System.prototype.spawnCrane = function(coords, name) {

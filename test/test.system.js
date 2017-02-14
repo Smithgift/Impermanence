@@ -1,4 +1,3 @@
-var assert = require('chai').assert;
 var universe = require('../src/universe');
 var system = require('../src/system');
 
@@ -17,7 +16,7 @@ describe('system', function() {
     });
   })
 
-  describe('#empty system', function() {
+  describe('empty system', function() {
     var tauceti;
 
     before('create empty system', function() {
@@ -25,7 +24,7 @@ describe('system', function() {
     });
 
     it('does not exist', function() {
-      assert.equal(tauceti.exists(), false);
+      assert.eventually.equal(tauceti.exists(), false);
     })
 
     it('has a name', function() {
@@ -37,29 +36,20 @@ describe('system', function() {
     }); 
 
     it('has nothing in the map', function() {
-      assert.deepEqual(tauceti.sysMap, Array.from({length: 256}, () => 0));
+      assert.eventually.deepEqual(tauceti.sysMap(), Array.from({length: 256}, () => 0));
     });
   });
 
   describe('created system', function() {
     var polaris;
     
-    before('create polaris', function(done) {
+    before('create polaris', function() {
       polaris = new System('polaris');
-      polaris.create().then(function() {
-        done();
-      }).catch(function(err) {
-        done(err);
-      });
+      return polaris.create();
     });
 
     it('exists', function() {
-      assert.equal(polaris.exists(), true);
-    });
-
-    it('is identical to itself', function() {
-      var polaris2 = new System(polaris.name);
-      assert.deepEqual(polaris.sysMap, polaris2.sysMap);
+      return assert.eventually.equal(polaris.exists(), true);
     });
 
     it('cannot be recreated', function(done) {
@@ -75,11 +65,15 @@ describe('system', function() {
     });
 
     it('has the correct map', function() {
-      var sysMap = galaxy.generateMap(polaris.hash).map(
-        (bn) => (bn.toNumber())
-      );
-      // TODO: Set this to the actual map.
-      assert.deepEqual(polaris.sysMap, sysMap);
+      return assert.eventually.isOk(
+        Promise.all([
+          polaris.sysMap(),
+          galaxy.generateMapAsync(polaris.hash).map((bn) => (bn.toNumber()))
+        ]).then((m) => {
+            assert.deepEqual(m[0], m[1]);
+            return true;
+          })
+        )
     });
   });
 
