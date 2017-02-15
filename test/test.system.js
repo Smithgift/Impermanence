@@ -14,7 +14,7 @@ describe('system', function() {
       System = system(web3, galaxy);
       done();
     });
-  })
+  });
 
   describe('empty system', function() {
     var tauceti;
@@ -75,38 +75,6 @@ describe('system', function() {
           })
         )
     });
-  });
-
-  describe('ships', function() {
-    var sol;
-    
-    before('create Sol', function(done) {
-      sol = new System('Sol');
-      sol.create().then(function() {
-        done();
-      }).catch(function(err) {
-        done(err);
-      });
-    });
-
-    describe('cranes', function() { 
-      var crane;
-      
-      before('create the crane', function(done) {
-        sol.spawnCrane(39, "crane").then(function(_crane) {
-          crane = _crane;
-          done();
-        }).catch(function() {
-          done(err);
-        });
-      });
-
-      it('is something', function() {
-        assert.notEqual(typeof crane, "undefined");
-      });
-
-    });
-
   });
 
 });
