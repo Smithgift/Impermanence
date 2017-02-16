@@ -5,7 +5,6 @@ web3.setProvider(new window.web3.providers.HttpProvider('http://localhost:8555')
 
 var m = require('mithril');
 
-var global = require('../src/global');
 var ui = require('../src/ui');
 
 var universe = require('../src/universe');
@@ -19,7 +18,7 @@ var System;
 function connect(_galaxy) {
   galaxy = u.linkGalaxy(_galaxy);
   System = s(web3, galaxy);
-  ui(m, global, System).init();
+  ui(System).init();
 }
 
 

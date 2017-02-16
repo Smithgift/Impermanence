@@ -1,3 +1,5 @@
+var Promise = require('bluebird');
+
 // ORM of a system.
 module.exports = function(web3, galaxy) {
   
@@ -8,22 +10,33 @@ module.exports = function(web3, galaxy) {
     this.hash = '0x' + web3.sha3(this.name);
     this.shipActivity = galaxy.shipActivity({'system': this.hash});
     this.ships = []; // TODO: Discover existing ships.
-    this.shipActivity.watch((err, result) => {
+    /*this.shipActivity.watch((err, result) => {
       if(err) {
         console.log(err);
         return;
       }
       // TODO: Don't double-add ships
       this.ships.push(ship.getShip(result.args.shipID));
-    })
+    })*/
+    this.cache = {
+      exists: null,
+      sysMap: null
+    };
   }
 
   System.prototype.exists = function() {
-    return galaxy.galacticMapAsync(this.hash).then((sys) => sys[1]);
+    return galaxy.galacticMapAsync(this.hash)
+      .then((sys) => this.cache.exists = sys[1]);
   };
 
   System.prototype.sysMap = function() {
-    return galaxy.getSystemMapAsync(this.hash).then((_sysMap) => _sysMap.map((bn) => (bn.toNumber())));
+    return galaxy.getSystemMapAsync(this.hash)
+      .then((_sysMap) => _sysMap.map((bn) => (bn.toNumber())))
+      .then((sysMap) => this.cache.sysMap = sysMap);
+  };
+
+  System.prototype.refreshCache = function() {
+    return Promise.all([this.exists(), this.sysMap()]);
   };
 
   System.prototype.create = function() {
