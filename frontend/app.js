@@ -17,21 +17,13 @@ var s = require('../src/system');
 var System;
 
 function connect(_galaxy) {
-  galaxy = _galaxy;
+  galaxy = u.linkGalaxy(_galaxy);
   System = s(web3, galaxy);
   ui(m, global, System).init();
 }
 
-// Scary debug function. Only run on your private testnet!
-window.dcu = function() {
-  web3.eth.defaultAccount = web3.eth.accounts[0];
-  u.createUniverse().then(connect);
-};
 
-// 0xfffeb276f004ea8b05366ac9763beb25b5b4d946
-
-// Scarier automatic use of debug function.
 document.addEventListener('DOMContentLoaded', function(){
   web3.eth.defaultAccount = web3.eth.accounts[0];
-  dcu();
+  connect(require('../build/galaxy-address.js'));
 });

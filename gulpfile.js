@@ -12,6 +12,9 @@ var TestRPC = require('ethereumjs-testrpc');
 
 var Promise = require('bluebird');
 
+var fs = require('fs');
+Promise.promisifyAll(fs);
+
 gulp.task('default', function() {
   return gulpMultiProcess(['testrpc', 'watch-build', 'watch-mocha']);
 });
@@ -47,8 +50,6 @@ gulp.task('mocha', function() {
     .on('error', gutil.log);
 });
 
-var galaxy;
-
 gulp.task('deploy', ['build', 'testrpc'], function() {
   var Web3 = require('web3');
   var web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8555'));
@@ -57,8 +58,13 @@ gulp.task('deploy', ['build', 'testrpc'], function() {
   return web3.eth.getAccountsAsync()
     .then(a => web3.eth.defaultAccount = a[0])
     .then(u.createUniverse)
-    .then(_galaxy => galaxy = _galaxy)
-    .then(_galaxy => console.log("galaxy deployed at:", _galaxy.address));
+    .then(galaxy => {
+      console.log("galaxy deployed at:", galaxy.address);
+      return fs.writeFileAsync(
+        './build/galaxy-address.js',
+        'module.exports = "' + galaxy.address + '";'
+      );
+    });
 });
 
 gulp.task('run', ['deploy', 'testrpc'], function() {

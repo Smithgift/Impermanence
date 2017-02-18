@@ -42,8 +42,7 @@ module.exports = function(web3) {
             return;
           }
           if(newGalaxy.address) {
-            Promise.promisifyAll(newGalaxy);
-            resolve(newGalaxy);
+            resolve(Promise.promisifyAll(newGalaxy));
           }
         }
       );
@@ -60,7 +59,7 @@ module.exports = function(web3) {
   exports.createUniverse = createUniverse;
 
   function linkGalaxy(address) {
-    return Galaxy.at(address);
+    return Promise.promisifyAll(Galaxy.at(address));
   }
 
   exports.linkGalaxy = linkGalaxy;
