@@ -41,21 +41,12 @@ module.exports = function(System) {
   }
 
   var SystemMap = {
-    buildMap: function() {
-      var rows = new Array();
-      for(var y = 0; y < 256; y += 16) {
-        rows.push(
-          m("tr",
-            vm.sys.cache.sysMap.slice(y, y + 16).map(function(num) {
-              return m("td", m.trust(common.mapLegend[num][0]));
-            })
-           )
-        );
-      }
-      return rows;
-    },
     view: function() {
-      return m("table", this.buildMap());
+      return m("table", [
+        Array.from({length: 16}, (v, i) => (m("tr",
+          vm.sys.cache.sysMap.slice(i * 16, (i * 16) + 15).map((tile) => m("td", common.mapLegend[tile][0]))
+        )))
+      ]);
     }
   }
 

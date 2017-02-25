@@ -1,5 +1,5 @@
 var mapLegend = [
-    ["&nbsp;", "Empty Space"],    //Empty,
+    [" ", "Empty Space"],    //Empty,
     ["a", "Kaboomium Asteriod"],    //AtkAsteriod,
     ["d", "Bouncium Asteriod"],    //DefAsteriod,
     ["e", "Zoomium Asteriod"],    //EngAsteriod,
