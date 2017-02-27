@@ -21,7 +21,6 @@
     "gulp-rename": "^1.2.2",
     "gulp-run": "^1.7.1",
     "gulp-util": "^3.0.7",
-    "jsdom": "^9.2.0",
     "mithril": "^1.0.0",
     "sinon": "^1.17.3",
     "watchify": "^3.7.0",
